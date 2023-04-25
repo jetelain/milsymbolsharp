@@ -38,6 +38,12 @@ namespace Milsymbol.Symbols
             return lib;
         }
 
+        /// <summary>
+        /// Generate a symbol from a symbol identification coding
+        /// </summary>
+        /// <param name="sidc">Symbol identification coding</param>
+        /// <param name="options">Symbol generation options</param>
+        /// <returns></returns>
         public Symbol Generate(string sidc, SymbolOptions options)
         {
             lock (engine)
