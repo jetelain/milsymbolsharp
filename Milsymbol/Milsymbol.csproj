@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Symbols\milsymbol.js" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <EmbeddedResource Include="Symbols\App6d\app6d.json" />
     <EmbeddedResource Include="Symbols\milsymbol.js" />
   </ItemGroup>
 
@@ -19,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Jint" Version="3.0.0-beta-2049" />
     <PackageReference Include="Svg.Skia" Version="0.5.18" />
+    <PackageReference Include="System.Text.Json" Version="7.0.3" />
   </ItemGroup>
 
 </Project>
