@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
     public class App6dSymbolId : IApp6dSymbolId, ISymbolId
     {
@@ -26,9 +26,9 @@ namespace Milsymbol.Symbols.App6d
 
         public App6dStatus Status => (App6dStatus)(_sidc[6] - '0');
 
-        public App6dDummyHqTaskForce DummyHqTaskForce => (App6dDummyHqTaskForce)(_sidc[7] - '0');
+        public App6dFdHqTf FdHqTf => (App6dFdHqTf)(_sidc[7] - '0');
 
-        public string Size => _sidc.Substring(8, 2);
+        public string Amplifier => _sidc.Substring(8, 2);
 
         public string Icon => _sidc.Substring(10, 6);
 
@@ -36,11 +36,11 @@ namespace Milsymbol.Symbols.App6d
 
         public string Modifier2 => _sidc.Substring(18, 2);
 
-        public bool IsDummy => DummyHqTaskForce.IsDummy();
+        public bool IsFeintDummy => FdHqTf.IsFeintDummy();
 
-        public bool IsHeadquarters => DummyHqTaskForce.IsHeadquarters();
+        public bool IsHeadquarters => FdHqTf.IsHeadquarters();
 
-        public bool IsTaskForce => DummyHqTaskForce.IsTaskForce();
+        public bool IsTaskForce => FdHqTf.IsTaskForce();
 
         /// <summary>
         /// Symbol identification coding

@@ -1,14 +1,14 @@
-﻿using Milsymbol.Symbols;
+﻿using Milsymbol.Icons;
 
-namespace Milsymbol.Test.Symbols
+namespace Milsymbol.Test.Icons
 {
-    public class SymbolGeneratorTest
+    public class SymbolIconGeneratorTest
     {
         [Fact]
         public void SymbolGenerator_Generate()
         {
-            using var generator = new SymbolGenerator();
-            var symbol = generator.Generate("30031000131211050000", new SymbolOptions());
+            using var generator = new SymbolIconGenerator();
+            var symbol = generator.Generate("30031000131211050000", new SymbolIconOptions());
             Assert.Equal(158, symbol.Width);
             Assert.Equal(135.5, symbol.Height);
             Assert.Equal(81.5, symbol.AnchorY);

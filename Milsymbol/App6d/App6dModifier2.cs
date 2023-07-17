@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
-    [DebuggerDisplay("{Code} : {FirstModifier}")]
-    public class App6dModifier1
+    [DebuggerDisplay("{Code} : {SecondModifier}")]
+    public class App6dModifier2
     {
-        [JsonPropertyName("First Modifier")]
-        public string FirstModifier { get; set; }
+        [JsonPropertyName("Second Modifier")]
+        public string SecondModifier { get; set; }
 
         [JsonPropertyName("Code")]
         public string Code { get; set; }

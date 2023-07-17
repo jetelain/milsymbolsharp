@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
     [DebuggerDisplay("{Code} : {Name}")]
-    public class App6dSize
+    public class App6dAmplifier
     {
         [JsonPropertyName("code")]
         public string Code { get; set; }

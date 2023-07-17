@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Symbols\App6d\app6d.json" />
-    <EmbeddedResource Include="Symbols\milsymbol.js" />
+    <EmbeddedResource Include="App6d\app6d.json" />
+    <EmbeddedResource Include="Icons\milsymbol.js" />
   </ItemGroup>
 
   <ItemGroup>

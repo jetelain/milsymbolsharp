@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
     public class App6dSymbolIdBuilder : IApp6dSymbolId
     {
@@ -30,8 +30,8 @@ namespace Milsymbol.Symbols.App6d
             StandardIdentity2 = copy.StandardIdentity2;
             _symbolSet = copy.SymbolSet;
             Status = copy.Status;
-            DummyHqTaskForce = copy.DummyHqTaskForce;
-            _size = copy.Size;
+            FdHqTf = copy.FdHqTf;
+            _size = copy.Amplifier;
             _icon = copy.Icon;
             _modifier1 = copy.Modifier1;
             _modifier2 = copy.Modifier2;
@@ -69,27 +69,27 @@ namespace Milsymbol.Symbols.App6d
 
         public App6dStatus Status { get; set; } = App6dStatus.Present;
 
-        public App6dDummyHqTaskForce DummyHqTaskForce { get; set; } = App6dDummyHqTaskForce.None;
+        public App6dFdHqTf FdHqTf { get; set; } = App6dFdHqTf.None;
 
-        public bool IsDummy
+        public bool IsFeintDummy
         {
-            get { return DummyHqTaskForce.IsDummy(); }
-            set { DummyHqTaskForce = DummyHqTaskForce & ~App6dDummyHqTaskForce.FeintDummy | (value ? App6dDummyHqTaskForce.FeintDummy : App6dDummyHqTaskForce.None); }
+            get { return FdHqTf.IsFeintDummy(); }
+            set { FdHqTf = FdHqTf & ~App6dFdHqTf.FeintDummy | (value ? App6dFdHqTf.FeintDummy : App6dFdHqTf.None); }
         }
 
         public bool IsHeadquarters
         {
-            get { return DummyHqTaskForce.IsHeadquarters(); }
-            set { DummyHqTaskForce = DummyHqTaskForce & ~App6dDummyHqTaskForce.Headquarters | (value ? App6dDummyHqTaskForce.Headquarters : App6dDummyHqTaskForce.None); }
+            get { return FdHqTf.IsHeadquarters(); }
+            set { FdHqTf = FdHqTf & ~App6dFdHqTf.Headquarters | (value ? App6dFdHqTf.Headquarters : App6dFdHqTf.None); }
         }
 
         public bool IsTaskForce
         {
-            get { return DummyHqTaskForce.IsTaskForce(); }
-            set { DummyHqTaskForce = DummyHqTaskForce & ~App6dDummyHqTaskForce.TaskForce | (value ? App6dDummyHqTaskForce.TaskForce : App6dDummyHqTaskForce.None); }
+            get { return FdHqTf.IsTaskForce(); }
+            set { FdHqTf = FdHqTf & ~App6dFdHqTf.TaskForce | (value ? App6dFdHqTf.TaskForce : App6dFdHqTf.None); }
         }
 
-        public string Size
+        public string Amplifier
         {
             get { return _size; }
             set
@@ -149,8 +149,8 @@ namespace Milsymbol.Symbols.App6d
             sb.Append((char)('0' + StandardIdentity2));
             sb.Append(SymbolSet);
             sb.Append((char)('0' + Status));
-            sb.Append((char)('0' + DummyHqTaskForce));
-            sb.Append(Size);
+            sb.Append((char)('0' + FdHqTf));
+            sb.Append(Amplifier);
             sb.Append(Icon);
             sb.Append(Modifier1);
             sb.Append(Modifier2);

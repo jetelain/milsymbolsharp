@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
     [DebuggerDisplay("{Code} : {Name}")]
     public class App6dSymbolSet
@@ -22,7 +22,7 @@ namespace Milsymbol.Symbols.App6d
         [JsonPropertyName("modifier2")]
         public List<App6dModifier2> Modifiers2 { get; set; }
 
-        [JsonPropertyName("size")]
-        public List<App6dSize> Sizes { get; set; } = new List<App6dSize>();
+        [JsonPropertyName("amplifier")]
+        public List<App6dAmplifier> Amplifiers { get; set; } = new List<App6dAmplifier>();
     }
 }

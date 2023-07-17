@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
     [DebuggerDisplay("{Code} : {Entity} - {EntityType} - {EntitySubtype}")]
     public class App6dMainIcon

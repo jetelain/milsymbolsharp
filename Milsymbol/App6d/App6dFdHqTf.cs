@@ -1,6 +1,6 @@
-﻿namespace Milsymbol.Symbols.App6d
+﻿namespace Milsymbol.App6d
 {
-    public enum App6dDummyHqTaskForce
+    public enum App6dFdHqTf
     { 
         None = 0,
 

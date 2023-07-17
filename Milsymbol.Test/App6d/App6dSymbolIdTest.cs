@@ -1,6 +1,6 @@
-﻿using Milsymbol.Symbols.App6d;
+﻿using Milsymbol.App6d;
 
-namespace Milsymbol.Test.Symbols.App6d
+namespace Milsymbol.Test.App6d
 {
     public class App6dSymbolIdTest
     {
@@ -14,11 +14,11 @@ namespace Milsymbol.Test.Symbols.App6d
             Assert.Equal(App6dStandardIdentity2.Hostile, symbol.StandardIdentity2);
             Assert.Equal("30", symbol.SymbolSet);
             Assert.Equal(App6dStatus.Present, symbol.Status);
-            Assert.Equal(App6dDummyHqTaskForce.None, symbol.DummyHqTaskForce);
-            Assert.False(symbol.IsDummy);
+            Assert.Equal(App6dFdHqTf.None, symbol.FdHqTf);
+            Assert.False(symbol.IsFeintDummy);
             Assert.False(symbol.IsHeadquarters);
             Assert.False(symbol.IsTaskForce);
-            Assert.Equal("00", symbol.Size);
+            Assert.Equal("00", symbol.Amplifier);
             Assert.Equal("120204", symbol.Icon);
             Assert.Equal("00", symbol.Modifier1);
             Assert.Equal("00", symbol.Modifier2);

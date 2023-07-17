@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Milsymbol.Symbols.App6d
+namespace Milsymbol.App6d
 {
     public class App6dSymbolIdInfos
     {
@@ -9,9 +9,9 @@ namespace Milsymbol.Symbols.App6d
         private readonly App6dMainIcon icon;
         private readonly App6dModifier1 mod1;
         private readonly App6dModifier2 mod2;
-        private readonly App6dSize size;
+        private readonly App6dAmplifier size;
 
-        public App6dSymbolIdInfos(App6dSymbolId symbol, App6dSymbolSet set, App6dMainIcon icon, App6dModifier1 mod1, App6dModifier2 mod2, App6dSize size)
+        public App6dSymbolIdInfos(App6dSymbolId symbol, App6dSymbolSet set, App6dMainIcon icon, App6dModifier1 mod1, App6dModifier2 mod2, App6dAmplifier size)
         {
             this.symbol = symbol;
             this.set = set;
@@ -37,7 +37,7 @@ namespace Milsymbol.Symbols.App6d
             var icon = set.MainIcons.FirstOrDefault(i => i.Code == symbol.Icon);
             var mod1 = set.Modifiers1.FirstOrDefault(i => i.Code == symbol.Modifier1);
             var mod2 = set.Modifiers2.FirstOrDefault(i => i.Code == symbol.Modifier2);
-            var size = set.Sizes.FirstOrDefault(i => i.Code == symbol.Size);
+            var size = set.Amplifiers.FirstOrDefault(i => i.Code == symbol.Amplifier);
             return new App6dSymbolIdInfos(symbol, set, icon, mod1, mod2, size);
         }
 

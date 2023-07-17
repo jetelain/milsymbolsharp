@@ -1,4 +1,4 @@
-﻿namespace Milsymbol.Symbols
+﻿namespace Milsymbol
 {
     public interface ISymbolId
     {

@@ -1478,14 +1478,6 @@
         "First Modifier": "Headquarters or headquarters staff element",
         "Code": "98",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "71-74, 83-93"
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -1726,18 +1718,9 @@
         "Second Modifier": "Combat Search and Rescue",
         "Code": "57",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "58-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
-    "size": [
+    "amplifier": [
       {
         "code": "00",
         "name": "Unspecified"
@@ -1972,15 +1955,6 @@
         "First Modifier": "Loot",
         "Code": "24",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "25-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -1991,15 +1965,6 @@
       {
         "Second Modifier": "Leader or Leadership",
         "Code": "01"
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "02-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ]
   },
@@ -3356,20 +3321,11 @@
         "First Modifier": "Civilian",
         "Code": "09",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "10-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
     ],
-    "size": [
+    "amplifier": [
       {
         "code": "00",
         "name": "Unspecified"
@@ -4346,15 +4302,6 @@
         "First Modifier": "Command Post Node",
         "Code": "16",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "17-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -4401,15 +4348,6 @@
         "Second Modifier": "Weapons Grade",
         "Code": "08",
         "Remarks": "Used with CRBN "
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "09-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ]
   },
@@ -8813,15 +8751,6 @@
       {
         "First Modifier": "Division",
         "Code": "55"
-      },
-      {
-        "First Modifier": "Reserved for future Use",
-        "Code": "56-98",
-        "Remarks": "Assigned by SSMC/JSP Only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -8984,18 +8913,9 @@
       {
         "Second Modifier": "SKI",
         "Code": "39"
-      },
-      {
-        "Second Modifier": "Reserved for future Use",
-        "Code": "40-98",
-        "Remarks": "Assigned by SSMC/JSP Only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
-    "size": [
+    "amplifier": [
       {
         "code": "00",
         "name": "Unspecified"
@@ -9672,15 +9592,6 @@
         "First Modifier": "Hijacking",
         "Code": "23",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "24-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -9747,18 +9658,9 @@
       {
         "Second Modifier": "Expendable",
         "Code": "15"
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "16-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
-    "size": [
+    "amplifier": [
       {
         "code": "00",
         "name": "Unspecified"
@@ -9980,15 +9882,6 @@
       {
         "First Modifier": "Hijacking/Hijacked",
         "Code": "20"
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "21-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -10075,18 +9968,9 @@
         "Second Modifier": "Expendable",
         "Code": "16",
         "Remarks": "Used with AUV/UUV entity type only. "
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "17-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
-    "size": [
+    "amplifier": [
       {
         "code": "00",
         "name": "Unspecified"
@@ -11569,15 +11453,6 @@
       {
         "First Modifier": "Theft",
         "Code": "18"
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "19-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -12062,15 +11937,6 @@
         "First Modifier": "ASW Helo - SH-60R",
         "Code": "39",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "40-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -12122,15 +11988,6 @@
         "Second Modifier": "Downlinked",
         "Code": "11",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "12-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ]
   },
@@ -12184,15 +12041,6 @@
         "First Modifier": "Interceptor",
         "Code": "08",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "09-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -12269,15 +12117,6 @@
         "Second Modifier": "Intercontinental",
         "Code": "16",
         "Remarks": "From MIL-STD-2525. "
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "06, 17-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ]
   },
@@ -12489,15 +12328,6 @@
       {
         "First Modifier": "Molniya Orbit (MO)",
         "Code": "06"
-      },
-      {
-        "First Modifier": "Reserved for Future Use",
-        "Code": "07-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "First Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ],
     "modifier2": [
@@ -12520,15 +12350,6 @@
       {
         "Second Modifier": "Signals Intelligence (SIGINT)",
         "Code": "04"
-      },
-      {
-        "Second Modifier": "Reserved for Future Use",
-        "Code": "05-98",
-        "Remarks": "Assigned by SSMC/JSP only "
-      },
-      {
-        "Second Modifier": "Version Extension Flag",
-        "Code": "99"
       }
     ]
   }
