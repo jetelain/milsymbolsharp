@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Jint.Native;
 
 namespace Milsymbol.App6d
 {
@@ -11,6 +12,9 @@ namespace Milsymbol.App6d
         private string _icon = "000000";
         private string _modifier1 = "00";
         private string _modifier2 = "00";
+        private string _originatorIdentifier = "";
+        private string _originatorSymbolSet = "";
+        private string _originatorData = "";
 
         public App6dSymbolIdBuilder()
         {
@@ -26,11 +30,11 @@ namespace Milsymbol.App6d
         public App6dSymbolIdBuilder(App6dSymbolId copy)
         {
             _version = copy.Version;
-            StandardIdentity1 = copy.StandardIdentity1;
-            StandardIdentity2 = copy.StandardIdentity2;
+            Context = copy.Context;
+            StandardIdentity = copy.StandardIdentity;
             _symbolSet = copy.SymbolSet;
             Status = copy.Status;
-            FdHqTf = copy.FdHqTf;
+            HqTfFd = copy.HqTfFd;
             _size = copy.Amplifier;
             _icon = copy.Icon;
             _modifier1 = copy.Modifier1;
@@ -50,9 +54,9 @@ namespace Milsymbol.App6d
             } 
         }
 
-        public App6dStandardIdentity1 StandardIdentity1 { get; set; } = App6dStandardIdentity1.Reality;
+        public App6dContext Context { get; set; } = App6dContext.Reality;
 
-        public App6dStandardIdentity2 StandardIdentity2 { get; set; } = App6dStandardIdentity2.Unknown;
+        public App6dStandardIdentity StandardIdentity { get; set; } = App6dStandardIdentity.Unknown;
 
         public string SymbolSet
         {
@@ -69,24 +73,24 @@ namespace Milsymbol.App6d
 
         public App6dStatus Status { get; set; } = App6dStatus.Present;
 
-        public App6dFdHqTf FdHqTf { get; set; } = App6dFdHqTf.None;
+        public App6dHqTfFd HqTfFd { get; set; } = App6dHqTfFd.None;
 
         public bool IsFeintDummy
         {
-            get { return FdHqTf.IsFeintDummy(); }
-            set { FdHqTf = FdHqTf & ~App6dFdHqTf.FeintDummy | (value ? App6dFdHqTf.FeintDummy : App6dFdHqTf.None); }
+            get { return HqTfFd.IsFeintDummy(); }
+            set { HqTfFd = HqTfFd & ~App6dHqTfFd.FeintDummy | (value ? App6dHqTfFd.FeintDummy : App6dHqTfFd.None); }
         }
 
         public bool IsHeadquarters
         {
-            get { return FdHqTf.IsHeadquarters(); }
-            set { FdHqTf = FdHqTf & ~App6dFdHqTf.Headquarters | (value ? App6dFdHqTf.Headquarters : App6dFdHqTf.None); }
+            get { return HqTfFd.IsHeadquarters(); }
+            set { HqTfFd = HqTfFd & ~App6dHqTfFd.Headquarters | (value ? App6dHqTfFd.Headquarters : App6dHqTfFd.None); }
         }
 
         public bool IsTaskForce
         {
-            get { return FdHqTf.IsTaskForce(); }
-            set { FdHqTf = FdHqTf & ~App6dFdHqTf.TaskForce | (value ? App6dFdHqTf.TaskForce : App6dFdHqTf.None); }
+            get { return HqTfFd.IsTaskForce(); }
+            set { HqTfFd = HqTfFd & ~App6dHqTfFd.TaskForce | (value ? App6dHqTfFd.TaskForce : App6dHqTfFd.None); }
         }
 
         public string Amplifier
@@ -141,19 +145,62 @@ namespace Milsymbol.App6d
             }
         }
 
+        public string OriginatorIdentifier
+        {
+            get { return _originatorIdentifier; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && (value.Length != 3 || !App6dSymbolId.IsNumeric(value)))
+                {
+                    throw new ArgumentException();
+                }
+                _originatorIdentifier = value;
+            }
+        }
+        public string OriginatorSymbolSet
+        {
+            get { return _originatorSymbolSet; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && (value.Length != 1 || !App6dSymbolId.IsNumeric(value)))
+                {
+                    throw new ArgumentException();
+                }
+                _originatorSymbolSet = value;
+            }
+        }
+        public string OriginatorData
+        {
+            get { return _originatorData; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && (value.Length != 6 || !App6dSymbolId.IsNumeric(value)))
+                {
+                    throw new ArgumentException();
+                }
+                _originatorData = value;
+            }
+        }
+
         public string ToSIDC()
         {
             var sb = new StringBuilder(20);
             sb.Append(Version);
-            sb.Append((char)('0' + StandardIdentity1));
-            sb.Append((char)('0' + StandardIdentity2));
+            sb.Append((char)('0' + Context));
+            sb.Append((char)('0' + StandardIdentity));
             sb.Append(SymbolSet);
             sb.Append((char)('0' + Status));
-            sb.Append((char)('0' + FdHqTf));
+            sb.Append((char)('0' + HqTfFd));
             sb.Append(Amplifier);
             sb.Append(Icon);
             sb.Append(Modifier1);
             sb.Append(Modifier2);
+            if (!string.IsNullOrEmpty(OriginatorIdentifier))
+            {
+                sb.Append(OriginatorIdentifier);
+                sb.Append((OriginatorSymbolSet ?? string.Empty).PadRight(1, '0'));
+                sb.Append((OriginatorData ?? string.Empty).PadRight(6, '0'));
+            }
             return sb.ToString();
         }
 

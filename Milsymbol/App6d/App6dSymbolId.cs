@@ -9,24 +9,24 @@ namespace Milsymbol.App6d
 
         public App6dSymbolId(string sidc)
         {
-            if (sidc == null || sidc.Length != 20 || !IsNumeric(sidc))
+            if (sidc == null || (sidc.Length != 20 && sidc.Length != 30) || !IsNumeric(sidc))
             {
-                throw new ArgumentException($"'{sidc}' is not a valid APP-6D SIDC, length must be 20", nameof(sidc));
+                throw new ArgumentException($"'{sidc}' is not a valid APP-6D SIDC: length must be 20 or 30 and value must be only digits", nameof(sidc));
             }
             _sidc = sidc;
         }
 
         public string Version => _sidc.Substring(0, 2);
 
-        public App6dStandardIdentity1 StandardIdentity1 => (App6dStandardIdentity1)(_sidc[2] - '0');
+        public App6dContext Context => (App6dContext)(_sidc[2] - '0');
 
-        public App6dStandardIdentity2 StandardIdentity2 => (App6dStandardIdentity2)(_sidc[3] - '0');
+        public App6dStandardIdentity StandardIdentity => (App6dStandardIdentity)(_sidc[3] - '0');
 
         public string SymbolSet => _sidc.Substring(4, 2);
 
         public App6dStatus Status => (App6dStatus)(_sidc[6] - '0');
 
-        public App6dFdHqTf FdHqTf => (App6dFdHqTf)(_sidc[7] - '0');
+        public App6dHqTfFd HqTfFd => (App6dHqTfFd)(_sidc[7] - '0');
 
         public string Amplifier => _sidc.Substring(8, 2);
 
@@ -36,11 +36,17 @@ namespace Milsymbol.App6d
 
         public string Modifier2 => _sidc.Substring(18, 2);
 
-        public bool IsFeintDummy => FdHqTf.IsFeintDummy();
+        public bool IsFeintDummy => HqTfFd.IsFeintDummy();
 
-        public bool IsHeadquarters => FdHqTf.IsHeadquarters();
+        public bool IsHeadquarters => HqTfFd.IsHeadquarters();
 
-        public bool IsTaskForce => FdHqTf.IsTaskForce();
+        public bool IsTaskForce => HqTfFd.IsTaskForce();
+
+        public string OriginatorIdentifier => _sidc.Length == 30 ? _sidc.Substring(20, 3) : string.Empty;
+
+        public string OriginatorSymbolSet => _sidc.Length == 30 ? _sidc.Substring(23, 1) : string.Empty;
+
+        public string OriginatorData => _sidc.Length == 30 ? _sidc.Substring(24, 6) : string.Empty;
 
         /// <summary>
         /// Symbol identification coding

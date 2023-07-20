@@ -10,11 +10,11 @@ namespace Milsymbol.Test.App6d
         {
             var symbol = new App6dSymbolId("10063000001202040000");
             Assert.Equal("10", symbol.Version);
-            Assert.Equal(App6dStandardIdentity1.Reality, symbol.StandardIdentity1);
-            Assert.Equal(App6dStandardIdentity2.Hostile, symbol.StandardIdentity2);
+            Assert.Equal(App6dContext.Reality, symbol.Context);
+            Assert.Equal(App6dStandardIdentity.Hostile, symbol.StandardIdentity);
             Assert.Equal("30", symbol.SymbolSet);
             Assert.Equal(App6dStatus.Present, symbol.Status);
-            Assert.Equal(App6dFdHqTf.None, symbol.FdHqTf);
+            Assert.Equal(App6dHqTfFd.None, symbol.HqTfFd);
             Assert.False(symbol.IsFeintDummy);
             Assert.False(symbol.IsHeadquarters);
             Assert.False(symbol.IsTaskForce);

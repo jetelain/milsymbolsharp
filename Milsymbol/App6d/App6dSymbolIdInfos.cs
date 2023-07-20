@@ -41,9 +41,9 @@ namespace Milsymbol.App6d
             return new App6dSymbolIdInfos(symbol, set, icon, mod1, mod2, size);
         }
 
-        public App6dStandardIdentity1 StandardIdentity1 => symbol.StandardIdentity1;
+        public App6dContext StandardIdentity1 => symbol.Context;
 
-        public App6dStandardIdentity2 StandardIdentity2 => symbol.StandardIdentity2;
+        public App6dStandardIdentity StandardIdentity2 => symbol.StandardIdentity;
 
         public string SymbolSet => set.Name;
 
