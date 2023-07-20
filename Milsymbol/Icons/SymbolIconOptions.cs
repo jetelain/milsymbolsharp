@@ -1,9 +1,9 @@
 ﻿using Jint;
 using Jint.Native;
 
-namespace Milsymbol.Symbols
+namespace Milsymbol.Icons
 {
-    public class SymbolOptions
+    public class SymbolIconOptions
     {
         public double? Size { get; set; }
 

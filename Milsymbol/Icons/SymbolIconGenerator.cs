@@ -6,14 +6,14 @@ using Esprima;
 using Jint;
 using Jint.Native;
 
-namespace Milsymbol.Symbols
+namespace Milsymbol.Icons
 {
-    public class SymbolGenerator : IDisposable
+    public class SymbolIconGenerator : IDisposable
     {
         private readonly Engine engine;
         private readonly JsValue symbolFunction;
 
-        public SymbolGenerator()
+        public SymbolIconGenerator()
         {
             engine = new Engine();
             engine.Execute(LoadScript());
@@ -31,7 +31,7 @@ namespace Milsymbol.Symbols
         private static string GetEmbeddedScript()
         {
             string lib;
-            using (var reader = new StreamReader(typeof(SymbolGenerator).Assembly.GetManifestResourceStream("Milsymbol.Symbols.milsymbol.js") ?? throw new InvalidOperationException()))
+            using (var reader = new StreamReader(typeof(SymbolIconGenerator).Assembly.GetManifestResourceStream("Milsymbol.Icons.milsymbol.js") ?? throw new InvalidOperationException()))
             {
                 lib = reader.ReadToEnd();
             }
@@ -44,7 +44,7 @@ namespace Milsymbol.Symbols
         /// <param name="sidc">Symbol identification coding</param>
         /// <param name="options">Symbol generation options</param>
         /// <returns></returns>
-        public Symbol Generate(string sidc, SymbolOptions options)
+        public SymbolIcon Generate(string sidc, SymbolIconOptions options)
         {
             lock (engine)
             {
@@ -52,7 +52,7 @@ namespace Milsymbol.Symbols
             }
         }
 
-        public List<Symbol> Generate(IEnumerable<string> codes, SymbolOptions options)
+        public List<SymbolIcon> Generate(IEnumerable<string> codes, SymbolIconOptions options)
         {
             lock (engine)
             {
@@ -61,7 +61,7 @@ namespace Milsymbol.Symbols
             }
         }
 
-        private Symbol Generate(string sidc, JsValue optionsJS)
+        private SymbolIcon Generate(string sidc, JsValue optionsJS)
         {
             var result = engine.Construct(symbolFunction, new JsValue[] { new JsString(sidc), optionsJS });
             var svg = engine.Invoke(result.Get(new JsString("asSVG")), result, new object[0]).ToString();
@@ -71,7 +71,7 @@ namespace Milsymbol.Symbols
             var h = size.Get(new JsString("height")).AsNumber();
             var x = anchor.Get(new JsString("x")).AsNumber();
             var y = anchor.Get(new JsString("y")).AsNumber();
-            return new Symbol(svg, w, h, x, y);
+            return new SymbolIcon(svg, w, h, x, y);
         }
 
         public void Dispose()
