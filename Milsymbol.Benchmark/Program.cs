@@ -15,9 +15,9 @@ namespace Milsymbol.Benchmark
             var sw = Stopwatch.StartNew();
             var count = 0;
             var real = 0;
-            foreach (var id2 in Enum.GetValues<App6dStandardIdentity2>())
+            foreach (var stdid in Enum.GetValues<App6dStandardIdentity>())
             {
-                builder.StandardIdentity2 = id2;
+                builder.StandardIdentity = stdid;
                 foreach (var set in App6dSymbolDatabase.Default.SymbolSets)
                 {
                     builder.SymbolSet = set.Code;
