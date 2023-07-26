@@ -13,11 +13,13 @@ namespace Milsymbol.Icons
         private readonly Engine engine;
         private readonly JsValue symbolFunction;
 
-        public SymbolIconGenerator()
+        public SymbolIconGenerator(string standard = "APP6")
         {
             engine = new Engine();
             engine.Execute(LoadScript());
-            symbolFunction = engine.GetValue("ms").Get(new JsString("Symbol"));
+            var ms = engine.GetValue("ms");
+            symbolFunction = ms.Get(new JsString("Symbol"));
+            engine.Invoke(ms.Get(new JsString("setStandard")), ms, new[] { new JsString(standard) });
         }
 
         private static Esprima.Ast.Script LoadScript()

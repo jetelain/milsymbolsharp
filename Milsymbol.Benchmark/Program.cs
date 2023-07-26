@@ -12,6 +12,9 @@ namespace Milsymbol.Benchmark
 
             var builder = new App6dSymbolIdBuilder();
 
+            // + IsHeadquarters true/false
+            // + App6dStatus Present/Planned
+
             var sw = Stopwatch.StartNew();
             var count = 0;
             var real = 0;
@@ -22,7 +25,7 @@ namespace Milsymbol.Benchmark
                 {
                     builder.SymbolSet = set.Code;
                     Console.WriteLine(set.Code);
-                    foreach (var icon in set.MainIcons)
+                    foreach (var icon in set.MainIcons.Concat(new[] { new App6dMainIcon { Code = "000000" } }))
                     {
                         if (icon.IsPointRendering)
                         { 
@@ -32,9 +35,9 @@ namespace Milsymbol.Benchmark
                             if (!ms.IsUnknownSymbol)
                             {
                                 var png = ms.ToPng();
-                                //var dir = Path.Combine("c:\\temp\\app6d", sdic.Substring(0, 4));
-                                //Directory.CreateDirectory(dir);
-                                //File.WriteAllBytes(Path.Combine(dir, $"{sdic.Substring(4)}.png"), png);
+                                var dir = Path.Combine("c:\\temp\\app6d", ((int)stdid).ToString(), set.Code);
+                                Directory.CreateDirectory(dir);
+                                File.WriteAllBytes(Path.Combine(dir, $"{icon.Code}.png"), png);
                                 real++;
                             }
                         }
@@ -43,6 +46,7 @@ namespace Milsymbol.Benchmark
                 }
             }
             Console.WriteLine($"{count} symbols, {real} generated, {sw.ElapsedMilliseconds / (double)count} msec per symbol");
+            Console.WriteLine($"{sw.ElapsedMilliseconds} elapsed");
         }
     }
 }
