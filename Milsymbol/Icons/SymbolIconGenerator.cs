@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Esprima;
 using Jint;
 using Jint.Native;
 
@@ -16,18 +15,10 @@ namespace Milsymbol.Icons
         public SymbolIconGenerator(string standard = "APP6")
         {
             engine = new Engine();
-            engine.Execute(LoadScript());
+            engine.Execute(GetEmbeddedScript());
             var ms = engine.GetValue("ms");
             symbolFunction = ms.Get(new JsString("Symbol"));
             engine.Invoke(ms.Get(new JsString("setStandard")), ms, new[] { new JsString(standard) });
-        }
-
-        private static Esprima.Ast.Script LoadScript()
-        {
-            string lib = GetEmbeddedScript();
-            var parser = new JavaScriptParser();
-            var script = parser.ParseScript(lib);
-            return script;
         }
 
         private static string GetEmbeddedScript()
