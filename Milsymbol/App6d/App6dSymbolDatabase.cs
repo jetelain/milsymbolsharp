@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
+﻿using System.Text.Json;
 
-namespace Milsymbol.App6d
+namespace Pmad.Milsymbol.App6d
 {
     public class App6dSymbolDatabase
     {
@@ -22,9 +20,9 @@ namespace Milsymbol.App6d
 
         public static App6dSymbolDatabase LoadEmbedded()
         {
-            using(var stream = typeof(App6dSymbolDatabase).Assembly.GetManifestResourceStream("Milsymbol.App6d.app6d.json"))
+            using(var stream = typeof(App6dSymbolDatabase).Assembly.GetManifestResourceStream("Pmad.Milsymbol.App6d.app6d.json")!)
             {
-                var sets = JsonSerializer.Deserialize<Dictionary<string, App6dSymbolSet>>(stream);
+                var sets = JsonSerializer.Deserialize(stream, App6dSymbolDatabaseContext.Default.DictionaryStringApp6dSymbolSet)!;
 
                 return new App6dSymbolDatabase(sets);
             }

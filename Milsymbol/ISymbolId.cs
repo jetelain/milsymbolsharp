@@ -1,4 +1,4 @@
-﻿namespace Milsymbol
+﻿namespace Pmad.Milsymbol
 {
     public interface ISymbolId
     {

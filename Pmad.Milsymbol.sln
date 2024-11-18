@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Milsymbol", "Milsymbol\Milsymbol.csproj", "{F8ABDC18-7CF7-4AFE-96AD-0E0A66CB9796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Milsymbol", "Milsymbol\Pmad.Milsymbol.csproj", "{F8ABDC18-7CF7-4AFE-96AD-0E0A66CB9796}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Milsymbol.Test", "Milsymbol.Test\Milsymbol.Test.csproj", "{8C217C66-125B-441F-9FC5-EAAAB8A43EF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Milsymbol.Test", "Milsymbol.Test\Pmad.Milsymbol.Test.csproj", "{8C217C66-125B-441F-9FC5-EAAAB8A43EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Milsymbol.Benchmark", "Milsymbol.Benchmark\Milsymbol.Benchmark.csproj", "{F59830D6-E45B-47A7-A5CC-633776A3320A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Milsymbol.Benchmark", "Milsymbol.Benchmark\Pmad.Milsymbol.Benchmark.csproj", "{F59830D6-E45B-47A7-A5CC-633776A3320A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

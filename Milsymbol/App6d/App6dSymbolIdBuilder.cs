@@ -2,7 +2,7 @@
 using System.Text;
 using Jint.Native;
 
-namespace Milsymbol.App6d
+namespace Pmad.Milsymbol.App6d
 {
     public class App6dSymbolIdBuilder : IApp6dSymbolId
     {

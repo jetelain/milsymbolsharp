@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Milsymbol.App6d
+namespace Pmad.Milsymbol.App6d
 {
     public class App6dSymbolId : IApp6dSymbolId, ISymbolId
     {

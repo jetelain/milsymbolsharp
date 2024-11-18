@@ -1,6 +1,6 @@
-﻿using Milsymbol.App6d;
+﻿using Pmad.Milsymbol.App6d;
 
-namespace Milsymbol.Test.App6d
+namespace Pmad.Milsymbol.Test.App6d
 {
     public class App6dSymbolIdTest
     {

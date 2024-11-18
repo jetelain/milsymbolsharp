@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using Milsymbol.App6d;
-using Milsymbol.Icons;
+using Pmad.Milsymbol.App6d;
+using Pmad.Milsymbol.Icons;
 
-namespace Milsymbol.Benchmark
+namespace Pmad.Milsymbol.Benchmark
 {
     internal class Program
     {

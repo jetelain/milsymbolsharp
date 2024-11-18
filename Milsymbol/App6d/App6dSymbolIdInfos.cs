@@ -1,17 +1,15 @@
-﻿using System.Linq;
-
-namespace Milsymbol.App6d
+﻿namespace Pmad.Milsymbol.App6d
 {
     public class App6dSymbolIdInfos
     {
         private readonly App6dSymbolId symbol;
         private readonly App6dSymbolSet set;
-        private readonly App6dMainIcon icon;
-        private readonly App6dModifier1 mod1;
-        private readonly App6dModifier2 mod2;
-        private readonly App6dAmplifier size;
+        private readonly App6dMainIcon? icon;
+        private readonly App6dModifier1? mod1;
+        private readonly App6dModifier2? mod2;
+        private readonly App6dAmplifier? size;
 
-        public App6dSymbolIdInfos(App6dSymbolId symbol, App6dSymbolSet set, App6dMainIcon icon, App6dModifier1 mod1, App6dModifier2 mod2, App6dAmplifier size)
+        public App6dSymbolIdInfos(App6dSymbolId symbol, App6dSymbolSet set, App6dMainIcon? icon, App6dModifier1? mod1, App6dModifier2? mod2, App6dAmplifier? size)
         {
             this.symbol = symbol;
             this.set = set;
@@ -47,16 +45,16 @@ namespace Milsymbol.App6d
 
         public string SymbolSet => set.Name;
 
-        public string Entity => icon?.Entity;
+        public string? Entity => icon?.Entity;
 
-        public string EntityType => icon?.EntityType;
+        public string? EntityType => icon?.EntityType;
 
-        public string EntitySubtype => icon?.EntitySubtype;
+        public string? EntitySubtype => icon?.EntitySubtype;
 
-        public string FirstModifier => mod1?.FirstModifier;
+        public string? FirstModifier => mod1?.FirstModifier;
 
-        public string SecondModifier => mod2?.SecondModifier;
+        public string? SecondModifier => mod2?.SecondModifier;
 
-        public string Size => size?.Name;
+        public string? Size => size?.Name;
     }
 }

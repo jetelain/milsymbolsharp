@@ -1,6 +1,6 @@
-﻿using Milsymbol.Icons;
+﻿using Pmad.Milsymbol.Icons;
 
-namespace Milsymbol.Test.Icons
+namespace Pmad.Milsymbol.Test.Icons
 {
     public class SymbolIconGeneratorTest
     {

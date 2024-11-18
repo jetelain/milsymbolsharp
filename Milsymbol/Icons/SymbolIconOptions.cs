@@ -1,7 +1,7 @@
 ﻿using Jint;
 using Jint.Native;
 
-namespace Milsymbol.Icons
+namespace Pmad.Milsymbol.Icons
 {
     public class SymbolIconOptions
     {
@@ -9,7 +9,7 @@ namespace Milsymbol.Icons
 
         public double? StrokeWidth { get; set; }
 
-        public string UniqueDesignation { get; set; }
+        public string? UniqueDesignation { get; set; }
 
         internal JsValue ToJsObject(Engine engine)
         {

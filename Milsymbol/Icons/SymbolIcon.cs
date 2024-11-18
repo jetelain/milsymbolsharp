@@ -3,7 +3,7 @@ using System.IO;
 using SkiaSharp;
 using Svg.Skia;
 
-namespace Milsymbol.Icons
+namespace Pmad.Milsymbol.Icons
 {
     public class SymbolIcon
     {

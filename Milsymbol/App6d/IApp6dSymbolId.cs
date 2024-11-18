@@ -1,4 +1,4 @@
-﻿namespace Milsymbol.App6d
+﻿namespace Pmad.Milsymbol.App6d
 {
     public interface IApp6dSymbolId
     {

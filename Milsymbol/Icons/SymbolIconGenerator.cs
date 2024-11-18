@@ -5,7 +5,7 @@ using System.Linq;
 using Jint;
 using Jint.Native;
 
-namespace Milsymbol.Icons
+namespace Pmad.Milsymbol.Icons
 {
     public class SymbolIconGenerator : IDisposable
     {
@@ -24,7 +24,7 @@ namespace Milsymbol.Icons
         private static string GetEmbeddedScript()
         {
             string lib;
-            using (var reader = new StreamReader(typeof(SymbolIconGenerator).Assembly.GetManifestResourceStream("Milsymbol.Icons.milsymbol.js") ?? throw new InvalidOperationException()))
+            using (var reader = new StreamReader(typeof(SymbolIconGenerator).Assembly.GetManifestResourceStream("Pmad.Milsymbol.Icons.milsymbol.js") ?? throw new InvalidOperationException()))
             {
                 lib = reader.ReadToEnd();
             }

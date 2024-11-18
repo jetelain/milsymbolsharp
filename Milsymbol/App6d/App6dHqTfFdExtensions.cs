@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Milsymbol.App6d
+namespace Pmad.Milsymbol.App6d
 {
     public static class App6dHqTfFdExtensions
     {
