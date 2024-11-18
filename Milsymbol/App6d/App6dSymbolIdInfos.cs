@@ -32,9 +32,9 @@
         public static App6dSymbolIdInfos From(App6dSymbolId symbol, App6dSymbolDatabase db)
         {
             var set = db.GetSymbolSet(symbol.SymbolSet);
-            var icon = set.MainIcons.FirstOrDefault(i => i.Code == symbol.Icon);
-            var mod1 = set.Modifiers1.FirstOrDefault(i => i.Code == symbol.Modifier1);
-            var mod2 = set.Modifiers2.FirstOrDefault(i => i.Code == symbol.Modifier2);
+            var icon = set.MainIcons?.FirstOrDefault(i => i.Code == symbol.Icon);
+            var mod1 = set.Modifiers1?.FirstOrDefault(i => i.Code == symbol.Modifier1);
+            var mod2 = set.Modifiers2?.FirstOrDefault(i => i.Code == symbol.Modifier2);
             var size = set.Amplifiers.FirstOrDefault(i => i.Code == symbol.Amplifier);
             return new App6dSymbolIdInfos(symbol, set, icon, mod1, mod2, size);
         }
@@ -43,7 +43,7 @@
 
         public App6dStandardIdentity StandardIdentity2 => symbol.StandardIdentity;
 
-        public string SymbolSet => set.Name;
+        public string SymbolSet => set.Name ?? string.Empty;
 
         public string? Entity => icon?.Entity;
 
