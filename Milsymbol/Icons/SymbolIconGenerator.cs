@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Jint;
+﻿using Jint;
 using Jint.Native;
 
 namespace Pmad.Milsymbol.Icons
@@ -12,13 +8,25 @@ namespace Pmad.Milsymbol.Icons
         private readonly Engine engine;
         private readonly JsValue symbolFunction;
 
-        public SymbolIconGenerator(string standard = "APP6")
+        public SymbolIconGenerator(SymbolStandard standard = SymbolStandard.App6d)
         {
             engine = new Engine();
             engine.Execute(GetEmbeddedScript());
             var ms = engine.GetValue("ms");
             symbolFunction = ms.Get(new JsString("Symbol"));
-            engine.Invoke(ms.Get(new JsString("setStandard")), ms, new[] { new JsString(standard) });
+            engine.Invoke(ms.Get(new JsString("setStandard")), ms, new[] { new JsString(GetStandard(standard)) });
+        }
+
+        private static string GetStandard(SymbolStandard standard)
+        {
+            switch (standard)
+            {
+                case SymbolStandard.App6d:
+                    return "APP6";
+
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         private static string GetEmbeddedScript()
@@ -29,6 +37,16 @@ namespace Pmad.Milsymbol.Icons
                 lib = reader.ReadToEnd();
             }
             return lib;
+        }
+
+        /// <summary>
+        /// Generate a symbol from a symbol identification coding with default options
+        /// </summary>
+        /// <param name="sidc">Symbol identification coding</param>
+        /// <returns></returns>
+        public SymbolIcon Generate(string sidc)
+        {
+            return Generate(sidc, new SymbolIconOptions());
         }
 
         /// <summary>

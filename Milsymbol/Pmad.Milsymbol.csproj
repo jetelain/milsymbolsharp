@@ -8,7 +8,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/jetelain/milsymbolsharp</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Description>Military Symbols (APP-6D)</Description>
+		<Description>Military symbol icon render, and symbol identification coding tools for NATO APP-6D.</Description>
 		<IsAotCompatible>true</IsAotCompatible>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<IncludeSymbols>true</IncludeSymbols>

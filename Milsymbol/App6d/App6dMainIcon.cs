@@ -18,7 +18,7 @@ namespace Pmad.Milsymbol.App6d
         public string? EntitySubtype { get; set; }
 
         [JsonPropertyName("Code")]
-        public string? Code { get; set; }
+        public required string Code { get; set; }
 
         [JsonPropertyName("Remarks")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
