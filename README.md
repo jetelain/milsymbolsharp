@@ -1,5 +1,7 @@
 # Milsymbol for C#
 
+[![NuGet](https://img.shields.io/nuget/v/Pmad.Milsymbol?logo=nuget)](https://www.nuget.org/packages/Pmad.Milsymbol/) 
+
 ## Symbol Icon rendering
 
 Simple wrapper around [milsymbol](https://github.com/spatialillusions/milsymbol) with a Javascript interpreter to allow server usage.
