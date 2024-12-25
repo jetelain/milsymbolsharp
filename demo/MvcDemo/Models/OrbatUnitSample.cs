@@ -6,15 +6,15 @@ namespace MvcDemo.Models
     internal class OrbatUnitSample : IOrbatUnit, IEnumerable<OrbatUnitSample>
     {
 
-        public OrbatUnitSample(string sdic = "30031000131211050000", string? uid = null, string? common = null) 
+        public OrbatUnitSample(string sdic = "30031000131211050000", string? uid = null, string? common = null, string? higher = null) 
         {
-
             Sdic = sdic;
             UniqueDesignation = uid;
             CommonIdentifier = common;
+            HigherFormation = higher;
         }
 
-        public string Sdic { get; set; } = "30031000131211050000";
+        public string Sdic { get; set; }
 
         public string? UniqueDesignation { get; set; }
 
@@ -25,10 +25,6 @@ namespace MvcDemo.Models
         public List<OrbatUnitSample> SubUnits { get;} = new List<OrbatUnitSample>();
 
         IEnumerable<IOrbatUnit>? IOrbatUnit.SubUnits => SubUnits;
-
-        string? IOrbatUnit.HigherFormation => CommonIdentifier?.Split('-')[1];
-
-        string? IOrbatUnit.CommonIdentifier => CommonIdentifier?.Split('-')[0];
 
         string? IOrbatUnit.AdditionalInformation => null;
 

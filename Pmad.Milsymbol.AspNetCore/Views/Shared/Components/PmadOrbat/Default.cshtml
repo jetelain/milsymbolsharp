@@ -1,50 +1,51 @@
-@model  Pmad.Milsymbol.AspNetCore.Orbat.OrbatModel
-
-<div class="orbat-root">
-    <div class="orbat-root-content">
-        <a href="@Model.RootUnit.Href">@Html.Raw(Model.RootUnit.SymbolIconSvg)</a>
-    </div>
-    <div class="orbat-root-decorator">
-    </div>
-</div>
+@model Pmad.Milsymbol.AspNetCore.Orbat.OrbatModel
 @{
     var columns = Model.RootUnit.SubUnits;
 }
-<div class="orbat-cols orbat-cols-@columns.Count">
-    @for (var col = 0; col < columns.Count; ++col)
-    {
-        var level2 = columns[col];
-        var position = "mid";
-        if (col == 0)
-        {
-            position = "sta";
-        }
-        else if (col == columns.Count - 1)
-        {
-            position = "end";
-        }
-        <div class="orbat-col orbat-col-@position">
-            <div class="orbat-col-decorator">
-                <div></div>
-            </div>
-            <div class="orbat-col-header">
-                <a href="@level2.Href">@Html.Raw(level2.SymbolIconSvg)</a>
-            </div>
-            @{
-                var rows = level2.SubUnits;
-            }
-            @for (var row = 0; row < rows.Count; ++row)
-            {
-                var level3 = rows[row];
-                <div class="orbat-row @((row == rows.Count - 1) ? "orbat-row-last":"orbat-row-mid")">
-                    <div class="orbat-row-decorator">
-                        <div></div>
-                    </div>
-                    <div class="orbat-row-content">
-                        <a href="@level3.Href">@Html.Raw(level3.SymbolIconSvg)</a>
-                    </div>
-                </div>
-            }
+<div class="pmad-orbat orbat-cols-@columns.Count">
+    <div class="orbat-root">
+        <div class="orbat-root-content">
+            <a href="@Model.RootUnit.Href">@Html.Raw(Model.RootUnit.SymbolIconSvg)</a>
         </div>
-    }
+        <div class="orbat-root-decorator">
+        </div>
+    </div>
+    <div class="orbat-cols">
+        @for (var col = 0; col < columns.Count; ++col)
+        {
+            var level2 = columns[col];
+            var position = "mid";
+            if (col == 0)
+            {
+                position = "sta";
+            }
+            else if (col == columns.Count - 1)
+            {
+                position = "end";
+            }
+            <div class="orbat-col orbat-col-@position">
+                <div class="orbat-col-decorator">
+                    <div></div>
+                </div>
+                <div class="orbat-col-header">
+                    <a href="@level2.Href">@Html.Raw(level2.SymbolIconSvg)</a>
+                </div>
+                @{
+                    var rows = level2.SubUnits;
+                }
+                @for (var row = 0; row < rows.Count; ++row)
+                {
+                    var level3 = rows[row];
+                    <div class="orbat-row @((row == rows.Count - 1) ? "orbat-row-last":"orbat-row-mid")">
+                        <div class="orbat-row-decorator">
+                            <div></div>
+                        </div>
+                        <div class="orbat-row-content">
+                            <a href="@level3.Href">@Html.Raw(level3.SymbolIconSvg)</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
 </div>
