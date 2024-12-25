@@ -1,0 +1,164 @@
+/*.sname {
+    width: 2em;
+    display: inline-block;
+    text-align: left;
+}
+
+.gname {
+    width: 5.5em;
+    display: inline-block;
+    text-align: right;
+}
+
+.orbat-sline {
+    height: 1.5em;
+}
+
+.orbat-sline-1 {
+    border-top: 1px solid black;
+    height: 1.5em;
+    width: calc(1.75em + 50%);
+    display: inline-block;
+}
+
+.orbat-sline-2 {
+    height: 1.5em;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    width: calc(50% - 1.75em);
+    display: inline-block;
+}
+
+.orbat-sline.orbat-sline-first .orbat-sline-1 {
+    border-top: 1px solid transparent;
+}
+
+.orbat-sline.orbat-sline-last .orbat-sline-2 {
+    border-top: 1px solid transparent;
+}
+
+.orbat-caline {
+    right: 0px;
+    top: 25px;
+    position: absolute;
+    background: black;
+    width: calc(50% - 4em - 25px);
+    height: 1px;
+}
+*/
+
+
+div.orbat-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+    div.orbat-root div.orbat-root-content {
+    }
+    div.orbat-root div.orbat-root-decorator {
+        border-left: 0.2em solid black;
+        height: 1em;
+    }
+
+div.orbat-cols-6 div.orbat-col {
+    width: 16.6%;
+}
+
+div.orbat-cols-5 div.orbat-col {
+    width: 20%;
+}
+
+div.orbat-cols-4 div.orbat-col {
+    width: 25%;
+}
+
+div.orbat-cols-3 div.orbat-col {
+    width: 33.3%;
+}
+
+div.orbat-cols-2 div.orbat-col {
+    width: 50%;
+}
+
+div.orbat-cols-1 div.orbat-col {
+    width: 100%;
+}
+
+div.orbat-cols {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+    div.orbat-cols div.orbat-col {
+        flex: 1 0 0%;
+    }
+
+        div.orbat-cols div.orbat-col div.orbat-col-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div.orbat-cols div.orbat-col.orbat-col-mid div.orbat-col-decorator {
+            height: 1em;
+            border-top: 0.2em solid black;
+        }
+
+            div.orbat-cols div.orbat-col.orbat-col-mid div.orbat-col-decorator div {
+                margin-right: calc(50% - 0.1em);
+                width: calc(50% + 0.1em);
+                border-right: 0.2em solid black;
+                height: 0.8em;
+            }
+
+        div.orbat-cols div.orbat-col.orbat-col-sta div.orbat-col-decorator {
+            margin-left: calc(50% - 0.1em);
+            width: calc(50% + 0.1em);
+            border-top: 0.2em solid black;
+            border-left: 0.2em solid black;
+            height: 1em;
+        }
+        div.orbat-cols div.orbat-col.orbat-col-end div.orbat-col-decorator {
+            margin-right: calc(50% - 0.1em);
+            width: calc(50% + 0.1em);
+            border-top: 0.2em solid black;
+            border-right: 0.2em solid black;
+            height: 1em;
+        }
+
+        div.orbat-cols div.orbat-col div.orbat-col-header {
+            padding: 0.2em 0 0 0;
+        }
+
+div.orbat-row {
+    margin-left: calc(50% - 1em);
+    display: flex;
+}
+
+    div.orbat-row div.orbat-row-decorator {
+        width: 1em;
+        border-left: 0.2em solid black;
+    }
+
+    div.orbat-row div.orbat-row-decorator div {
+        width: 0.8em;
+    }
+
+    div.orbat-row.orbat-row-mid div.orbat-row-decorator div {
+        height: 1.5em;
+        border-bottom: 0.2em solid black;
+    }
+
+    div.orbat-row.orbat-row-last div.orbat-row-decorator {
+        height: 1.5em;
+        width: 1em;
+        border-left: 0.2em solid black;
+        border-bottom: 0.2em solid black;
+    }
+    div.orbat-row div.orbat-row-content {
+        padding: 0.3em 0 0.1em 0;
+    }

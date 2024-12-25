@@ -11,6 +11,12 @@ namespace Pmad.Milsymbol.Icons
 
         public string? UniqueDesignation { get; set; }
 
+        public string? AdditionalInformation { get; set; }
+
+        public string? HigherFormation { get; set; }
+
+        public string? CommonIdentifier { get; set; }
+
         internal JsValue ToJsObject(Engine engine)
         {
             var obj = new JsObject(engine);
@@ -25,6 +31,18 @@ namespace Pmad.Milsymbol.Icons
             if (UniqueDesignation != null)
             {
                 obj.FastSetDataProperty("uniqueDesignation", new JsString(UniqueDesignation));
+            }
+            if (AdditionalInformation != null)
+            {
+                obj.FastSetDataProperty("additionalInformation", new JsString(AdditionalInformation));
+            }
+            if (HigherFormation != null)
+            {
+                obj.FastSetDataProperty("higherFormation", new JsString(HigherFormation));
+            }
+            if (CommonIdentifier != null)
+            {
+                obj.FastSetDataProperty("commonIdentifier", new JsString(CommonIdentifier));
             }
             return obj;
         }
