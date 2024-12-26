@@ -5,7 +5,7 @@
 <div class="pmad-orbat orbat-cols-@columns.Count">
     <div class="orbat-root">
         <div class="orbat-root-content">
-            <a href="@Model.RootUnit.Href">@Html.Raw(Model.RootUnit.SymbolIconSvg)</a>
+            <a href="@Model.RootUnit.Href" title="@Model.RootUnit.Title">@Html.Raw(Model.RootUnit.SymbolIconSvg)</a>
         </div>
         <div class="orbat-root-decorator">
         </div>
@@ -28,7 +28,7 @@
                     <div></div>
                 </div>
                 <div class="orbat-col-header">
-                    <a href="@level2.Href">@Html.Raw(level2.SymbolIconSvg)</a>
+                    <a href="@level2.Href" title="@level2.Title">@Html.Raw(level2.SymbolIconSvg)</a>
                 </div>
                 @{
                     var rows = level2.SubUnits;
@@ -41,7 +41,7 @@
                             <div></div>
                         </div>
                         <div class="orbat-row-content">
-                            <a href="@level3.Href">@Html.Raw(level3.SymbolIconSvg)</a>
+                            <a href="@level3.Href" title="@level3.Title">@Html.Raw(level3.SymbolIconSvg)</a>
                         </div>
                     </div>
                 }

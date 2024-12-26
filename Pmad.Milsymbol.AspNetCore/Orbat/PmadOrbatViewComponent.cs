@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Pmad.Milsymbol.Icons;
@@ -9,18 +7,21 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
 {
     public class PmadOrbatViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(IOrbatUnit rootUnit)
+        public IViewComponentResult Invoke(IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
         {
             var generator = new SymbolIconGenerator();
             var model = new OrbatModel
             {
-                RootUnit = CreateViewModel(generator, rootUnit)
+                RootUnit = CreateViewModel(generator, rootUnit, getTitle, getHref)
             };
 
+            // Level 1 / Root
             MakeUniformViewBoxes([model.RootUnit.SymbolIcon.Root!], true, 0.5);
 
+            // Level 2 / Columns headers
             MakeUniformViewBoxes(model.RootUnit.SubUnits.Select(unit => unit.SymbolIcon.Root!), true, 0.4);
 
+            // Level 3
             MakeUniformViewBoxes(model.RootUnit.SubUnits.SelectMany(unit => unit.SubUnits).Select(unit => unit.SymbolIcon.Root!), false, 0.3);
 
             return View(model);
@@ -78,12 +79,11 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
             }
         }
 
-        private OrbatUnitModel CreateViewModel(SymbolIconGenerator generator, IOrbatUnit rootUnit)
+        private OrbatUnitModel CreateViewModel(SymbolIconGenerator generator, IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
         {
             var icon = generator.Generate(rootUnit.Sdic, new SymbolIconOptions()
             {
                 UniqueDesignation = rootUnit.UniqueDesignation,
-                AdditionalInformation = rootUnit.AdditionalInformation,
                 CommonIdentifier = rootUnit.CommonIdentifier,
                 HigherFormation = rootUnit.HigherFormation
             });
@@ -91,8 +91,9 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
             return new OrbatUnitModel()
             {
                 SymbolIcon = XDocument.Parse(icon.Svg),
-                SubUnits = rootUnit.SubUnits?.Select(subUnit => CreateViewModel(generator, subUnit)).ToList() ?? new List<OrbatUnitModel>(),
-                Initial = rootUnit
+                SubUnits = rootUnit.SubUnits?.Select(subUnit => CreateViewModel(generator, subUnit, getTitle, getHref)).ToList() ?? new List<OrbatUnitModel>(),
+                Href = (rootUnit as IOrbatUnitViewModel)?.Href ?? getHref?.Invoke(rootUnit),
+                Title = (rootUnit as IOrbatUnitViewModel)?.Title ?? getTitle?.Invoke(rootUnit)
             };
         }
 

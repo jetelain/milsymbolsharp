@@ -8,10 +8,10 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
 
         public string SymbolIconSvg => SymbolIcon.ToString(SaveOptions.DisableFormatting);
 
-        public string? Href => Initial.Href;
+        public required string? Href { get; set; }
+
+        public required string? Title { get; set; }
 
         public required List<OrbatUnitModel> SubUnits { get; set; }
-
-        public required IOrbatUnit Initial { get; set; }
     }
 }
