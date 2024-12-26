@@ -17,7 +17,14 @@
             var position = "mid";
             if (col == 0)
             {
-                position = "sta";
+                if (columns.Count == 1)
+                {
+                    position = "single";
+                }
+                else
+                {
+                    position = "sta";
+                }
             }
             else if (col == columns.Count - 1)
             {
