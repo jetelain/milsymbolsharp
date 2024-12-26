@@ -1,18 +1,26 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Pmad.Milsymbol.AspNetCore.Services;
 using Pmad.Milsymbol.Icons;
 
 namespace Pmad.Milsymbol.AspNetCore.Orbat
 {
     public class PmadOrbatViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
+        private readonly IApp6dSymbolGenerator _symbolGenerator;
+
+        public PmadOrbatViewComponent(IApp6dSymbolGenerator symbolGenerator)
         {
-            var generator = new SymbolIconGenerator();
+            _symbolGenerator = symbolGenerator;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync(IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
+        {
             var model = new OrbatModel
             {
-                RootUnit = CreateViewModel(generator, rootUnit, getTitle, getHref)
+                RootUnit = await CreateViewModelAsync(rootUnit, getTitle, getHref)
             };
 
             // Level 1 / Root
@@ -23,7 +31,7 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
 
             // Level 3
             MakeUniformViewBoxes(model.RootUnit.SubUnits.SelectMany(unit => unit.SubUnits).Select(unit => unit.SymbolIcon.Root!), false, 0.3);
-
+            
             return View(model);
         }
 
@@ -64,19 +72,23 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
             }
         }
 
-        private OrbatUnitModel CreateViewModel(SymbolIconGenerator generator, IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
+        private async Task<OrbatUnitModel> CreateViewModelAsync(IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
         {
-            var icon = generator.Generate(rootUnit.Sdic, new SymbolIconOptions()
+            var icon = await _symbolGenerator.GenerateAsync(rootUnit.Sdic, new SymbolIconOptions()
             {
                 UniqueDesignation = rootUnit.UniqueDesignation,
                 CommonIdentifier = rootUnit.CommonIdentifier,
                 HigherFormation = rootUnit.HigherFormation
             });
 
+            var subUnits = rootUnit.SubUnits != null
+                ? await Task.WhenAll(rootUnit.SubUnits.Select(subUnit => CreateViewModelAsync(subUnit, getTitle, getHref)))
+                : Array.Empty<OrbatUnitModel>();
+
             return new OrbatUnitModel()
             {
                 SymbolIcon = XDocument.Parse(icon.Svg),
-                SubUnits = rootUnit.SubUnits?.Select(subUnit => CreateViewModel(generator, subUnit, getTitle, getHref)).ToList() ?? new List<OrbatUnitModel>(),
+                SubUnits = subUnits.ToList(),
                 Href = getHref?.Invoke(rootUnit) ?? (rootUnit as IOrbatUnitViewModel)?.Href,
                 Title = getTitle?.Invoke(rootUnit) ?? (rootUnit as IOrbatUnitViewModel)?.Title
             };

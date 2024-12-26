@@ -2,9 +2,11 @@
 
 ## Setup
 
-In `Program.cs`, on the ServiceCollection, add the Milsymbol components.
+In `Program.cs`, on the Mvc Builder, add the Milsymbol components.
 ```csharp
-builder.Services.AddMilsymbolMvcComponents();
+builder.Services
+    .AddControllersWithViews()
+        .AddMilsymbolMvcComponents();
 ```
 
 In `Program.cs`, on the ApplicationBuilder, add the Milsymbol static files middleware.

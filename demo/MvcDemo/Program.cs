@@ -9,8 +9,9 @@ namespace MvcDemo
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddMilsymbolMvcComponents();
+            builder.Services
+                .AddControllersWithViews()
+                    .AddMilsymbolMvcComponents();
 
             var app = builder.Build();
 
