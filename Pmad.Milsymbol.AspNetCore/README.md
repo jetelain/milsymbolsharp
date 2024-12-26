@@ -4,7 +4,7 @@
 
 In `Program.cs`, on the ServiceCollection, add the Milsymbol components.
 ```csharp
-builder.Services.AddMilsymbolComponents();
+builder.Services.AddMilsymbolMvcComponents();
 ```
 
 In `Program.cs`, on the ApplicationBuilder, add the Milsymbol static files middleware.

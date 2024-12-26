@@ -10,7 +10,7 @@ namespace MvcDemo
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddMilsymbolComponents();
+            builder.Services.AddMilsymbolMvcComponents();
 
             var app = builder.Build();
 

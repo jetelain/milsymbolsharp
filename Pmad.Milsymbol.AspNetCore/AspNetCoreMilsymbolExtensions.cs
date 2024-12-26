@@ -6,15 +6,15 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Pmad.Milsymbol.AspNetCore
 {
-    public static class Setup
+    public static class AspNetCoreMilsymbolExtensions
     {
         private static Assembly MilsymbolAspNetCoreAssembly 
-            => typeof(Setup).Assembly;
+            => typeof(AspNetCoreMilsymbolExtensions).Assembly;
 
         public static ManifestEmbeddedFileProvider MilsymbolStaticFiles
             => new ManifestEmbeddedFileProvider(MilsymbolAspNetCoreAssembly, "wwwroot");
 
-        public static void AddMilsymbolComponents(this IServiceCollection services)
+        public static void AddMilsymbolMvcComponents(this IServiceCollection services)
         {
             services.AddMvc().ConfigureApplicationPartManager(apm =>
             {

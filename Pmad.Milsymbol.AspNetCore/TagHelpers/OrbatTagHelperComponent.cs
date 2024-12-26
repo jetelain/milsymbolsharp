@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Pmad.Milsymbol.AspNetCore.TagHelpers
 {
@@ -16,9 +14,13 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
         {
             if (string.Equals(context.TagName, "head", StringComparison.OrdinalIgnoreCase))
             {
-                var file = Setup.MilsymbolStaticFiles.GetFileInfo("lib/pmad-milsymbol/css/orbat.css");
-
-                output.PostContent.AppendHtml($"<link rel=\"stylesheet\" href=\"/lib/pmad-milsymbol/css/orbat.css?{file.LastModified.Ticks}\" />");
+#if DEBUG
+                var file = AspNetCoreMilsymbolExtensions.MilsymbolStaticFiles.GetFileInfo("lib/pmad-milsymbol/css/orbat.css");
+                var version = file.LastModified.Ticks.ToString();
+#else
+                var version = ThisAssembly.AssemblyFileVersion;
+#endif
+                output.PostContent.AppendHtml($"<link rel=\"stylesheet\" href=\"/lib/pmad-milsymbol/css/orbat.css?v={version}\" />");
             }
             return Task.CompletedTask;
         }

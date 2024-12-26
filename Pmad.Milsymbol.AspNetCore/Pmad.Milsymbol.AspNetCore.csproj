@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="..\Milsymbol\Icons\milsymbol.js" Link="wwwroot\lib\pmad-milsymbol\js\milsymbol.js" />
+		<EmbeddedResource Include="..\Milsymbol\App6d\app6d.json" Link="wwwroot\lib\pmad-milsymbol\js\app6d.json" />
 		<EmbeddedResource Include="wwwroot\lib\pmad-milsymbol\css\orbat.css" />
 	</ItemGroup>
 
