@@ -64,21 +64,6 @@ namespace Pmad.Milsymbol.AspNetCore.Orbat
             }
         }
 
-        private IEnumerable<OrbatUnitModel> All(OrbatUnitModel model)
-        {
-            yield return model;
-            if (model.SubUnits != null)
-            {
-                foreach (var subUnit in model.SubUnits)
-                {
-                    foreach (var subSubUnit in All(subUnit))
-                    {
-                        yield return subSubUnit;
-                    }
-                }
-            }
-        }
-
         private OrbatUnitModel CreateViewModel(SymbolIconGenerator generator, IOrbatUnit rootUnit, Func<IOrbatUnit, string?>? getTitle, Func<IOrbatUnit, string?>? getHref)
         {
             var icon = generator.Generate(rootUnit.Sdic, new SymbolIconOptions()
