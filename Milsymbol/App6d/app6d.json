@@ -4357,6 +4357,7 @@
     "mainIcon": [
       {
         "Entity": "Command and Control Lines",
+        "Geometric Rendering": "Line",
         "Code": "110000",
         "Remarks": "For training or hierarchical purposes only"
       },
@@ -4402,6 +4403,7 @@
       },
       {
         "Entity": "Command and Control Areas",
+        "Geometric Rendering": "Area",
         "Code": "120000",
         "Remarks": "For training or hierarchical purposes only"
       },
@@ -4787,6 +4789,7 @@
       },
       {
         "Entity": "Manoeuvre Areas",
+        "Geometric Rendering": "Area",
         "Code": "150000",
         "Remarks": "For training or hierarchical purposes only "
       },
@@ -4849,11 +4852,6 @@
         "Entity Subtype": "Offset Units",
         "Geometric Rendering": "Area",
         "Code": "150302"
-      },
-      {
-        "Entity": "",
-        "Code": "150400",
-        "Remarks": "Reserved for future use "
       },
       {
         "Entity": "Manoeuvre Areas",
@@ -5085,6 +5083,7 @@
       },
       {
         "Entity": "Manoeuvre Points",
+        "Geometric Rendering": "Point",
         "Code": "160000",
         "Remarks": "For training or hierarchical purposes only"
       },

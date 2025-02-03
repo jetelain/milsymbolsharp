@@ -21,14 +21,24 @@ namespace Pmad.Milsymbol.AspNetCore
             services.TryAddSingleton<IApp6dSymbolGenerator, SharedApp6dSymbolGenerator>();
         }
 
-        public static IMvcBuilder AddMilsymbolMvcComponents(this IMvcBuilder builder)
+        public static IMvcBuilder AddMilsymbolMvcComponents(this IMvcBuilder builder, int boostrapVersion = 5)
         {
+            builder.Services.AddLocalization();
             builder.Services.AddMilsymbolGenerator();
             builder.ConfigureApplicationPartManager(apm =>
             {
                 // Allows Views to be found in the Pmad.Milsymbol.AspNetCore assembly
                 apm.ApplicationParts.Add(new CompiledRazorAssemblyPart(MilsymbolAspNetCoreAssembly));
             });
+            builder.AddViewLocalization();
+            if (boostrapVersion == 5)
+            {
+                builder.Services.TryAddSingleton<IDesignSystemClasses, Boostrap5>();
+            }
+            else
+            {
+                builder.Services.TryAddSingleton<IDesignSystemClasses, Boostrap4>();
+            }
             return builder;
         }
 

@@ -14,7 +14,7 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
         private readonly IViewComponentHelper _viewComponentHelper;
         private readonly ITagHelperComponentManager _manager;
         private readonly IUrlHelperFactory _urlHelperFactory;
-        private IUrlHelper _url;
+        private IUrlHelper? _url;
 
         public OrbatTagHelper(ITagHelperComponentManager manager, IViewComponentHelper viewComponentHelper, IUrlHelperFactory urlHelperFactory)
         {
@@ -72,10 +72,7 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
                 output.Content.SetHtmlContent(content);
             }
 
-            if (!_manager.Components.OfType<OrbatTagHelperComponent>().Any())
-            {
-                _manager.Components.Add(new OrbatTagHelperComponent());
-            }
+            AssetComponent.Get(_manager).AddStylesheet("lib/pmad-milsymbol/css/orbat.css");
         }
     }
 }
