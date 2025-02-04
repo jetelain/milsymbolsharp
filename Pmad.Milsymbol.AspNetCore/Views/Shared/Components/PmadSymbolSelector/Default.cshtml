@@ -1,14 +1,38 @@
-@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Pmad.Milsymbol.AspNetCore
 @model Pmad.Milsymbol.AspNetCore.SymbolSelector.SymbolSelectorModel
 @inject IHtmlLocalizer<PmadMilsymbolLabels> Localizer
 @inject IDesignSystemClasses DesignSystem
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Pmad.Milsymbol.AspNetCore
 
 <div class="pmad-symbol-selector" data-base-id="@Model.BaseId">
-    <div class="bg-light text-center mb-1 p-1">
-        <input id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" type="text" />
-        <div id="@(Model.BaseId)-preview"></div>
+    <div class="mb-1 p-1">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="Symbol Identifier Coding" />
+                    <pmad-wrap-div class="@DesignSystem.InputGroupAppend">
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark">&#x2605; @Localizer["Bookmark"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-code" type="button">@Localizer["Copy code"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-image" type="button">@Localizer["Copy image"]</button>
+                    </pmad-wrap-div>
+                </div>
+                <div id="@(Model.BaseId)-preview" class="preview-box bg-light p-2 mt-1"></div>
+            </div>
+            <div class="col-md-3">
+                <div>
+                    @Localizer["Bookmarks"]
+                </div>
+                <div id="@(Model.BaseId)-bookmarks" class="row row-cols-3 g-0 no-gutters">
+                    <div class="col p-1 d-none">
+                        <button class="btn btn-outline-secondary w-100 h-100">
+                            #
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="@DesignSystem.FormRow">
         <div class="form-group col-md-3">

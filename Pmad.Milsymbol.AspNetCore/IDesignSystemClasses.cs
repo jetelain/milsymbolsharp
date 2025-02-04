@@ -10,5 +10,6 @@ namespace Pmad.Milsymbol.AspNetCore
     {
         string FormRow { get; }
         string ControlLabel { get; }
+        string? InputGroupAppend { get; }
     }
 }

@@ -3,6 +3,7 @@
     class Symbol {
         constructor(sidc: string, options: SymbolOptions);
         asSVG(): string;
+        asCanvas(): HTMLCanvasElement;
     }
     interface SymbolOptions {
         size?: number;

@@ -15,13 +15,49 @@ interface ModifierOrAmplifierJson {
     label: string;
 }
 
-//document.addEventListener("load", function () {
+class PmadMilsymbolSelectorOptions implements SetPmadMilsymbolSelectorOptions {
+    getSymbolOptions(): ms.SymbolOptions { return {}; }
+}
 
-    ms.setStandard("APP6");
+interface SetPmadMilsymbolSelectorOptions {
+    getSymbolOptions?(): ms.SymbolOptions;
+}
+interface PmadMilsymbolSelectorInstance {
+    updatePreview();
+}
 
-    document.querySelectorAll("div.pmad-symbol-selector").forEach(element => {
+class PmadMilsymbolSelector {
+    private static _options: { [id: string]: PmadMilsymbolSelectorOptions; } = {};
+    private static _instances: { [id: string]: PmadMilsymbolSelectorInstance; } = {};
 
-        const baseId = element.getAttribute("data-base-id");
+    static setOptions(id: string, setOptions: SetPmadMilsymbolSelectorOptions) {
+        Object.assign(PmadMilsymbolSelector.getOptions(id), setOptions);
+    }
+
+    static getOptions(id: string): PmadMilsymbolSelectorOptions {
+        let options = PmadMilsymbolSelector._options[id];
+        if (!options) {
+            options = new PmadMilsymbolSelectorOptions();
+            PmadMilsymbolSelector._options[id] = options;
+        }
+        return options;
+    }
+
+    static get(id: string): PmadMilsymbolSelectorInstance {
+        return PmadMilsymbolSelector._instances[id];
+    }
+
+    static updatePreview(id?: string) {
+        if (!id) {
+            Object.keys(PmadMilsymbolSelector._instances).forEach(PmadMilsymbolSelector.updatePreview);
+        } else {
+            PmadMilsymbolSelector.get(id)?.updatePreview();
+        }
+    }
+
+    static Initialize(baseId: string) {
+
+        let bookmarkItems = JSON.parse(localStorage.getItem("pmad-milsymbol-bookmarks") ?? "[]") as string[];
 
         const input = document.getElementById(baseId) as HTMLInputElement;
         const preview = document.getElementById(baseId + "-preview") as HTMLDivElement;
@@ -33,12 +69,16 @@ interface ModifierOrAmplifierJson {
         const selectMod1 = document.getElementById(baseId + "-mod1") as HTMLSelectElement;
         const selectMod2 = document.getElementById(baseId + "-mod2") as HTMLSelectElement;
         const selectAmp = document.getElementById(baseId + "-amp") as HTMLSelectElement;
+        const bookmarks = document.getElementById(baseId + "-bookmarks") as HTMLDivElement;
+        const bookmarkItem = bookmarks.querySelector("div.d-none") as HTMLDivElement;
+        const options = PmadMilsymbolSelector.getOptions(baseId);
+        const bookmarkButton = document.getElementById(baseId + "-add-bookmark");
 
         function addIcon(result: HTMLDivElement, element: HTMLOptionElement) {
             let sidc = element.getAttribute("data-sidc");
             if (sidc) {
                 let icon = document.createElement("span");
-                icon.className = "select-symbol-icon";
+                icon.className = "symbol-icon";
                 icon.innerHTML = new ms.Symbol(sidc, { size: 18 }).asSVG();
                 result.prepend(icon);
             }
@@ -48,7 +88,7 @@ interface ModifierOrAmplifierJson {
             shouldSort: false,
             itemSelectText: "",
             searchResultLimit: -1,
-            callbackOnCreateTemplates: (strToEl, escapeForTemplate, getClassNames) => ({
+            callbackOnCreateTemplates: () => ({
                 item: function (options: any, choice: any, removeItemButton: boolean) {
                     let result = Choices.defaults.templates.item.call(this, options, choice, removeItemButton);
                     addIcon(result, choice.element);
@@ -79,9 +119,21 @@ interface ModifierOrAmplifierJson {
 
         let batchUpdate = false;
 
-        function updatePreview() {
-            preview.innerHTML = new ms.Symbol(input.value, {}).asSVG();
+        function updateBookmarkButton() {
+            if (bookmarkItems.includes(input.value)) {
+                bookmarkButton.classList.remove("btn-outline-secondary");
+                bookmarkButton.classList.add("btn-secondary");
+            } else {
+                bookmarkButton.classList.add("btn-outline-secondary");
+                bookmarkButton.classList.remove("btn-secondary");
+            }
         }
+
+        function updatePreview() {
+            preview.innerHTML = new ms.Symbol(input.value, options.getSymbolOptions()).asSVG();
+            updateBookmarkButton();
+        }
+
 
         function getSelectedSymbol() {
             let symbol = '100';
@@ -126,13 +178,13 @@ interface ModifierOrAmplifierJson {
             }
         }
 
-        function generateSelectContent(data: ModifierOrAmplifierJson[], select: HTMLSelectElement, choices: Choices, selected: string, getSdic: (code:string) => string) {
+        function generateSelectContent(data: ModifierOrAmplifierJson[], select: HTMLSelectElement, choices: Choices, selected: string, getSdic: (code: string) => string) {
             select.innerHTML = '';
             data.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.code;
                 option.text = item.label;
-                option.setAttribute("data-sidc", getSdic(item.code)); 
+                option.setAttribute("data-sidc", getSdic(item.code));
                 if (item.code === selected) {
                     option.selected = true;
                 }
@@ -165,7 +217,7 @@ interface ModifierOrAmplifierJson {
                 option.value = item.code;
                 option.text = item.entity.join(' - ');
                 (option as any).pmadEntity = item.entity;
-                option.setAttribute("data-sidc", getSdic(item.code)); 
+                option.setAttribute("data-sidc", getSdic(item.code));
                 if (item.code === selected) {
                     option.selected = true;
                 }
@@ -181,10 +233,10 @@ interface ModifierOrAmplifierJson {
             const result = await fetch(`/lib/pmad-milsymbol/app6d/${set}.json`);
             const json = (await result.json()) as SymbolsetJson;
             batchUpdate = true;
-            generateSelectContent(json.amplifiers, selectAmp, choicesAmp, sidc.substring(8, 10),    code => `1003${set}00${code}0000000000`);
+            generateSelectContent(json.amplifiers, selectAmp, choicesAmp, sidc.substring(8, 10), code => `1003${set}00${code}0000000000`);
             generateSelectContent(json.modifiers1, selectMod1, choicesMod1, sidc.substring(16, 18), code => `1003${set}0000000000${code}00`);
             generateSelectContent(json.modifiers2, selectMod2, choicesMod2, sidc.substring(18, 20), code => `1003${set}000000000000${code}`);
-            generateIconSelectContent(json.icons, selectIcon, choicesIcon, sidc.substring(10, 16),  code => `1003${set}0000${code}0000`);
+            generateIconSelectContent(json.icons, selectIcon, choicesIcon, sidc.substring(10, 16), code => `1003${set}0000${code}0000`);
             input.value = sidc;
             batchUpdate = false;
             updatePreview();
@@ -198,6 +250,28 @@ interface ModifierOrAmplifierJson {
             }
         }
 
+        const bookmarkButtons = {};
+
+        function addBookmarkButton(sidc: string) {
+            let item = bookmarkItem.cloneNode(true) as HTMLDivElement;
+            item.classList.remove("d-none");
+            let button = item.querySelector("button");
+            button.innerHTML = new ms.Symbol(sidc, { size: 18 }).asSVG();
+            button.title = sidc;
+            button.addEventListener("click", function () {
+                input.value = sidc;
+                updateSelects(sidc);
+                updatePreview();
+            });
+            bookmarks.appendChild(item);
+            bookmarkButtons[sidc] = item;
+            updateBookmarkButton();
+        }
+
+        function removeBookmarkButton(sidc: string) {
+            bookmarkButtons[sidc]?.remove();
+            updateBookmarkButton();
+        }
 
         updateSelects(input.value);
 
@@ -217,6 +291,45 @@ interface ModifierOrAmplifierJson {
         loadSymbolSet(input.value);
 
         updatePreview();
-    });
 
-//});
+        document.getElementById(baseId + "-copy-code").addEventListener("click", function () {
+            navigator.clipboard.writeText(input.value);
+        });
+        document.getElementById(baseId + "-copy-image").addEventListener("click", async function () {
+            const msOptions = options.getSymbolOptions();
+            msOptions.size = 200; // twice the default, make a setting ?
+            const canvas = new ms.Symbol(input.value, msOptions).asCanvas();
+            canvas.toBlob(blob => {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]);
+            });
+        });
+
+        bookmarkItems.forEach(sidc => {
+            addBookmarkButton(sidc);
+        });
+
+        bookmarkButton.addEventListener("click", function () {
+            if (!bookmarkItems.includes(input.value)) {
+                bookmarkItems.push(input.value);
+                addBookmarkButton(input.value);
+            } else {
+                bookmarkItems = bookmarkItems.filter(sidc => sidc !== input.value);
+                removeBookmarkButton(input.value);
+            }
+            localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+        });
+
+        PmadMilsymbolSelector._instances[baseId] = {
+            updatePreview: updatePreview
+        };
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    ms.setStandard("APP6");
+    document.querySelectorAll("div.pmad-symbol-selector").forEach(element => {
+        PmadMilsymbolSelector.Initialize(element.getAttribute("data-base-id"));
+    });
+});
