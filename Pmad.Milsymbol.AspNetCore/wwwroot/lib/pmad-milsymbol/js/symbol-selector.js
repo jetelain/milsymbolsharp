@@ -264,6 +264,9 @@ class PmadMilsymbolSelector {
                 removeBookmarkButton(input.value);
             }
             localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+            if (options.saveBookmarks) {
+                options.saveBookmarks(bookmarkItems);
+            }
         });
         PmadMilsymbolSelector._instances[baseId] = {
             updatePreview: updatePreview

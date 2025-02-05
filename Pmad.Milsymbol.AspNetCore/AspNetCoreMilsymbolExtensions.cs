@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,25 +22,61 @@ namespace Pmad.Milsymbol.AspNetCore
             services.TryAddSingleton<IApp6dSymbolGenerator, SharedApp6dSymbolGenerator>();
         }
 
-        public static IMvcBuilder AddMilsymbolMvcComponents(this IMvcBuilder builder, int boostrapVersion = 5)
+        public static IMvcBuilder AddMilsymbolMvcComponents(this IMvcBuilder builder, DesignSystem designSystem = DesignSystem.Automatic)
         {
             builder.Services.AddLocalization();
             builder.Services.AddMilsymbolGenerator();
+            builder.Services.AddDesignSystem(designSystem);
+
             builder.ConfigureApplicationPartManager(apm =>
             {
                 // Allows Views to be found in the Pmad.Milsymbol.AspNetCore assembly
                 apm.ApplicationParts.Add(new CompiledRazorAssemblyPart(MilsymbolAspNetCoreAssembly));
             });
             builder.AddViewLocalization();
-            if (boostrapVersion == 5)
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Setup design system for Pmad components
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="designSystem"></param>
+        public static void AddDesignSystem(this IServiceCollection services, DesignSystem designSystem)
+        {
+            if (designSystem == DesignSystem.Automatic)
             {
-                builder.Services.TryAddSingleton<IDesignSystemClasses, Boostrap5>();
+                services.TryAddSingleton<IDesignSystemClasses>(provider =>
+                    DetectDesignSystsem(provider.GetRequiredService<IWebHostEnvironment>()));
+            }
+            else if (designSystem == DesignSystem.Bootstrap5)
+            {
+                services.TryAddSingleton<IDesignSystemClasses, Boostrap5>();
             }
             else
             {
-                builder.Services.TryAddSingleton<IDesignSystemClasses, Boostrap4>();
+                services.TryAddSingleton<IDesignSystemClasses, Boostrap4>();
             }
-            return builder;
+        }
+
+        private static IDesignSystemClasses DetectDesignSystsem(IWebHostEnvironment host)
+        {
+            var file = host.WebRootFileProvider.GetFileInfo("lib/bootstrap/dist/css/bootstrap.css");
+            if (file.Exists && !file.IsDirectory)
+            {
+                using var stream = file.CreateReadStream();
+                var content = new StreamReader(stream).ReadToEnd();
+                if (content.Contains("Bootstrap v5"))
+                {
+                    return new Boostrap5();
+                }
+                if (content.Contains("Bootstrap v4"))
+                {
+                    return new Boostrap4();
+                }
+            }
+            return new Boostrap5();
         }
 
         public static void UseMilsymbolStaticFiles(this IApplicationBuilder app)

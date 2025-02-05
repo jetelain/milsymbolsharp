@@ -17,10 +17,12 @@ interface ModifierOrAmplifierJson {
 
 class PmadMilsymbolSelectorOptions implements SetPmadMilsymbolSelectorOptions {
     getSymbolOptions(): ms.SymbolOptions { return {}; }
+    saveBookmarks?(bookmarks: string[]): void;
 }
 
 interface SetPmadMilsymbolSelectorOptions {
     getSymbolOptions?(): ms.SymbolOptions;
+    saveBookmarks?(bookmarks: string[]): void;
 }
 interface PmadMilsymbolSelectorInstance {
     updatePreview();
@@ -318,6 +320,9 @@ class PmadMilsymbolSelector {
                 removeBookmarkButton(input.value);
             }
             localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+            if (options.saveBookmarks) {
+                options.saveBookmarks(bookmarkItems);
+            }
         });
 
         PmadMilsymbolSelector._instances[baseId] = {
