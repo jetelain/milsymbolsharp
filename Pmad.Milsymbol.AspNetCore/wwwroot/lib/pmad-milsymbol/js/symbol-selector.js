@@ -3,7 +3,12 @@ class PmadMilsymbolSelectorOptions {
 }
 class PmadMilsymbolSelector {
     static setOptions(id, setOptions) {
+        var _a;
         Object.assign(PmadMilsymbolSelector.getOptions(id), setOptions);
+        if (setOptions.getBookmarks) {
+            // merge bookmarks if already initialized
+            (_a = PmadMilsymbolSelector.get(id)) === null || _a === void 0 ? void 0 : _a.mergeBookmarks(setOptions.getBookmarks());
+        }
     }
     static getOptions(id) {
         let options = PmadMilsymbolSelector._options[id];
@@ -42,6 +47,12 @@ class PmadMilsymbolSelector {
         const bookmarkItem = bookmarks.querySelector("div.d-none");
         const options = PmadMilsymbolSelector.getOptions(baseId);
         const bookmarkButton = document.getElementById(baseId + "-add-bookmark");
+        function saveBookmarks() {
+            localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+            if (options.saveBookmarks) {
+                options.saveBookmarks(bookmarkItems);
+            }
+        }
         function addIcon(result, element) {
             let sidc = element.getAttribute("data-sidc");
             if (sidc) {
@@ -263,13 +274,32 @@ class PmadMilsymbolSelector {
                 bookmarkItems = bookmarkItems.filter(sidc => sidc !== input.value);
                 removeBookmarkButton(input.value);
             }
-            localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
-            if (options.saveBookmarks) {
-                options.saveBookmarks(bookmarkItems);
-            }
+            saveBookmarks();
         });
+        function mergeBookmarks(bookmarks) {
+            let changed = bookmarks.length !== bookmarkItems.length;
+            bookmarks.forEach(sidc => {
+                if (!bookmarkItems.includes(sidc)) {
+                    bookmarkItems.push(sidc);
+                    addBookmarkButton(sidc);
+                    changed = true;
+                }
+            });
+            if (changed) {
+                saveBookmarks();
+            }
+        }
+        if (options.getBookmarks) {
+            mergeBookmarks(options.getBookmarks());
+        }
         PmadMilsymbolSelector._instances[baseId] = {
-            updatePreview: updatePreview
+            updatePreview: updatePreview,
+            mergeBookmarks: mergeBookmarks,
+            setValue: function (sidc) {
+                input.value = sidc;
+                input.dispatchEvent(new Event("change"));
+            },
+            getValue: () => input.value
         };
     }
 }
