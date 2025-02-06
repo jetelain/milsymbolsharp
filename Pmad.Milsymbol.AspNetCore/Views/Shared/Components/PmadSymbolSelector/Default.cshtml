@@ -35,19 +35,19 @@
         </div>
     </div>
     <div class="@DesignSystem.FormRow">
-        <div class="form-group col-md-3">
+        <div class="form-group mb-2 col-md-3">
             <label for="@(Model.BaseId)-id" class="@DesignSystem.ControlLabel">@Localizer["Standard Identity"]</label>
             <select id="@(Model.BaseId)-id" class="form-control form-control-sm">
-                <option value="0" data-sidc="10001000000000000000">@Localizer["Pending (yellow)"]</option>
-                <option value="1" data-sidc="10011000000000000000">@Localizer["Unknown (yellow)"]</option>
-                <option value="2" data-sidc="10021000000000000000">@Localizer["Assumed Friend (blue)"]</option>
-                <option value="3" data-sidc="10031000000000000000">@Localizer["Friend (blue)"]</option>
-                <option value="4" data-sidc="10041000000000000000">@Localizer["Neutral (green)"]</option>
-                <option value="5" data-sidc="10051000000000000000">@Localizer["Suspect (red)"]</option>
-                <option value="6" data-sidc="10061000000000000000">@Localizer["Hostile (red)"]</option>
+                <option value="0" data-sidc="10001000000000000000">@Localizer["Pending"]</option>
+                <option value="1" data-sidc="10011000000000000000">@Localizer["Unknown"]</option>
+                <option value="2" data-sidc="10021000000000000000">@Localizer["Assumed Friend"]</option>
+                <option value="3" data-sidc="10031000000000000000">@Localizer["Friend"]</option>
+                <option value="4" data-sidc="10041000000000000000">@Localizer["Neutral"]</option>
+                <option value="5" data-sidc="10051000000000000000">@Localizer["Suspect"]</option>
+                <option value="6" data-sidc="10061000000000000000">@Localizer["Hostile"]</option>
             </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group mb-2 col-md-3">
             <label for="@(Model.BaseId)-set" class="@DesignSystem.ControlLabel">@Localizer["Symbol set"]</label>
             <select id="@(Model.BaseId)-set" class="form-control form-control-sm">
                 @foreach (var option in Model.App6d.SymbolSets)
@@ -57,7 +57,7 @@
                 }
             </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group mb-2 col-md-3">
             <label for="@(Model.BaseId)-status" class="@DesignSystem.ControlLabel">@Localizer["Status"]</label>
             <select id="@(Model.BaseId)-status" class="form-control form-control-sm">
                 <option value="0" data-sidc="10031000000000000000" selected="selected">@Localizer["Present"]</option>
@@ -68,7 +68,7 @@
                 <option value="5" data-sidc="10031050000000000000">@Localizer["Present/Full to capacity"]</option>
             </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group mb-2 col-md-3">
             <label for="@(Model.BaseId)-hq" class="@DesignSystem.ControlLabel">HQ, TF</label>
             <select id="@(Model.BaseId)-hq" class="form-control form-control-sm">
                 <option value="0" data-sidc="10031000000000000000" selected="selected">n/a</option>
@@ -84,22 +84,22 @@
     </div>
 
     <div class="@DesignSystem.FormRow">
-        <div class="form-group col-md-6">
+        <div class="form-group mb-2 col-md-6">
             <label for="@(Model.BaseId)-icon" class="@DesignSystem.ControlLabel">@Localizer["Symbol"]</label>
             <select id="@(Model.BaseId)-icon" class="form-control form-control-sm">
             </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group mb-2 col-md-2">
             <label for="@(Model.BaseId)-mod1" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 1"]</label>
             <select id="@(Model.BaseId)-mod1" class="form-control form-control-sm">
             </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group mb-2 col-md-2">
             <label for="@(Model.BaseId)-mod2" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 2"]</label>
             <select id="@(Model.BaseId)-mod2" class="form-control form-control-sm">
             </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group mb-2 col-md-2">
             <label for="@(Model.BaseId)-amp" class="@DesignSystem.ControlLabel">@Localizer["Echelon"]</label>
             <select id="@(Model.BaseId)-amp" class="form-control form-control-sm">
             </select>

@@ -67,7 +67,7 @@ class PmadMilsymbolSelector {
         }
     }
 
-    static Initialize(baseId: string) {
+    static initialize(baseId: string) {
 
         let bookmarkItems = JSON.parse(localStorage.getItem("pmad-milsymbol-bookmarks") ?? "[]") as string[];
 
@@ -93,7 +93,19 @@ class PmadMilsymbolSelector {
             }
         }
 
-        function addIcon(result: HTMLDivElement, element: HTMLOptionElement) {
+        function formatOption(result: HTMLDivElement, element: HTMLOptionElement) {
+            let entity = (element as any).pmadEntity as string[];
+            if (entity) {
+                result.innerHTML = "";
+                entity.forEach((label, idx) => {
+                    let span = document.createElement("span");
+                    if (idx < entity.length - 1) {
+                        span.className = "entity-parent";
+                    }
+                    span.innerText = label;
+                    result.append(span);
+                });
+            }
             let sidc = element.getAttribute("data-sidc");
             if (sidc) {
                 let icon = document.createElement("span");
@@ -110,12 +122,12 @@ class PmadMilsymbolSelector {
             callbackOnCreateTemplates: () => ({
                 item: function (options: any, choice: any, removeItemButton: boolean) {
                     let result = Choices.defaults.templates.item.call(this, options, choice, removeItemButton);
-                    addIcon(result, choice.element);
+                    formatOption(result, choice.element);
                     return result;
                 },
                 choice: function (options: any, choice: any, selectText: string, groupName: string) {
                     let result = Choices.defaults.templates.choice.call(this, options, choice, selectText, groupName);
-                    addIcon(result, choice.element);
+                    formatOption(result, choice.element);
                     return result;
                 },
             }),
@@ -366,6 +378,6 @@ class PmadMilsymbolSelector {
 document.addEventListener("DOMContentLoaded", function () {
     ms.setStandard("APP6");
     document.querySelectorAll("div.pmad-symbol-selector").forEach(element => {
-        PmadMilsymbolSelector.Initialize(element.getAttribute("data-base-id"));
+        PmadMilsymbolSelector.initialize(element.getAttribute("data-base-id"));
     });
 });

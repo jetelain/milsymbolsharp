@@ -30,7 +30,7 @@ class PmadMilsymbolSelector {
             (_a = PmadMilsymbolSelector.get(id)) === null || _a === void 0 ? void 0 : _a.updatePreview();
         }
     }
-    static Initialize(baseId) {
+    static initialize(baseId) {
         var _a;
         let bookmarkItems = JSON.parse((_a = localStorage.getItem("pmad-milsymbol-bookmarks")) !== null && _a !== void 0 ? _a : "[]");
         const input = document.getElementById(baseId);
@@ -53,7 +53,19 @@ class PmadMilsymbolSelector {
                 options.saveBookmarks(bookmarkItems);
             }
         }
-        function addIcon(result, element) {
+        function formatOption(result, element) {
+            let entity = element.pmadEntity;
+            if (entity) {
+                result.innerHTML = "";
+                entity.forEach((label, idx) => {
+                    let span = document.createElement("span");
+                    if (idx < entity.length - 1) {
+                        span.className = "entity-parent";
+                    }
+                    span.innerText = label;
+                    result.append(span);
+                });
+            }
             let sidc = element.getAttribute("data-sidc");
             if (sidc) {
                 let icon = document.createElement("span");
@@ -69,12 +81,12 @@ class PmadMilsymbolSelector {
             callbackOnCreateTemplates: () => ({
                 item: function (options, choice, removeItemButton) {
                     let result = Choices.defaults.templates.item.call(this, options, choice, removeItemButton);
-                    addIcon(result, choice.element);
+                    formatOption(result, choice.element);
                     return result;
                 },
                 choice: function (options, choice, selectText, groupName) {
                     let result = Choices.defaults.templates.choice.call(this, options, choice, selectText, groupName);
-                    addIcon(result, choice.element);
+                    formatOption(result, choice.element);
                     return result;
                 },
             }),
@@ -132,14 +144,6 @@ class PmadMilsymbolSelector {
             choicesIcon.setChoiceByValue(sidc.substring(10, 16));
             choicesMod1.setChoiceByValue(sidc.substring(16, 18));
             choicesMod2.setChoiceByValue(sidc.substring(18, 20));
-            //selectId.value = sidc.substring(3, 4);
-            //selectSet.value = sidc.substring(4, 6);
-            //selectStatus.value = sidc.substring(6, 7);
-            //selectHq.value = sidc.substring(7, 8);
-            //selectAmp.value = sidc.substring(8, 10);
-            //selectIcon.value = sidc.substring(10, 16);
-            //selectMod1.value = sidc.substring(16, 18);
-            //selectMod2.value = sidc.substring(18, 20);
             batchUpdate = false;
         }
         function updateSelectedSymbol() {
@@ -308,6 +312,6 @@ PmadMilsymbolSelector._instances = {};
 document.addEventListener("DOMContentLoaded", function () {
     ms.setStandard("APP6");
     document.querySelectorAll("div.pmad-symbol-selector").forEach(element => {
-        PmadMilsymbolSelector.Initialize(element.getAttribute("data-base-id"));
+        PmadMilsymbolSelector.initialize(element.getAttribute("data-base-id"));
     });
 });
