@@ -1,6 +1,6 @@
 namespace PmadMilsymbolSelector {
 
-    const validSidc = new RegExp('^([0-9]{20})|([0-9]{30})$');
+    const validSidc = new RegExp('^[0-9]{20}([0-9]{10})?$');
     const _options: { [id: string]: PmadMilsymbolSelectorOptions; } = {};
     const _instances: { [id: string]: PmadMilsymbolSelectorInstance; } = {};
     let _bookmarksProvider: BookmarksProvider = null;
@@ -11,7 +11,7 @@ namespace PmadMilsymbolSelector {
         modifiers2: ModifierOrAmplifierJson[];
         amplifiers: ModifierOrAmplifierJson[];
     }
-
+    
     interface IconJson {
         code: string;
         entity: string[];
@@ -31,14 +31,16 @@ namespace PmadMilsymbolSelector {
     }
 
     export interface BookmarksProvider {
-        saveBookmarks(bookmarks: string[]): void;
-        getBookmarks(): string[];
+        saveBookmarks(bookmarks: string[]);
+        getBookmarksItems(): string[];
+        getBookmarksTimestamp(): Date;
     }
 
     export interface PmadMilsymbolSelectorInstance {
         updatePreview();
         setValue(sidc: string): void;
         getValue(): string;
+
         addBookmarkButton(sidc: string);
         removeBookmarkButton(sidc: string);
     }
@@ -244,6 +246,9 @@ namespace PmadMilsymbolSelector {
     }
 
     function toggleBookmark(sidc: string) {
+        if (!validSidc.test(sidc)) {
+            return;
+        }
         if (bookmarkItems.includes(sidc)) {
             doRemoveBookmark(sidc);
         } else {
@@ -254,35 +259,72 @@ namespace PmadMilsymbolSelector {
 
     function saveBookmarks() {
         localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+        localStorage.setItem("pmad-milsymbol-bookmarks-timesteamp", new Date().toJSON());
         if (_bookmarksProvider) {
             _bookmarksProvider.saveBookmarks(bookmarkItems);
         }
     }
 
     function mergeBookmarks(bookmarks: string[]) {
-        let changed = bookmarks.length !== bookmarkItems.length;
-        bookmarks.forEach(sidc => {
-            if (!bookmarkItems.includes(sidc)) {
-                doAddBookmark(sidc);
-                changed = true;
-            }
-        });
-        if (changed) {
+        const addedBookmarks = bookmarks.filter(sidc => !bookmarkItems.includes(sidc));
+        if (addedBookmarks.length > 0) {
+            addedBookmarks.forEach(doAddBookmark);
             saveBookmarks();
         }
     }
 
+    function doSetBookmarks(bookmarks: string[]): boolean {
+        const addedBookmarks = bookmarks.filter(sidc => !bookmarkItems.includes(sidc));
+        const removedBookmarks = bookmarkItems.filter(sidc => !bookmarks.includes(sidc));
+        addedBookmarks.forEach(doAddBookmark);
+        removedBookmarks.forEach(doRemoveBookmark);
+        return addedBookmarks.length != 0 || removedBookmarks.length != 0;
+    }
+
+    /**
+     * Set bookmarks list, save it to localstorage and update all instances in all tabs
+     * To propagate a server side change, please do not set a BookmarksProvider, as this will call again the provider
+     * @param bookmarks
+     */
+    export function setBookmarks(bookmarks: string[]) {
+        if (doSetBookmarks(bookmarks)) {
+            saveBookmarks();
+        }
+    }
+
+    addEventListener("storage", (event: StorageEvent) => {
+        if (event.key == "pmad-milsymbol-bookmarks") {
+            // Bookmarks has changed in an other tab
+            const jsonData = localStorage.getItem("pmad-milsymbol-bookmarks");
+            if (jsonData) {
+                doSetBookmarks(JSON.parse(jsonData) as string[]);
+            }
+        }
+    });
+
+
     /**
      * Set a way to save and load bookmarks server-side (to allow bookmarks to work across devices)
-     * 
-     * The localstorage is always used, and will be updated with server data if required.
-     * 
+     * The localstorage is always used. it will be merged with server data if more recent.
      * @param bookmarksProvider
      */
     export function setBookmarksProvider(bookmarksProvider: BookmarksProvider) {
         _bookmarksProvider = bookmarksProvider;
         if (_bookmarksProvider) {
-            mergeBookmarks(_bookmarksProvider.getBookmarks());
+            const timestamp = localStorage.getItem("pmad-milsymbol-bookmarks-timesteamp");
+            if (timestamp) {
+                const date = new Date(timestamp);
+                if (date > _bookmarksProvider.getBookmarksTimestamp()) {
+                    // Local storage is more recent, opt for a merge
+                    mergeBookmarks(_bookmarksProvider.getBookmarksItems());
+                }
+                else {
+                    // Local storage is older, opt for a set
+                    setBookmarks(_bookmarksProvider.getBookmarksItems());
+                }
+            } else {
+                mergeBookmarks(_bookmarksProvider.getBookmarksItems());
+            }
         }
     }
 
@@ -307,7 +349,6 @@ namespace PmadMilsymbolSelector {
         const bookmarks = document.getElementById(baseId + "-bookmarks") as HTMLDivElement;
         const bookmarkItem = bookmarks.querySelector("div.d-none") as HTMLDivElement;
         const bookmarkButton = document.getElementById(baseId + "-add-bookmark");
-
 
         let batchUpdate = false;
 

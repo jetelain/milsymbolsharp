@@ -1,7 +1,7 @@
 var PmadMilsymbolSelector;
 (function (PmadMilsymbolSelector) {
     var _a;
-    const validSidc = new RegExp('^([0-9]{20})|([0-9]{30})$');
+    const validSidc = new RegExp('^[0-9]{20}([0-9]{10})?$');
     const _options = {};
     const _instances = {};
     let _bookmarksProvider = null;
@@ -190,6 +190,9 @@ var PmadMilsymbolSelector;
         Object.keys(_instances).forEach(id => _instances[id].removeBookmarkButton(sidc));
     }
     function toggleBookmark(sidc) {
+        if (!validSidc.test(sidc)) {
+            return;
+        }
         if (bookmarkItems.includes(sidc)) {
             doRemoveBookmark(sidc);
         }
@@ -200,33 +203,68 @@ var PmadMilsymbolSelector;
     }
     function saveBookmarks() {
         localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+        localStorage.setItem("pmad-milsymbol-bookmarks-timesteamp", new Date().toJSON());
         if (_bookmarksProvider) {
             _bookmarksProvider.saveBookmarks(bookmarkItems);
         }
     }
     function mergeBookmarks(bookmarks) {
-        let changed = bookmarks.length !== bookmarkItems.length;
-        bookmarks.forEach(sidc => {
-            if (!bookmarkItems.includes(sidc)) {
-                doAddBookmark(sidc);
-                changed = true;
-            }
-        });
-        if (changed) {
+        const addedBookmarks = bookmarks.filter(sidc => !bookmarkItems.includes(sidc));
+        if (addedBookmarks.length > 0) {
+            addedBookmarks.forEach(doAddBookmark);
             saveBookmarks();
         }
     }
+    function doSetBookmarks(bookmarks) {
+        const addedBookmarks = bookmarks.filter(sidc => !bookmarkItems.includes(sidc));
+        const removedBookmarks = bookmarkItems.filter(sidc => !bookmarks.includes(sidc));
+        addedBookmarks.forEach(doAddBookmark);
+        removedBookmarks.forEach(doRemoveBookmark);
+        return addedBookmarks.length != 0 || removedBookmarks.length != 0;
+    }
+    /**
+     * Set bookmarks list, save it to localstorage and update all instances in all tabs
+     * To propagate a server side change, please do not set a BookmarksProvider, as this will call again the provider
+     * @param bookmarks
+     */
+    function setBookmarks(bookmarks) {
+        if (doSetBookmarks(bookmarks)) {
+            saveBookmarks();
+        }
+    }
+    PmadMilsymbolSelector.setBookmarks = setBookmarks;
+    addEventListener("storage", (event) => {
+        if (event.key == "pmad-milsymbol-bookmarks") {
+            // Bookmarks has changed in an other tab
+            const jsonData = localStorage.getItem("pmad-milsymbol-bookmarks");
+            if (jsonData) {
+                doSetBookmarks(JSON.parse(jsonData));
+            }
+        }
+    });
     /**
      * Set a way to save and load bookmarks server-side (to allow bookmarks to work across devices)
-     *
-     * The localstorage is always used, and will be updated with server data if required.
-     *
+     * The localstorage is always used. it will be merged with server data if more recent.
      * @param bookmarksProvider
      */
     function setBookmarksProvider(bookmarksProvider) {
         _bookmarksProvider = bookmarksProvider;
         if (_bookmarksProvider) {
-            mergeBookmarks(_bookmarksProvider.getBookmarks());
+            const timestamp = localStorage.getItem("pmad-milsymbol-bookmarks-timesteamp");
+            if (timestamp) {
+                const date = new Date(timestamp);
+                if (date > _bookmarksProvider.getBookmarksTimestamp()) {
+                    // Local storage is more recent, opt for a merge
+                    mergeBookmarks(_bookmarksProvider.getBookmarksItems());
+                }
+                else {
+                    // Local storage is older, opt for a set
+                    setBookmarks(_bookmarksProvider.getBookmarksItems());
+                }
+            }
+            else {
+                mergeBookmarks(_bookmarksProvider.getBookmarksItems());
+            }
         }
     }
     PmadMilsymbolSelector.setBookmarksProvider = setBookmarksProvider;
