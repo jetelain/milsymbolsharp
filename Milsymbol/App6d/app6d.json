@@ -4445,6 +4445,7 @@
       },
       {
         "Entity": "Command and Control Points",
+        "Geometric Rendering": "None",
         "Code": "130000",
         "Remarks": "For training or hierarchical purposes only "
       },
@@ -4960,6 +4961,7 @@
       {
         "Entity": "Manoeuvre Areas",
         "Entity Type": "Axis of Advance",
+        "Geometric Rendering": "Line",
         "Code": "151400",
         "Remarks": "For training or hierarchical purposes only "
       },
@@ -5148,6 +5150,7 @@
       },
       {
         "Entity": "Airspace Control (Corridors) Areas",
+        "Geometric Rendering": "Area",
         "Code": "170000",
         "Remarks": "For training or hierarchical purposes only "
       },
@@ -5436,6 +5439,7 @@
       },
       {
         "Entity": "Airspace Control Lines",
+        "Geometric Rendering": "Line",
         "Code": "190000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -5453,12 +5457,14 @@
       },
       {
         "Entity": "Maritime Control Areas",
+        "Geometric Rendering": "Area",
         "Code": "200000",
         "Remarks": "For training or hierarchical purposes"
       },
       {
         "Entity": "Maritime Control Areas",
         "Entity Type": "Launch Area",
+        "Geometric Rendering": "Area",
         "Code": "200100",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6225,6 +6231,7 @@
       },
       {
         "Entity": "Maritime Control Lines",
+        "Geometric Rendering": "Line",
         "Code": "220000",
         "Remarks": "For training or hierarchical purposes"
       },
