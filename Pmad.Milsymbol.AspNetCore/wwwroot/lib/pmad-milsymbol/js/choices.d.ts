@@ -102,6 +102,7 @@ declare class Choices {
     refresh(withEvents: boolean, selectFirstOption: boolean);
 
     setChoiceByValue(value: string | string[]);
+    getValue(valueOnly: true): string[] | string;
 
     static defaults: ChoicesDefaults;
 }

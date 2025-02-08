@@ -7,6 +7,8 @@ namespace MvcDemo.Models
 
         public required IOrbatUnit RootUnit { get; set; }
 
-        public string? Symbol { get; set; }
+        public string? Symbol1 { get; set; }
+        public string? Symbol2 { get; set; }
+
     }
 }

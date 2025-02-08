@@ -33,6 +33,9 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
         [HtmlAttributeName("asp-for")]
         public ModelExpression? For { get; set; }
 
+        [HtmlAttributeName("layout")]
+        public SymbolSelectorLayout Layout { get; set; }
+
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = null; // Remove the <pmad-orbat> root element
@@ -43,7 +46,8 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
                 new Dictionary<string, object?> {
                     {"id", For?.Name ?? "selector"},
                     {"name", For?.Name ?? "selector"},
-                    {"value", For?.Model?.ToString() ?? string.Empty}
+                    {"value", For?.Model?.ToString() ?? string.Empty},
+                    {"layout", Layout},
                 });
 
             output.Content.SetHtmlContent(content);

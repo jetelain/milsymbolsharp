@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Pmad.Milsymbol.AspNetCore
+@model Pmad.Milsymbol.AspNetCore.SymbolSelector.SymbolSelectorModel
+@inject IHtmlLocalizer<PmadMilsymbolLabels> Localizer
+@inject IDesignSystem DesignSystem
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Pmad.Milsymbol.AspNetCore
+
+<div class="pmad-symbol-selector" data-base-id="@Model.BaseId">
+    <div class="mb-1 p-1">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="Symbol Identifier Coding" />
+                    <pmad-wrap-div class="@DesignSystem.InputGroupAppend">
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark">&#x2605; @Localizer["Bookmark"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-code" type="button">@Localizer["Copy code"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-image" type="button">@Localizer["Copy image"]</button>
+                    </pmad-wrap-div>
+                </div>
+                <div id="@(Model.BaseId)-preview" class="preview-box bg-light p-2 mt-1"></div>
+            </div>
+            <div class="col-md-3">
+                <div>
+                    @Localizer["Bookmarks"]
+                </div>
+                <div id="@(Model.BaseId)-bookmarks" class="row row-cols-3 g-0 no-gutters">
+                    <div class="col p-1 d-none">
+                        <button class="btn btn-outline-secondary w-100 h-100">
+                            #
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="@DesignSystem.FormRow">
+        <div class="btn-group mb-2 col-md-9 btn-group-toggle" role="group" data-toggle="buttons">
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id1" value="0">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="26.37" height="26.37" viewBox="26.75 26.75 146.5 146.5"><path d="M63,63 C63,20 137,20 137,63 C180,63 180,137 137,137 C137,180 63,180 63,137 C20,137 20,63 63,63 Z" stroke-width="4" stroke="black" fill="rgb(255,255,128)" fill-opacity="1"></path><path d="M63,63 C63,20 137,20 137,63 C180,63 180,137 137,137 C137,180 63,180 63,137 C20,137 20,63 63,63 Z" stroke-width="5" stroke-dasharray="4,4" stroke="rgb(239, 239, 239)" fill="none"></path></svg>
+                </span>
+                <br />Pending
+            </pmad-toggle-button>
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id2" value="1">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="26.37" height="26.37" viewBox="26.75 26.75 146.5 146.5"><path d="M63,63 C63,20 137,20 137,63 C180,63 180,137 137,137 C137,180 63,180 63,137 C20,137 20,63 63,63 Z" stroke-width="4" stroke="black" fill="rgb(255,255,128)" fill-opacity="1"></path></svg>
+                </span>
+                <br />Unknown
+            </pmad-toggle-button>
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id3" value="2">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="19.44" viewBox="21 46 158 108"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="5" stroke-dasharray="4,4" stroke="rgb(239, 239, 239)" fill="none"></path></svg>
+                </span>
+                <br />Assumed Friend
+            </pmad-toggle-button>
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id4" value="3">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="19.44" viewBox="21 46 158 108"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path></svg>
+                </span>
+                <br />Friend
+            </pmad-toggle-button>
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id5" value="4">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="21.24" height="21.24" viewBox="41 41 118 118"><path d="M45,45 l110,0 0,110 -110,0 z" stroke-width="4" stroke="black" fill="rgb(170,255,170)" fill-opacity="1"></path></svg>
+                </span>
+                <br />Neutral
+            </pmad-toggle-button>
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id6" value="5">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="27.36" height="27.36" viewBox="24 24 152 152"><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" stroke-width="4" stroke="black" fill="rgb(255,128,128)" fill-opacity="1"></path><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" stroke-width="5" stroke-dasharray="4,4" stroke="rgb(239, 239, 239)" fill="none"></path></svg>
+                </span>
+                <br />Suspect
+            </pmad-toggle-button>
+            <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id7" value="6">
+                <span class="symbol-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="27.36" height="27.36" viewBox="24 24 152 152"><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" stroke-width="4" stroke="black" fill="rgb(255,128,128)" fill-opacity="1"></path></svg>
+                </span>
+                <br />Hostile
+            </pmad-toggle-button>
+        </div>
+
+        <div class="btn-group mb-2 col-md-3 btn-group-toggle" role="group" data-toggle="buttons">
+            <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq1">
+                <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="32.94" viewBox="21 -29 158 183"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M100,-25 L25,50 M100,-25 L175,50" stroke-width="4" stroke-dasharray="8,8" stroke="black" fill="none"></path></svg></span>
+                <br/>Dummy
+            </pmad-toggle-button>
+            <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq2">
+                <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="37.44" viewBox="21 46 158 208"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M25,150 L25,250" stroke-width="4" stroke="black" fill="none"></path></svg></span>
+                <br />HQ
+            </pmad-toggle-button>
+            <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq4">
+                <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="26.64" viewBox="21 6 158 148"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M55,50 L55,10 145,10 145,50" stroke-width="4" stroke="black" fill="none"></path></svg></span>
+                <br />TF
+            </pmad-toggle-button>
+        </div>
+
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-set" class="@DesignSystem.ControlLabel">@Localizer["Symbol set"]</label>
+            <select id="@(Model.BaseId)-set" class="form-control form-control-sm">
+                @foreach (var option in Model.App6d.SymbolSets)
+                {
+                    var icon = option.MainIcons.Where(i => i.IsPointRendering).FirstOrDefault()?.Code ?? "000000";
+                    <option value="@option.Code" data-sidc="1003@(option.Code)0000@(icon)0000">@option.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-2 col-md-3 d-none">
+            <label for="@(Model.BaseId)-hq" class="@DesignSystem.ControlLabel">HQ, TF</label>
+            <select id="@(Model.BaseId)-hq" class="form-control form-control-sm">
+                <option value="0" data-sidc="10031000000000000000" selected="selected">n/a</option>
+                <option value="1" data-sidc="10031001000000000000">Feint/Dummy</option>
+                <option value="2" data-sidc="10031002000000000000">Headquarters</option>
+                <option value="3" data-sidc="10031003000000000000">Feint/Dummy Headquarters</option>
+                <option value="4" data-sidc="10031004000000000000">Task Force</option>
+                <option value="5" data-sidc="10031005000000000000">Feint/Dummy Task Force</option>
+                <option value="6" data-sidc="10031006000000000000">Task Force Headquarters</option>
+                <option value="7" data-sidc="10031007000000000000">Feint/Dummy Task Force Headquarters</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-2 col-md-9">
+            <label for="@(Model.BaseId)-icon" class="@DesignSystem.ControlLabel">@Localizer["Symbol"]</label>
+            <select id="@(Model.BaseId)-icon" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-status" class="@DesignSystem.ControlLabel">@Localizer["Status"]</label>
+            <select id="@(Model.BaseId)-status" class="form-control form-control-sm">
+                <option value="0" data-sidc="10031000000000000000" selected="selected">@Localizer["Present"]</option>
+                <option value="1" data-sidc="10031010000000000000">@Localizer["Planned/Anticiped/Supect"]</option>
+                <option value="2" data-sidc="10031020000000000000">@Localizer["Present/Fully capable"]</option>
+                <option value="3" data-sidc="10031030000000000000">@Localizer["Present/Damaged"]</option>
+                <option value="4" data-sidc="10031040000000000000">@Localizer["Present/Destroyed"]</option>
+                <option value="5" data-sidc="10031050000000000000">@Localizer["Present/Full to capacity"]</option>
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-mod1" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 1"]</label>
+            <select id="@(Model.BaseId)-mod1" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-mod2" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 2"]</label>
+            <select id="@(Model.BaseId)-mod2" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-amp" class="@DesignSystem.ControlLabel">@Localizer["Echelon"]</label>
+            <select id="@(Model.BaseId)-amp" class="form-control form-control-sm">
+            </select>
+        </div>
+    </div>
+    </div>

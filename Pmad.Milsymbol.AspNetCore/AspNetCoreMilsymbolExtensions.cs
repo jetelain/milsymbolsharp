@@ -47,20 +47,20 @@ namespace Pmad.Milsymbol.AspNetCore
         {
             if (designSystem == DesignSystem.Automatic)
             {
-                services.TryAddSingleton<IDesignSystemClasses>(provider =>
+                services.TryAddSingleton<IDesignSystem>(provider =>
                     DetectDesignSystsem(provider.GetRequiredService<IWebHostEnvironment>()));
             }
             else if (designSystem == DesignSystem.Bootstrap5)
             {
-                services.TryAddSingleton<IDesignSystemClasses, Boostrap5>();
+                services.TryAddSingleton<IDesignSystem, Boostrap5>();
             }
             else
             {
-                services.TryAddSingleton<IDesignSystemClasses, Boostrap4>();
+                services.TryAddSingleton<IDesignSystem, Boostrap4>();
             }
         }
 
-        private static IDesignSystemClasses DetectDesignSystsem(IWebHostEnvironment host)
+        private static IDesignSystem DetectDesignSystsem(IWebHostEnvironment host)
         {
             var file = host.WebRootFileProvider.GetFileInfo("lib/bootstrap/dist/css/bootstrap.css");
             if (file.Exists && !file.IsDirectory)

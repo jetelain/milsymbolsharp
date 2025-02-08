@@ -41,3 +41,7 @@ To set a tooltip, or a link on each unit symbol, you can :
     unit-title="@(u => ((YourOrbatUnit)u).Label)"
     unit-link-controller="Units" unit-link-action="Details" unit-link-route="@(u => new { id = ((YourOrbatUnit)u).UnitID })" />
 ```
+
+## Symbol Component
+
+Compatible with Boostrap 4 and 5
