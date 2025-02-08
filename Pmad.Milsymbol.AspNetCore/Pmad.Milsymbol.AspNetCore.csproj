@@ -69,4 +69,8 @@
 	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Views\PmadMilsymbolApp6d\" />
+	</ItemGroup>
 </Project>

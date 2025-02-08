@@ -23,6 +23,10 @@
             <div class="col-md-3">
                 <div>
                     @Localizer["Bookmarks"]
+                    @if (!string.IsNullOrEmpty(Model.AllSymbolsHref))
+                    {
+                        <a href="@Model.BookmarksHref" class="small" target="_blank">@Localizer["Edit"]</a>
+                    }
                 </div>
                 <div id="@(Model.BaseId)-bookmarks" class="row row-cols-3 g-0 no-gutters">
                     <div class="col p-1 d-none">
@@ -86,6 +90,10 @@
     <div class="@DesignSystem.FormRow">
         <div class="form-group mb-2 col-md-6">
             <label for="@(Model.BaseId)-icon" class="@DesignSystem.ControlLabel">@Localizer["Symbol"]</label>
+            @if (!string.IsNullOrEmpty(Model.AllSymbolsHref))
+            {
+                <a href="@Model.AllSymbolsHref" class="small" target="_blank">@Localizer["All symbols"]</a>
+            }
             <select id="@(Model.BaseId)-icon" class="form-control form-control-sm">
             </select>
         </div>

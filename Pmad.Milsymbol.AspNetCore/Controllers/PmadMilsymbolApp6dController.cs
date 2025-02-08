@@ -3,7 +3,7 @@ using Pmad.Milsymbol.App6d;
 
 namespace Pmad.Milsymbol.AspNetCore.Controllers
 {
-    public class App6dController : Controller
+    public class PmadMilsymbolApp6dController : Controller
     {
         private readonly App6dSymbolDatabase app6D = App6dSymbolDatabase.Default;
 
@@ -18,5 +18,11 @@ namespace Pmad.Milsymbol.AspNetCore.Controllers
             return Json(new SymbolsetJson(symbolSet));
         }
 
+
+        [HttpGet("/lib/pmad-milsymbol/app6d/all")]
+        public IActionResult AllSymbols(string code)
+        {
+            return View(app6D);
+        }
     }
 }

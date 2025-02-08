@@ -1,0 +1,60 @@
+@model Pmad.Milsymbol.App6d.App6dSymbolDatabase
+@inject Pmad.Milsymbol.AspNetCore.Services.IApp6dSymbolGenerator SymbolGenerator
+@{
+    var options = new Pmad.Milsymbol.Icons.SymbolIconOptions();
+    options.Size = 25;
+}
+<h1>All symbols</h1>
+@foreach (var symbolset in Model.SymbolSets)
+{
+    <h2>@symbolset.Name</h2>
+    <code class="text-dark bg-white">
+        1003<span class="bg-primary text-white">@(symbolset.Code)</span>00000000000000
+    </code>
+    <h3>Symbols (@symbolset.MainIcons.Count)</h3>
+    <table class="table">
+        <colgroup>
+            <col style="width: 50px;" />
+            <col style="width: 175px;" />
+        </colgroup>
+        <tr>
+            <th>Icon</th>
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+        @foreach (var icon in symbolset.MainIcons)
+        {
+            var sidc = $"1003{symbolset.Code}0000{icon.Code}0000";
+            if (icon.IsPointRendering)
+            {
+                <tr>
+                    <td>
+                        @Html.Raw((await SymbolGenerator.GenerateAsync(sidc, options)).Svg)
+                    </td>
+                    <td>
+                        <code class="text-dark bg-white">
+                            1003<span class="bg-secondary text-white">@(symbolset.Code)</span>0000<span class="bg-primary text-white">@(icon.Code)</span>0000
+                        </code>
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(icon.EntitySubtype))
+                        {
+                            <span class="small">@icon.Entity &gt;</span>
+                            <span class="small">@icon.EntityType &gt;</span>
+                            <span>@icon.EntitySubtype</span>
+                        }
+                        else if (!string.IsNullOrEmpty(icon.EntityType))
+                        {
+                            <span class="small">@icon.Entity &gt;</span>
+                            <span>@icon.EntityType</span>
+                        }
+                        else
+                        {
+                            <span>@icon.Entity</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}

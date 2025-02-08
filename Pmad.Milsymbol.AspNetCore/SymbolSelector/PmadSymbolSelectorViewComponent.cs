@@ -1,28 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Pmad.Milsymbol.App6d;
-using Pmad.Milsymbol.AspNetCore.TagHelpers;
 
 namespace Pmad.Milsymbol.AspNetCore.SymbolSelector
 {
     public class PmadSymbolSelectorViewComponent : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(string id, string name, string value, SymbolSelectorLayout layout = SymbolSelectorLayout.Default)
+        public async Task<IViewComponentResult> InvokeAsync(PmadSymbolSelectorOptions options)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(options.Value))
             {
-                value = "10031000000000000000";
+                options.Value = "10031000000000000000";
             }
             var app6d = App6dSymbolDatabase.Default;
-            var sdic = new App6dSymbolId(value);
+            var sdic = new App6dSymbolId(options.Value);
             var model = new SymbolSelectorModel
             {
-                Name = name,
-                BaseId = id,
+                Name = options.Name,
+                BaseId = options.Id,
                 App6d = app6d,
-                SymbolId = sdic
+                SymbolId = sdic,
+                AllSymbolsHref = options.AllSymbolsHref ?? "/lib/pmad-milsymbol/app6d/all",
+                BookmarksHref = options.BookmarksHref
             };
-            return View(layout.ToString(), model);
+            return View(options.Layout.ToString(), model);
         }
     }
 }

@@ -222,4 +222,10 @@
   <data name="Standard Identity" xml:space="preserve">
     <value>Identité standard</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="All symbols" xml:space="preserve">
+    <value>Tous les symboles</value>
+  </data>
 </root>

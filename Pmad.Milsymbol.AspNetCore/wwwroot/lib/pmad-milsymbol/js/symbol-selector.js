@@ -368,7 +368,7 @@ var PmadMilsymbolSelector;
                 }
                 const option = document.createElement('option');
                 option.value = item.code;
-                option.text = item.entity.join(' - ');
+                option.text = item.entity.join(' > ');
                 option.pmadEntity = item.entity;
                 option.setAttribute("data-sidc", getSdic(item.code));
                 if (item.code === selected) {
