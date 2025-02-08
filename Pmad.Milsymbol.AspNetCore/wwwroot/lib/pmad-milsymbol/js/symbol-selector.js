@@ -1,8 +1,10 @@
 var PmadMilsymbolSelector;
 (function (PmadMilsymbolSelector) {
+    var _a;
     const validSidc = new RegExp('^([0-9]{20})|([0-9]{30})$');
     const _options = {};
     const _instances = {};
+    let _bookmarksProvider = null;
     class PmadMilsymbolSelectorOptions {
         getSymbolOptions() { return {}; }
     }
@@ -87,12 +89,7 @@ var PmadMilsymbolSelector;
         }
     }
     function setOptions(id, setOptions) {
-        var _a;
         Object.assign(getOptions(id), setOptions);
-        if (setOptions.getBookmarks) {
-            // merge bookmarks if already initialized
-            (_a = getInstance(id)) === null || _a === void 0 ? void 0 : _a.mergeBookmarks(setOptions.getBookmarks());
-        }
     }
     PmadMilsymbolSelector.setOptions = setOptions;
     function getOptions(id) {
@@ -182,10 +179,60 @@ var PmadMilsymbolSelector;
         }
         throw new Error("Element not found: " + id);
     }
+    // ---- Bookmark management (common to all instances) ----
+    let bookmarkItems = JSON.parse((_a = localStorage.getItem("pmad-milsymbol-bookmarks")) !== null && _a !== void 0 ? _a : "[]");
+    function doAddBookmark(sidc) {
+        bookmarkItems.push(sidc);
+        Object.keys(_instances).forEach(id => _instances[id].addBookmarkButton(sidc));
+    }
+    function doRemoveBookmark(sidc) {
+        bookmarkItems = bookmarkItems.filter(other => other !== sidc);
+        Object.keys(_instances).forEach(id => _instances[id].removeBookmarkButton(sidc));
+    }
+    function toggleBookmark(sidc) {
+        if (bookmarkItems.includes(sidc)) {
+            doRemoveBookmark(sidc);
+        }
+        else {
+            doAddBookmark(sidc);
+        }
+        saveBookmarks();
+    }
+    function saveBookmarks() {
+        localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+        if (_bookmarksProvider) {
+            _bookmarksProvider.saveBookmarks(bookmarkItems);
+        }
+    }
+    function mergeBookmarks(bookmarks) {
+        let changed = bookmarks.length !== bookmarkItems.length;
+        bookmarks.forEach(sidc => {
+            if (!bookmarkItems.includes(sidc)) {
+                doAddBookmark(sidc);
+                changed = true;
+            }
+        });
+        if (changed) {
+            saveBookmarks();
+        }
+    }
+    /**
+     * Set a way to save and load bookmarks server-side (to allow bookmarks to work across devices)
+     *
+     * The localstorage is always used, and will be updated with server data if required.
+     *
+     * @param bookmarksProvider
+     */
+    function setBookmarksProvider(bookmarksProvider) {
+        _bookmarksProvider = bookmarksProvider;
+        if (_bookmarksProvider) {
+            mergeBookmarks(_bookmarksProvider.getBookmarks());
+        }
+    }
+    PmadMilsymbolSelector.setBookmarksProvider = setBookmarksProvider;
+    // ---- Each instance logic ----
     function initialize(baseId) {
-        var _a;
         const options = getOptions(baseId);
-        let bookmarkItems = JSON.parse((_a = localStorage.getItem("pmad-milsymbol-bookmarks")) !== null && _a !== void 0 ? _a : "[]");
         const input = document.getElementById(baseId);
         const preview = document.getElementById(baseId + "-preview");
         const selectId = getPseudoSelect(baseId + "-id");
@@ -199,12 +246,6 @@ var PmadMilsymbolSelector;
         const bookmarks = document.getElementById(baseId + "-bookmarks");
         const bookmarkItem = bookmarks.querySelector("div.d-none");
         const bookmarkButton = document.getElementById(baseId + "-add-bookmark");
-        function saveBookmarks() {
-            localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
-            if (options.saveBookmarks) {
-                options.saveBookmarks(bookmarkItems);
-            }
-        }
         let batchUpdate = false;
         function updateBookmarkButton() {
             if (bookmarkItems.includes(input.value)) {
@@ -372,40 +413,17 @@ var PmadMilsymbolSelector;
             addBookmarkButton(sidc);
         });
         bookmarkButton.addEventListener("click", function () {
-            if (!bookmarkItems.includes(input.value)) {
-                bookmarkItems.push(input.value);
-                addBookmarkButton(input.value);
-            }
-            else {
-                bookmarkItems = bookmarkItems.filter(sidc => sidc !== input.value);
-                removeBookmarkButton(input.value);
-            }
-            saveBookmarks();
+            toggleBookmark(input.value);
         });
-        function mergeBookmarks(bookmarks) {
-            let changed = bookmarks.length !== bookmarkItems.length;
-            bookmarks.forEach(sidc => {
-                if (!bookmarkItems.includes(sidc)) {
-                    bookmarkItems.push(sidc);
-                    addBookmarkButton(sidc);
-                    changed = true;
-                }
-            });
-            if (changed) {
-                saveBookmarks();
-            }
-        }
-        if (options.getBookmarks) {
-            mergeBookmarks(options.getBookmarks());
-        }
         _instances[baseId] = {
             updatePreview: updatePreview,
-            mergeBookmarks: mergeBookmarks,
             setValue: function (sidc) {
                 input.value = sidc;
                 input.dispatchEvent(new Event("change"));
             },
-            getValue: () => input.value
+            getValue: () => input.value,
+            addBookmarkButton: addBookmarkButton,
+            removeBookmarkButton: removeBookmarkButton
         };
     }
     PmadMilsymbolSelector.initialize = initialize;

@@ -1,9 +1,9 @@
 namespace PmadMilsymbolSelector {
 
     const validSidc = new RegExp('^([0-9]{20})|([0-9]{30})$');
-
     const _options: { [id: string]: PmadMilsymbolSelectorOptions; } = {};
     const _instances: { [id: string]: PmadMilsymbolSelectorInstance; } = {};
+    let _bookmarksProvider: BookmarksProvider = null;
 
     interface SymbolsetJson {
         icons: IconJson[];
@@ -24,21 +24,23 @@ namespace PmadMilsymbolSelector {
 
     class PmadMilsymbolSelectorOptions implements SetPmadMilsymbolSelectorOptions {
         getSymbolOptions(): ms.SymbolOptions { return {}; }
-        saveBookmarks?(bookmarks: string[]): void;
-        getBookmarks?(): string[];
     }
 
     export interface SetPmadMilsymbolSelectorOptions {
         getSymbolOptions?(): ms.SymbolOptions;
-        saveBookmarks?(bookmarks: string[]): void;
-        getBookmarks?(): string[];
+    }
+
+    export interface BookmarksProvider {
+        saveBookmarks(bookmarks: string[]): void;
+        getBookmarks(): string[];
     }
 
     export interface PmadMilsymbolSelectorInstance {
         updatePreview();
-        mergeBookmarks(bookmarks: string[]): void;
         setValue(sidc: string): void;
         getValue(): string;
+        addBookmarkButton(sidc: string);
+        removeBookmarkButton(sidc: string);
     }
 
     interface PseudoSelect {
@@ -137,10 +139,6 @@ namespace PmadMilsymbolSelector {
 
     export function setOptions(id: string, setOptions: SetPmadMilsymbolSelectorOptions) {
         Object.assign(getOptions(id), setOptions);
-        if (setOptions.getBookmarks) {
-            // merge bookmarks if already initialized
-            getInstance(id)?.mergeBookmarks(setOptions.getBookmarks());
-        }
     }
 
     export function getOptions(id: string): PmadMilsymbolSelectorOptions {
@@ -214,12 +212,13 @@ namespace PmadMilsymbolSelector {
         let select = document.getElementById(id) as HTMLSelectElement;
         return new SelectWithChoicesJS(select, choicesConfig);
     }
+
     function getPseudoSelect(id: string, flags?: number[]): PseudoSelect {
         if (document.querySelectorAll<HTMLInputElement>("input[type=radio][name='" + id + "']").length > 0) {
             return new RadioButtons(id);
         }
         if (flags) {
-            let checkboxes = flags.map(flag => document.getElementById( id + flag) as HTMLInputElement);
+            let checkboxes = flags.map(flag => document.getElementById(id + flag) as HTMLInputElement);
             if (checkboxes.every(checkbox => checkbox)) {
                 return new FlagCheckboxes(checkboxes, flags);
             }
@@ -231,11 +230,66 @@ namespace PmadMilsymbolSelector {
         throw new Error("Element not found: " + id);
     }
 
+    // ---- Bookmark management (common to all instances) ----
+
+    let bookmarkItems = JSON.parse(localStorage.getItem("pmad-milsymbol-bookmarks") ?? "[]") as string[];
+
+    function doAddBookmark(sidc: string) {
+        bookmarkItems.push(sidc);
+        Object.keys(_instances).forEach(id => _instances[id].addBookmarkButton(sidc));
+    }
+    function doRemoveBookmark(sidc: string) {
+        bookmarkItems = bookmarkItems.filter(other => other !== sidc);
+        Object.keys(_instances).forEach(id => _instances[id].removeBookmarkButton(sidc));
+    }
+
+    function toggleBookmark(sidc: string) {
+        if (bookmarkItems.includes(sidc)) {
+            doRemoveBookmark(sidc);
+        } else {
+            doAddBookmark(sidc);
+        }
+        saveBookmarks();
+    }
+
+    function saveBookmarks() {
+        localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
+        if (_bookmarksProvider) {
+            _bookmarksProvider.saveBookmarks(bookmarkItems);
+        }
+    }
+
+    function mergeBookmarks(bookmarks: string[]) {
+        let changed = bookmarks.length !== bookmarkItems.length;
+        bookmarks.forEach(sidc => {
+            if (!bookmarkItems.includes(sidc)) {
+                doAddBookmark(sidc);
+                changed = true;
+            }
+        });
+        if (changed) {
+            saveBookmarks();
+        }
+    }
+
+    /**
+     * Set a way to save and load bookmarks server-side (to allow bookmarks to work across devices)
+     * 
+     * The localstorage is always used, and will be updated with server data if required.
+     * 
+     * @param bookmarksProvider
+     */
+    export function setBookmarksProvider(bookmarksProvider: BookmarksProvider) {
+        _bookmarksProvider = bookmarksProvider;
+        if (_bookmarksProvider) {
+            mergeBookmarks(_bookmarksProvider.getBookmarks());
+        }
+    }
+
+    // ---- Each instance logic ----
     export function initialize(baseId: string) {
 
         const options = getOptions(baseId);
-
-        let bookmarkItems = JSON.parse(localStorage.getItem("pmad-milsymbol-bookmarks") ?? "[]") as string[];
 
         const input = document.getElementById(baseId) as HTMLInputElement;
         const preview = document.getElementById(baseId + "-preview") as HTMLDivElement;
@@ -254,12 +308,6 @@ namespace PmadMilsymbolSelector {
         const bookmarkItem = bookmarks.querySelector("div.d-none") as HTMLDivElement;
         const bookmarkButton = document.getElementById(baseId + "-add-bookmark");
 
-        function saveBookmarks() {
-            localStorage.setItem("pmad-milsymbol-bookmarks", JSON.stringify(bookmarkItems));
-            if (options.saveBookmarks) {
-                options.saveBookmarks(bookmarkItems);
-            }
-        }
 
         let batchUpdate = false;
 
@@ -449,42 +497,18 @@ namespace PmadMilsymbolSelector {
         });
 
         bookmarkButton.addEventListener("click", function () {
-            if (!bookmarkItems.includes(input.value)) {
-                bookmarkItems.push(input.value);
-                addBookmarkButton(input.value);
-            } else {
-                bookmarkItems = bookmarkItems.filter(sidc => sidc !== input.value);
-                removeBookmarkButton(input.value);
-            }
-            saveBookmarks();
+            toggleBookmark(input.value);
         });
-
-        function mergeBookmarks(bookmarks: string[]) {
-            let changed = bookmarks.length !== bookmarkItems.length;
-            bookmarks.forEach(sidc => {
-                if (!bookmarkItems.includes(sidc)) {
-                    bookmarkItems.push(sidc);
-                    addBookmarkButton(sidc);
-                    changed = true;
-                }
-            });
-            if (changed) {
-                saveBookmarks();
-            }
-        }
-
-        if (options.getBookmarks) {
-            mergeBookmarks(options.getBookmarks());
-        }
 
         _instances[baseId] = {
             updatePreview: updatePreview,
-            mergeBookmarks: mergeBookmarks,
             setValue: function (sidc: string) {
                 input.value = sidc;
                 input.dispatchEvent(new Event("change"));
             },
-            getValue: () => input.value
+            getValue: () => input.value,
+            addBookmarkButton: addBookmarkButton,
+            removeBookmarkButton: removeBookmarkButton
         };
     }
 }
