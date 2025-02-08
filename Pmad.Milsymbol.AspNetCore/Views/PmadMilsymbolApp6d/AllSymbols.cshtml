@@ -8,8 +8,8 @@
 @foreach (var symbolset in Model.SymbolSets)
 {
     <h2>@symbolset.Name</h2>
-    <code class="text-dark bg-white">
-        1003<span class="bg-primary text-white">@(symbolset.Code)</span>00000000000000
+    <code class="text-body">
+        1003<span class="text-success">@(symbolset.Code)</span>00000000000000
     </code>
     <h3>Symbols (@symbolset.MainIcons.Count)</h3>
     <table class="table">
@@ -32,8 +32,8 @@
                         @Html.Raw((await SymbolGenerator.GenerateAsync(sidc, options)).Svg)
                     </td>
                     <td>
-                        <code class="text-dark bg-white">
-                            1003<span class="bg-secondary text-white">@(symbolset.Code)</span>0000<span class="bg-primary text-white">@(icon.Code)</span>0000
+                        <code class="text-body">
+                            1003@(symbolset.Code)0000<span class="text-success">@(icon.Code)</span>0000
                         </code>
                     </td>
                     <td>

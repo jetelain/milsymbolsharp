@@ -316,9 +316,15 @@ var PmadMilsymbolSelector;
         function updateSelects(sidc) {
             batchUpdate = true;
             selectId.setValue(sidc.substring(3, 4));
-            selectSet.setValue(sidc.substring(4, 6));
             selectStatus.setValue(sidc.substring(6, 7));
             selectHq.setValue(sidc.substring(7, 8));
+            const set = sidc.substring(4, 6);
+            if (set != selectSet.getValue()) {
+                selectSet.setValue(set);
+                batchUpdate = false;
+                loadSymbolSet(sidc);
+                return;
+            }
             selectAmp.setValue(sidc.substring(8, 10));
             selectIcon.setValue(sidc.substring(10, 16));
             selectMod1.setValue(sidc.substring(16, 18));
