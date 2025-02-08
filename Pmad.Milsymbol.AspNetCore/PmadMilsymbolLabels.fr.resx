@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Symbol Identifier Coding" xml:space="preserve">
-    <value>Symbol Identifier Coding</value>
+    <value>Codage de l'identifiant de symbole</value>
   </data>
   <data name="Bookmark" xml:space="preserve">
-    <value>Bookmark</value>
+    <value>Marque-page</value>
   </data>
   <data name="Copy code" xml:space="preserve">
-    <value>Copy code</value>
+    <value>Copier le code</value>
   </data>
   <data name="Copy image" xml:space="preserve">
-    <value>Copy image</value>
+    <value>Copier l'image</value>
   </data>
   <data name="Bookmarks" xml:space="preserve">
-    <value>Bookmarks</value>
+    <value>Marque-pages</value>
   </data>
   <data name="Pending" xml:space="preserve">
-    <value>Pending</value>
+    <value>En attente</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Inconnu</value>
   </data>
   <data name="Assumed Friend" xml:space="preserve">
-    <value>Assumed Friend</value>
+    <value>Présumé ami</value>
   </data>
   <data name="Friend" xml:space="preserve">
-    <value>Friend</value>
+    <value>Ami</value>
   </data>
   <data name="Neutral" xml:space="preserve">
-    <value>Neutral</value>
+    <value>Neutre</value>
   </data>
   <data name="Suspect" xml:space="preserve">
     <value>Suspect</value>
@@ -154,72 +154,72 @@
     <value>Hostile</value>
   </data>
   <data name="Dummy" xml:space="preserve">
-    <value>Dummy</value>
+    <value>Factice</value>
   </data>
   <data name="HQ" xml:space="preserve">
-    <value>HQ</value>
+    <value>QG</value>
   </data>
   <data name="TF" xml:space="preserve">
     <value>TF</value>
   </data>
   <data name="Symbol set" xml:space="preserve">
-    <value>Symbol set</value>
+    <value>Ensemble de symboles</value>
   </data>
   <data name="Symbol" xml:space="preserve">
-    <value>Symbol</value>
+    <value>Symbole</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>Statut</value>
   </data>
   <data name="Present" xml:space="preserve">
-    <value>Present</value>
+    <value>Présent</value>
   </data>
   <data name="Planned/Anticiped/Supect" xml:space="preserve">
-    <value>Planned/Anticiped/Supect</value>
+    <value>Planifié/Anticipé/Suspect</value>
   </data>
   <data name="Present/Fully capable" xml:space="preserve">
-    <value>Present/Fully capable</value>
+    <value>Présent/Entièrement capable</value>
   </data>
   <data name="Present/Damaged" xml:space="preserve">
-    <value>Present/Damaged</value>
+    <value>Présent/Endommagé</value>
   </data>
   <data name="Present/Destroyed" xml:space="preserve">
-    <value>Present/Destroyed</value>
+    <value>Présent/Détruit</value>
   </data>
   <data name="Present/Full to capacity" xml:space="preserve">
-    <value>Present/Full to capacity</value>
+    <value>Présent/Plein à capacité</value>
   </data>
   <data name="Icon Modifier 1" xml:space="preserve">
-    <value>Icon Modifier 1</value>
+    <value>Modificateur d'icône 1</value>
   </data>
   <data name="Icon Modifier 2" xml:space="preserve">
-    <value>Icon Modifier 2</value>
+    <value>Modificateur d'icône 2</value>
   </data>
   <data name="Echelon" xml:space="preserve">
     <value>Echelon</value>
   </data>
   <data name="Feint/Dummy" xml:space="preserve">
-    <value>Feint/Dummy</value>
+    <value>Feinte/Factice</value>
   </data>
   <data name="Headquarters" xml:space="preserve">
-    <value>Headquarters</value>
+    <value>Quartier général</value>
   </data>
   <data name="Feint/Dummy Headquarters" xml:space="preserve">
-    <value>Feint/Dummy Headquarters</value>
+    <value>Quartier général factice</value>
   </data>
   <data name="Task Force" xml:space="preserve">
     <value>Task Force</value>
   </data>
   <data name="Feint/Dummy Task Force" xml:space="preserve">
-    <value>Feint/Dummy Task Force</value>
+    <value>Task Force factice</value>
   </data>
   <data name="Task Force Headquarters" xml:space="preserve">
-    <value>Task Force Headquarters</value>
+    <value>Quartier général de la Task Force</value>
   </data>
   <data name="Feint/Dummy Task Force Headquarters" xml:space="preserve">
-    <value>Feint/Dummy Task Force Headquarters</value>
+    <value>Quartier général Factice de la Task Force</value>
   </data>
   <data name="Standard Identity" xml:space="preserve">
-    <value>Standard Identity</value>
+    <value>Identité standard</value>
   </data>
 </root>

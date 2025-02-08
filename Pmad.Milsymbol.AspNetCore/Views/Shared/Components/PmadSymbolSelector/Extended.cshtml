@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="Symbol Identifier Coding" />
+                    <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="@Localizer["Symbol Identifier Coding"]" />
                     <pmad-wrap-div class="@DesignSystem.InputGroupAppend">
                         <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark">&#x2605; @Localizer["Bookmark"]</button>
                         <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-code" type="button">@Localizer["Copy code"]</button>
@@ -40,58 +40,58 @@
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="26.37" height="26.37" viewBox="26.75 26.75 146.5 146.5"><path d="M63,63 C63,20 137,20 137,63 C180,63 180,137 137,137 C137,180 63,180 63,137 C20,137 20,63 63,63 Z" stroke-width="4" stroke="black" fill="rgb(255,255,128)" fill-opacity="1"></path><path d="M63,63 C63,20 137,20 137,63 C180,63 180,137 137,137 C137,180 63,180 63,137 C20,137 20,63 63,63 Z" stroke-width="5" stroke-dasharray="4,4" stroke="rgb(239, 239, 239)" fill="none"></path></svg>
                 </span>
-                <br />Pending
+                <br />@Localizer["Pending"]
             </pmad-toggle-button>
             <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id2" value="1">
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="26.37" height="26.37" viewBox="26.75 26.75 146.5 146.5"><path d="M63,63 C63,20 137,20 137,63 C180,63 180,137 137,137 C137,180 63,180 63,137 C20,137 20,63 63,63 Z" stroke-width="4" stroke="black" fill="rgb(255,255,128)" fill-opacity="1"></path></svg>
                 </span>
-                <br />Unknown
+                <br />@Localizer["Unknown"]
             </pmad-toggle-button>
             <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id3" value="2">
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="19.44" viewBox="21 46 158 108"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="5" stroke-dasharray="4,4" stroke="rgb(239, 239, 239)" fill="none"></path></svg>
                 </span>
-                <br />Assumed Friend
+                <br />@Localizer["Assumed Friend"]
             </pmad-toggle-button>
             <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id4" value="3">
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="19.44" viewBox="21 46 158 108"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path></svg>
                 </span>
-                <br />Friend
+                <br />@Localizer["Friend"]
             </pmad-toggle-button>
             <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id5" value="4">
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="21.24" height="21.24" viewBox="41 41 118 118"><path d="M45,45 l110,0 0,110 -110,0 z" stroke-width="4" stroke="black" fill="rgb(170,255,170)" fill-opacity="1"></path></svg>
                 </span>
-                <br />Neutral
+                <br />@Localizer["Neutral"]
             </pmad-toggle-button>
             <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id6" value="5">
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="27.36" height="27.36" viewBox="24 24 152 152"><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" stroke-width="4" stroke="black" fill="rgb(255,128,128)" fill-opacity="1"></path><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" stroke-width="5" stroke-dasharray="4,4" stroke="rgb(239, 239, 239)" fill="none"></path></svg>
                 </span>
-                <br />Suspect
+                <br />@Localizer["Suspect"]
             </pmad-toggle-button>
             <pmad-toggle-button type="radio" name="@(Model.BaseId)-id" id="@(Model.BaseId)-id7" value="6">
                 <span class="symbol-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="27.36" height="27.36" viewBox="24 24 152 152"><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" stroke-width="4" stroke="black" fill="rgb(255,128,128)" fill-opacity="1"></path></svg>
                 </span>
-                <br />Hostile
+                <br />@Localizer["Hostile"]
             </pmad-toggle-button>
         </div>
 
         <div class="btn-group mb-2 col-md-3 btn-group-toggle" role="group" data-toggle="buttons">
             <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq1">
                 <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="32.94" viewBox="21 -29 158 183"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M100,-25 L25,50 M100,-25 L175,50" stroke-width="4" stroke-dasharray="8,8" stroke="black" fill="none"></path></svg></span>
-                <br/>Dummy
+                <br/>@Localizer["Dummy"]
             </pmad-toggle-button>
             <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq2">
                 <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="37.44" viewBox="21 46 158 208"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M25,150 L25,250" stroke-width="4" stroke="black" fill="none"></path></svg></span>
-                <br />HQ
+                <br />@Localizer["HQ"]
             </pmad-toggle-button>
             <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq4">
                 <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="26.64" viewBox="21 6 158 148"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M55,50 L55,10 145,10 145,50" stroke-width="4" stroke="black" fill="none"></path></svg></span>
-                <br />TF
+                <br />@Localizer["TF"]
             </pmad-toggle-button>
         </div>
 
