@@ -1,10 +1,14 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Pmad.Milsymbol.AspNetCore
 @model Pmad.Milsymbol.App6d.App6dSymbolDatabase
 @inject Pmad.Milsymbol.AspNetCore.Services.IApp6dSymbolGenerator SymbolGenerator
+@inject IHtmlLocalizer<PmadMilsymbolLabels> Localizer
 @{
     var options = new Pmad.Milsymbol.Icons.SymbolIconOptions();
     options.Size = 25;
+    ViewData["Title"] = Localizer["All symbols"];
 }
-<h1>All symbols</h1>
+<h1>@Localizer["All symbols"]</h1>
 @foreach (var symbolset in Model.SymbolSets)
 {
     <h2>@symbolset.Name</h2>

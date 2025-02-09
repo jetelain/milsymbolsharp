@@ -23,7 +23,7 @@
             <div class="col-md-3">
                 <div>
                     @Localizer["Bookmarks"]
-                    @if (!string.IsNullOrEmpty(Model.AllSymbolsHref))
+                    @if (!string.IsNullOrEmpty(Model.BookmarksHref))
                     {
                         <a href="@Model.BookmarksHref" class="small" target="_blank">@Localizer["Edit"]</a>
                     }
