@@ -141,6 +141,7 @@ namespace PmadMilsymbolSelector {
 
     export function setOptions(id: string, setOptions: SetPmadMilsymbolSelectorOptions) {
         Object.assign(getOptions(id), setOptions);
+        getInstance(id)?.updatePreview();
     }
 
     export function getOptions(id: string): PmadMilsymbolSelectorOptions {
@@ -473,7 +474,7 @@ namespace PmadMilsymbolSelector {
             generateSelectContent(json.modifiers1, selectMod1, sidc.substring(16, 18), code => `1003${set}0000000000${code}00`);
             generateSelectContent(json.modifiers2, selectMod2, sidc.substring(18, 20), code => `1003${set}000000000000${code}`);
             generateIconSelectContent(json.icons, selectIcon, sidc.substring(10, 16), code => `1003${set}0000${code}0000`);
-            input.value = sidc;
+            input.value = getSelectedSymbol(); // sidc might not be valid according to the new set, update it
             batchUpdate = false;
             updatePreview();
         }
