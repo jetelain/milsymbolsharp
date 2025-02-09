@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Pmad.Milsymbol.App6d
 {
@@ -9,7 +8,7 @@ namespace Pmad.Milsymbol.App6d
 
         public App6dSymbolId(string sidc)
         {
-            if (sidc == null || (sidc.Length != 20 && sidc.Length != 30) || !IsNumeric(sidc))
+            if (!IsFormatValid(sidc))
             {
                 throw new ArgumentException($"'{sidc}' is not a valid APP-6D SIDC: length must be 20 or 30 and value must be only digits", nameof(sidc));
             }
@@ -61,6 +60,22 @@ namespace Pmad.Milsymbol.App6d
         internal static bool IsNumeric(string s)
         {
             return s.All(c => c >= '0' && c <= '9');
+        }
+
+        public static bool TryParse(string sidc, [NotNullWhen(true)] out App6dSymbolId? symbolId)
+        {
+            if (IsFormatValid(sidc))
+            {
+                symbolId = new App6dSymbolId(sidc);
+                return true;
+            }
+            symbolId = null;
+            return false;
+        }
+
+        public static bool IsFormatValid(string sidc)
+        {
+            return sidc != null && (sidc.Length == 20 || sidc.Length == 30) && IsNumeric(sidc);
         }
     }
 }

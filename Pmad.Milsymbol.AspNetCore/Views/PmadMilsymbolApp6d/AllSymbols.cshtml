@@ -11,7 +11,7 @@
 <h1>@Localizer["All symbols"]</h1>
 @foreach (var symbolset in Model.SymbolSets)
 {
-    <h2>@symbolset.Name</h2>
+    <h2 class="sticky-top bg-white pb-1">@symbolset.Name</h2>
     <code class="text-body">
         1003<span class="text-success">@(symbolset.Code)</span>00000000000000
     </code>

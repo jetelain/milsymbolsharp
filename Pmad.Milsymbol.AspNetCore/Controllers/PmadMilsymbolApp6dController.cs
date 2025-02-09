@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Pmad.Milsymbol.App6d;
+using Pmad.Milsymbol.AspNetCore.SymbolSelector.Bookmarks;
 
 namespace Pmad.Milsymbol.AspNetCore.Controllers
 {
@@ -24,5 +27,28 @@ namespace Pmad.Milsymbol.AspNetCore.Controllers
         {
             return View(app6D);
         }
+
+        [HttpPost("/lib/pmad-milsymbol/bookmarks")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StoreBookmarks(string bookmarks)
+        {
+            var service = HttpContext.RequestServices.GetService<ISymbolBookmarksService>();
+            if (service == null)
+            {
+                return NotFound();
+            }
+            if (!await service.CanUseBookmarksAsync(User))
+            {
+                return Forbid();
+            }
+            var data = JsonSerializer.Deserialize<List<string>>(bookmarks);
+            if (data == null || data.Any(sidc => !App6dSymbolId.IsFormatValid(sidc)))
+            {
+                return BadRequest();
+            }
+            await service.SaveBookmarksAsync(User, data);
+            return Ok();
+        }
+
     }
 }

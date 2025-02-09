@@ -8,7 +8,7 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
         [HtmlAttributeName("class")]
         public string? Class { get; set; }
 
-        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if ( string.IsNullOrEmpty(Class))
             {
@@ -19,6 +19,7 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
                 output.TagName = "div";
                 output.Attributes.SetAttribute("class", Class);
             }
+            return Task.CompletedTask;
         }
     }
 }

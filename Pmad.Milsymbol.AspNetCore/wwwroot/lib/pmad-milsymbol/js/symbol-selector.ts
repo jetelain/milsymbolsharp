@@ -562,11 +562,70 @@ namespace PmadMilsymbolSelector {
             removeBookmarkButton: removeBookmarkButton
         };
     }
+
+    interface SymbolBookmark {
+        sidc: string;
+        label?: string;
+    }
+    interface SymbolBookmarksData {
+        bookmarks: SymbolBookmark[];
+        timestamp: string;
+        endpoint: string;
+        token: string;
+    }
+
+    class BuiltinBookmarksProvider implements BookmarksProvider {
+        items: string[];
+        timestamp: Date;
+        token: string;
+        endpoint: string;
+
+        constructor(data: SymbolBookmarksData) {
+            this.items = data.bookmarks.map(b => b.sidc);
+            this.timestamp = data.timestamp ? new Date(data.timestamp) : new Date(0);
+            this.token = data.token;
+            this.endpoint = data.endpoint;
+        }
+
+        saveBookmarks(bookmarks: string[]) {
+            fetch(this.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    '__RequestVerificationToken': this.token,
+                    'bookmarks': JSON.stringify(bookmarks)
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    console.error('Failed to save bookmarks');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        getBookmarksItems(): string[] {
+            return this.items;
+        }
+        getBookmarksTimestamp(): Date {
+            return this.timestamp;
+        }
+    }
+
+    export function initializePage() {
+        ms.setStandard("APP6");
+
+        let body = document.querySelector("body");
+        let bookmarks = body?.getAttribute('data-pmad-milsymbol-bookmarks');
+        if (bookmarks) {
+            setBookmarksProvider(new BuiltinBookmarksProvider(JSON.parse(bookmarks)));
+        }
+
+        document.querySelectorAll("div.pmad-symbol-selector").forEach(element => {
+            initialize(element.getAttribute("data-base-id"));
+        });
+    }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    ms.setStandard("APP6");
-    document.querySelectorAll("div.pmad-symbol-selector").forEach(element => {
-        PmadMilsymbolSelector.initialize(element.getAttribute("data-base-id"));
-    });
-});
+document.addEventListener("DOMContentLoaded", PmadMilsymbolSelector.initializePage);

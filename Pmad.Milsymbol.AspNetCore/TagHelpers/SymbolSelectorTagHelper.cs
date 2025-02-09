@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.DependencyInjection;
 using Pmad.Milsymbol.AspNetCore.SymbolSelector;
+using Pmad.Milsymbol.AspNetCore.SymbolSelector.Bookmarks;
 
 namespace Pmad.Milsymbol.AspNetCore.TagHelpers
 {
@@ -73,6 +75,16 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
                 .AddScript("lib/pmad-milsymbol/js/choices.min.js")
                 .AddScript("lib/pmad-milsymbol/js/milsymbol.js")
                 .AddScript("lib/pmad-milsymbol/js/symbol-selector.js");
+
+            var instance = _manager.Components.OfType<SymbolBookmarksComponent>().FirstOrDefault();
+            if (instance == null)
+            {
+                var service = ViewContext?.HttpContext?.RequestServices?.GetService<ISymbolBookmarksService>();
+                if (service != null)
+                {
+                    _manager.Components.Add(new SymbolBookmarksComponent(service, ViewContext!));
+                }
+            }
         }
     }
 }
