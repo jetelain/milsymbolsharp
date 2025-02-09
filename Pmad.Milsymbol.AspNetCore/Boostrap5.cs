@@ -37,7 +37,7 @@ namespace Pmad.Milsymbol.AspNetCore
             labelTag.InnerHtml.AppendHtml(content);
 
             var htmlContentBuilder = new HtmlContentBuilder();
-            htmlContentBuilder.AppendHtml(inputTag);
+            htmlContentBuilder.AppendHtml(inputTag.RenderSelfClosingTag());
             htmlContentBuilder.AppendHtml(labelTag);
             return htmlContentBuilder;
         }

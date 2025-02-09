@@ -28,7 +28,7 @@ namespace Pmad.Milsymbol.AspNetCore
             {
                 inputTag.Attributes.Add("value", value);
             }
-            labelTag.InnerHtml.AppendHtml(inputTag);
+            labelTag.InnerHtml.AppendHtml(inputTag.RenderSelfClosingTag());
             labelTag.InnerHtml.AppendHtml(content);
 
             return labelTag;

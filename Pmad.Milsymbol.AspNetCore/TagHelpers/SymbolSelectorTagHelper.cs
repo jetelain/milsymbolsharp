@@ -35,6 +35,15 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
         [HtmlAttributeName("bookmarks-href")]
         public string? BookmarksHref { get; set; }
 
+        [HtmlAttributeName("id")]
+        public string? Id { get; set; }
+
+        [HtmlAttributeName("name")]
+        public string? Name { get; set; }
+
+        [HtmlAttributeName("value")]
+        public string? Value { get; set; }
+
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = null; // Remove the <pmad-orbat> root element
@@ -46,9 +55,9 @@ namespace Pmad.Milsymbol.AspNetCore.TagHelpers
                     {"options", 
                         new PmadSymbolSelectorOptions()
                         {
-                            Name = For?.Name ?? "selector",
-                            Id = For?.Name ?? "selector",
-                            Value = For?.Model?.ToString() ?? string.Empty,
+                            Name = Name ?? For?.Name,
+                            Id = Id ?? For?.Name ?? "selector",
+                            Value = Value ?? For?.Model?.ToString() ?? string.Empty,
                             Layout = Layout,
                             AllSymbolsHref = AllSymbolsHref,
                             BookmarksHref = BookmarksHref

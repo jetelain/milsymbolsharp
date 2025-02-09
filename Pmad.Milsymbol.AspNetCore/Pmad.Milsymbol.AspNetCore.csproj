@@ -19,14 +19,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="wwwroot\lib\pmad-milsymbol\js\src\**" />
-	  <Content Remove="wwwroot\lib\pmad-milsymbol\js\src\**" />
-	  <EmbeddedResource Remove="wwwroot\lib\pmad-milsymbol\js\src\**" />
-	  <None Remove="wwwroot\lib\pmad-milsymbol\js\src\**" />
-	  <TypeScriptCompile Remove="wwwroot\lib\pmad-milsymbol\js\src\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Content Remove="wwwroot\lib\pmad-milsymbol\css\choices.min.css" />
 	  <Content Remove="wwwroot\lib\pmad-milsymbol\css\symbol-selector.css" />
 	  <Content Remove="wwwroot\lib\pmad-milsymbol\js\choices.min.js" />
