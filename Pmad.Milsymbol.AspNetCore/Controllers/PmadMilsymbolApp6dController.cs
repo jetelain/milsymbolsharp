@@ -41,7 +41,15 @@ namespace Pmad.Milsymbol.AspNetCore.Controllers
             {
                 return Forbid();
             }
-            var data = JsonSerializer.Deserialize<List<string>>(bookmarks);
+            List<string> data;
+            try
+            {
+                data = JsonSerializer.Deserialize<List<string>>(bookmarks);
+            }
+            catch (JsonException)
+            {
+                return BadRequest();
+            }
             if (data == null || data.Any(sidc => !App6dSymbolId.IsFormatValid(sidc)))
             {
                 return BadRequest();
