@@ -52,11 +52,11 @@ namespace Pmad.Milsymbol.AspNetCore
             }
             else if (designSystem == DesignSystem.Bootstrap5)
             {
-                services.TryAddSingleton<IDesignSystem, Boostrap5>();
+                services.TryAddSingleton<IDesignSystem, Bootstrap5DesignSystem>();
             }
             else
             {
-                services.TryAddSingleton<IDesignSystem, Boostrap4>();
+                services.TryAddSingleton<IDesignSystem, Bootstrap4DesignSystem>();
             }
         }
 
@@ -69,14 +69,14 @@ namespace Pmad.Milsymbol.AspNetCore
                 var content = new StreamReader(stream).ReadToEnd();
                 if (content.Contains("Bootstrap v5"))
                 {
-                    return new Boostrap5();
+                    return new Bootstrap5DesignSystem();
                 }
                 if (content.Contains("Bootstrap v4"))
                 {
-                    return new Boostrap4();
+                    return new Bootstrap4DesignSystem();
                 }
             }
-            return new Boostrap5();
+            return new Bootstrap5DesignSystem();
         }
 
         public static void UseMilsymbolStaticFiles(this IApplicationBuilder app)

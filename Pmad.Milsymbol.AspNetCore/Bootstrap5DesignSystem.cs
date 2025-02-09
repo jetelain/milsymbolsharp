@@ -3,19 +3,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Pmad.Milsymbol.AspNetCore
 {
-    internal class Boostrap4 : IDesignSystem
+    internal class Bootstrap5DesignSystem : IDesignSystem
     {
-        public string FormRow => "form-row";
-        public string ControlLabel => "control-label";
-        public string? InputGroupAppend => "input-group-append";
+        public string FormRow => "row";
+        public string ControlLabel => "form-label";
+        public string? InputGroupAppend => null;
 
         public IHtmlContent CreateToggleButton(IHtmlContent content, string type, string? id, string? name, string? value)
         {
-            var labelTag = new TagBuilder("label");
-            labelTag.AddCssClass("btn btn-sm btn-outline-secondary");
-
             var inputTag = new TagBuilder("input");
             inputTag.Attributes.Add("type", type);
+            inputTag.AddCssClass("btn-check");
             if (!string.IsNullOrEmpty(name))
             {
                 inputTag.Attributes.Add("name", name);
@@ -28,10 +26,20 @@ namespace Pmad.Milsymbol.AspNetCore
             {
                 inputTag.Attributes.Add("value", value);
             }
-            labelTag.InnerHtml.AppendHtml(inputTag.RenderSelfClosingTag());
+            inputTag.Attributes.Add("autocomplete", "off");
+
+            var labelTag = new TagBuilder("label");
+            labelTag.AddCssClass("btn btn-sm btn-outline-secondary");
+            if (!string.IsNullOrEmpty(id))
+            {
+                labelTag.Attributes.Add("for", id);
+            }
             labelTag.InnerHtml.AppendHtml(content);
 
-            return labelTag;
+            var htmlContentBuilder = new HtmlContentBuilder();
+            htmlContentBuilder.AppendHtml(inputTag.RenderSelfClosingTag());
+            htmlContentBuilder.AppendHtml(labelTag);
+            return htmlContentBuilder;
         }
     }
 }
