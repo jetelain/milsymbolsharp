@@ -298,8 +298,12 @@ var PmadMilsymbolSelector;
             }
         }
         function updatePreview() {
-            preview.innerHTML = new ms.Symbol(input.value, options.getSymbolOptions()).asSVG();
+            var symbol = new ms.Symbol(input.value, options.getSymbolOptions());
+            preview.innerHTML = symbol.asSVG();
             updateBookmarkButton();
+            if (options.symbolUpdatedCallback) {
+                options.symbolUpdatedCallback(input.value, options.getSymbolOptions(), symbol);
+            }
         }
         function getSelectedSymbol() {
             let symbol = '100';

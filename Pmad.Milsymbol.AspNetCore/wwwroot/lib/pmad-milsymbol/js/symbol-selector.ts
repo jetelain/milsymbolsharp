@@ -24,10 +24,12 @@ namespace PmadMilsymbolSelector {
 
     class PmadMilsymbolSelectorOptions implements SetPmadMilsymbolSelectorOptions {
         getSymbolOptions(): ms.SymbolOptions { return {}; }
+        symbolUpdatedCallback?(sidc: string, options: ms.SymbolOptions, symbol: ms.Symbol): void;
     }
 
     export interface SetPmadMilsymbolSelectorOptions {
         getSymbolOptions?(): ms.SymbolOptions;
+        symbolUpdatedCallback?(sidc: string, options: ms.SymbolOptions, symbol: ms.Symbol): void;
     }
 
     export interface BookmarksProvider {
@@ -364,8 +366,12 @@ namespace PmadMilsymbolSelector {
         }
 
         function updatePreview() {
-            preview.innerHTML = new ms.Symbol(input.value, options.getSymbolOptions()).asSVG();
+            var symbol = new ms.Symbol(input.value, options.getSymbolOptions());
+            preview.innerHTML = symbol.asSVG();
             updateBookmarkButton();
+            if (options.symbolUpdatedCallback) {
+                options.symbolUpdatedCallback(input.value, options.getSymbolOptions(), symbol);
+            }
         }
 
         function getSelectedSymbol() {

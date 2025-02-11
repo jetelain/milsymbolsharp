@@ -14,3 +14,27 @@
 <h2>Sample ORBAT</h2>
 
 <pmad-orbat root-unit="@Model.RootUnit" />
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+
+            PmadMilsymbolSelector.setOptions("Symbol1", {
+
+                getSymbolOptions: function(){
+
+                    return {
+                    commonIdentifier: "Identifier",
+                    uniqueDesignation: "1.2.3.4",
+                    
+                    };
+                },
+                symbolUpdatedCallback: function(sidc, options, symbol)
+                {
+                    console.log(sidc, options, symbol);
+                }
+
+            });
+        });
+    </script>
+}
