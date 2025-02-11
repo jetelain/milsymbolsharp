@@ -541,9 +541,7 @@ namespace PmadMilsymbolSelector {
         });
 
         document.getElementById(baseId + "-copy-image").addEventListener("click", async function () {
-            const msOptions = options.getSymbolOptions();
-            msOptions.size = 200; // twice the default, make a setting ?
-            const canvas = new ms.Symbol(input.value, msOptions).asCanvas();
+            const canvas = new ms.Symbol(input.value, options.getSymbolOptions()).asCanvas(2);
             canvas.toBlob(blob => {
                 const item = new ClipboardItem({ "image/png": blob });
                 navigator.clipboard.write([item]);
