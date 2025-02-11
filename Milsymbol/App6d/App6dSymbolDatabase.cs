@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Pmad.Milsymbol.App6d
 {
@@ -31,6 +32,11 @@ namespace Pmad.Milsymbol.App6d
         public App6dSymbolSet GetSymbolSet(string code)
         {
             return symbolSets[code];
+        }
+
+        public bool TryGetSymbolSet(string code, [MaybeNullWhen(false)] out App6dSymbolSet symbolSet)
+        {
+            return symbolSets.TryGetValue(code, out symbolSet);
         }
     }
 }

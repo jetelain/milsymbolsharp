@@ -1,0 +1,116 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Pmad.Milsymbol.AspNetCore
+@model Pmad.Milsymbol.AspNetCore.SymbolSelector.SymbolSelectorModel
+@inject IHtmlLocalizer<PmadMilsymbolLabels> Localizer
+@inject IDesignSystem DesignSystem
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Pmad.Milsymbol.AspNetCore
+
+<div class="pmad-symbol-selector" data-base-id="@Model.BaseId">
+    <div class="mb-1 p-1">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="Symbol Identifier Coding" />
+                    <pmad-wrap-div class="@DesignSystem.InputGroupAppend">
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark">&#x2605; @Localizer["Bookmark"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-code" type="button">@Localizer["Copy code"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-image" type="button">@Localizer["Copy image"]</button>
+                    </pmad-wrap-div>
+                </div>
+                <div id="@(Model.BaseId)-preview" class="preview-box bg-light p-2 mt-1"></div>
+            </div>
+            <div class="col-md-3">
+                <div>
+                    @Localizer["Bookmarks"]
+                    @if (!string.IsNullOrEmpty(Model.BookmarksHref))
+                    {
+                        <a href="@Model.BookmarksHref" class="small" target="_blank">@Localizer["Edit"]</a>
+                    }
+                </div>
+                <div id="@(Model.BaseId)-bookmarks" class="row row-cols-3 g-0 no-gutters">
+                    <div class="col p-1 d-none">
+                        <button class="btn btn-outline-secondary w-100 h-100">
+                            #
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="@DesignSystem.FormRow">
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-id" class="@DesignSystem.ControlLabel">@Localizer["Standard Identity"]</label>
+            <select id="@(Model.BaseId)-id" class="form-control form-control-sm">
+                <option value="0" data-sidc="10001000000000000000">@Localizer["Pending"]</option>
+                <option value="1" data-sidc="10011000000000000000">@Localizer["Unknown"]</option>
+                <option value="2" data-sidc="10021000000000000000">@Localizer["Assumed Friend"]</option>
+                <option value="3" data-sidc="10031000000000000000">@Localizer["Friend"]</option>
+                <option value="4" data-sidc="10041000000000000000">@Localizer["Neutral"]</option>
+                <option value="5" data-sidc="10051000000000000000">@Localizer["Suspect"]</option>
+                <option value="6" data-sidc="10061000000000000000">@Localizer["Hostile"]</option>
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-set" class="@DesignSystem.ControlLabel">@Localizer["Symbol set"]</label>
+            <select id="@(Model.BaseId)-set" class="form-control form-control-sm">
+                @foreach (var option in Model.App6d.SymbolSets)
+                {
+                    var icon = option.MainIcons.Where(i => i.IsPointRendering).FirstOrDefault()?.Code ?? "000000";
+                    <option value="@option.Code" data-sidc="1003@(option.Code)0000@(icon)0000">@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-status" class="@DesignSystem.ControlLabel">@Localizer["Status"]</label>
+            <select id="@(Model.BaseId)-status" class="form-control form-control-sm">
+                <option value="0" data-sidc="10031000000000000000" selected="selected">@Localizer["Present"]</option>
+                <option value="1" data-sidc="10031010000000000000">@Localizer["Planned/Anticiped/Supect"]</option>
+                <option value="2" data-sidc="10031020000000000000">@Localizer["Present/Fully capable"]</option>
+                <option value="3" data-sidc="10031030000000000000">@Localizer["Present/Damaged"]</option>
+                <option value="4" data-sidc="10031040000000000000">@Localizer["Present/Destroyed"]</option>
+                <option value="5" data-sidc="10031050000000000000">@Localizer["Present/Full to capacity"]</option>
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-hq" class="@DesignSystem.ControlLabel">HQ, TF</label>
+            <select id="@(Model.BaseId)-hq" class="form-control form-control-sm">
+                <option value="0" data-sidc="10031000000000000000" selected="selected">n/a</option>
+                <option value="1" data-sidc="10031001000000000000">@Localizer["Feint/Dummy"]</option>
+                <option value="2" data-sidc="10031002000000000000">@Localizer["Headquarters"]</option>
+                <option value="3" data-sidc="10031003000000000000">@Localizer["Feint/Dummy Headquarters"]</option>
+                <option value="4" data-sidc="10031004000000000000">@Localizer["Task Force"]</option>
+                <option value="5" data-sidc="10031005000000000000">@Localizer["Feint/Dummy Task Force"]</option>
+                <option value="6" data-sidc="10031006000000000000">@Localizer["Task Force Headquarters"]</option>
+                <option value="7" data-sidc="10031007000000000000">@Localizer["Feint/Dummy Task Force Headquarters"]</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="@DesignSystem.FormRow">
+        <div class="form-group mb-2 col-md-6">
+            <label for="@(Model.BaseId)-icon" class="@DesignSystem.ControlLabel">@Localizer["Symbol"]</label>
+            @if (!string.IsNullOrEmpty(Model.AllSymbolsHref))
+            {
+                <a href="@Model.AllSymbolsHref" class="small" target="_blank">@Localizer["All symbols"]</a>
+            }
+            <select id="@(Model.BaseId)-icon" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-2">
+            <label for="@(Model.BaseId)-mod1" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 1"]</label>
+            <select id="@(Model.BaseId)-mod1" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-2">
+            <label for="@(Model.BaseId)-mod2" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 2"]</label>
+            <select id="@(Model.BaseId)-mod2" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-2">
+            <label for="@(Model.BaseId)-amp" class="@DesignSystem.ControlLabel">@Localizer["Echelon"]</label>
+            <select id="@(Model.BaseId)-amp" class="form-control form-control-sm">
+            </select>
+        </div>
+    </div>
+</div>

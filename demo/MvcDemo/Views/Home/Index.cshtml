@@ -3,6 +3,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Sample ORBAT</h1>
+<h2>Default symbol selector</h2>
+
+<pmad-symbol-selector asp-for="Symbol1" />
+
+<h2>Extended symbol selector</h2>
+
+<pmad-symbol-selector asp-for="Symbol2" layout="Extended" />
+
+<h2>Sample ORBAT</h2>
 
 <pmad-orbat root-unit="@Model.RootUnit" />
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+
+            PmadMilsymbolSelector.setOptions("Symbol1", {
+
+                getSymbolOptions: function(){
+
+                    return {
+                    commonIdentifier: "Identifier",
+                    uniqueDesignation: "1.2.3.4",
+                    
+                    };
+                },
+                symbolUpdatedCallback: function(sidc, options, symbol)
+                {
+                    console.log(sidc, options, symbol);
+                }
+
+            });
+        });
+    </script>
+}

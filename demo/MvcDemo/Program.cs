@@ -1,4 +1,6 @@
+using MvcDemoBS5;
 using Pmad.Milsymbol.AspNetCore;
+using Pmad.Milsymbol.AspNetCore.SymbolSelector.Bookmarks;
 
 namespace MvcDemo
 {
@@ -12,6 +14,8 @@ namespace MvcDemo
             builder.Services
                 .AddControllersWithViews()
                     .AddMilsymbolMvcComponents();
+
+            builder.Services.AddScoped<ISymbolBookmarksService, SampleSymbolBookmarksService>();
 
             var app = builder.Build();
 

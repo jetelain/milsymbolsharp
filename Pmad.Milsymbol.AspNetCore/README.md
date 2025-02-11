@@ -19,7 +19,7 @@ In `_ViewImports.cshtml`, add the Milsymbol tag helpers.
 @addTagHelper *, Pmad.Milsymbol.AspNetCore
 ```
 
-## ORBAT Component
+## ORBAT Component `<pmad-orbat />`
 
 Implement the `IOrbatUnit` interface, or use the provided class `OrbatUnitViewModel`, and in the model, add a property of type `IOrbarUnit`
 ```csharp
@@ -41,3 +41,25 @@ To set a tooltip, or a link on each unit symbol, you can :
     unit-title="@(u => ((YourOrbatUnit)u).Label)"
     unit-link-controller="Units" unit-link-action="Details" unit-link-route="@(u => new { id = ((YourOrbatUnit)u).UnitID })" />
 ```
+
+## Symbol Component `<pmad-symbol-selector />`
+
+APP-6D symbol selector component.
+
+This component requires Boostrap 4 or 5. Version of bootstrap is automatically detected. Anyway, you can force the version by setting the `DesignSystem` in `AddMilsymbolMvcComponents`.
+```csharp
+builder.Services
+    .AddControllersWithViews()
+        .AddMilsymbolMvcComponents(DesignSystem.Boostrap5); // DesignSystem.Automatic by default
+```
+
+Basic usage with Symbol as string property in the model:
+```
+<pmad-symbol-selector asp-for="Symbol" />
+```
+
+Component has differents layouts:
+- `layout="Default"` (default): Only dropdown lists
+- `layout="Extended"`: Standard identity and Dummy/HQ/TF are selected with buttons, other categories are selected with dropdown lists
+
+Please note that this component will automaticly include choices.js and milsymbol.js.
