@@ -1,6 +1,6 @@
 # Milsymbol for C#
 
-[![NuGet](https://img.shields.io/nuget/v/Pmad.Milsymbol?logo=nuget)](https://www.nuget.org/packages/Pmad.Milsymbol/) 
+[![NuGet](https://img.shields.io/nuget/v/Pmad.Milsymbol?logo=nuget)](https://www.nuget.org/packages/Pmad.Milsymbol/) [![NuGet](https://img.shields.io/nuget/v/Pmad.Milsymbol.Png?logo=nuget)](https://www.nuget.org/packages/Pmad.Milsymbol.Png/) 
 
 ## Symbol Icon rendering
 
@@ -11,6 +11,8 @@ Includes a SVG to PNG render library based on Skia. This allow to have a PNG res
 Despite having an interpreted JavaScript backend, performance is honorable : 0.3 msec per SVG symbol (vs 0.01 msec in browser, x30 slower), 1.5 msec per PNG symbol (vs 0.6 msec in browser, x3 slower).
 
 Long term goal is to rewrite everything in C#, but keep parity with JS library.
+
+Png render requires the package Pmad.Milsymbol.Png (to avoid SkiaSharp dependency when only SVG render is required).
 
 Usage:
 ```
