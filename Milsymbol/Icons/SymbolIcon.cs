@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using SkiaSharp;
-using Svg.Skia;
-
-namespace Pmad.Milsymbol.Icons
+﻿namespace Pmad.Milsymbol.Icons
 {
     public class SymbolIcon
     {
@@ -29,24 +24,5 @@ namespace Pmad.Milsymbol.Icons
         }
 
         public bool IsUnknownSymbol => Svg == UnknownSymbolSvg;
-
-        public byte[] ToPng(float scale = 1f)
-        {
-            var mem = new MemoryStream();
-            SaveToPng(mem, scale);
-            return mem.ToArray();
-        }
-
-        public void SaveToPng(Stream target, float scale = 1f)
-        {
-            using (var xsvg = new SKSvg())
-            {
-                if (xsvg.FromSvg(Svg) == null)
-                {
-                    throw new InvalidOperationException("Generated SVG seems invalid");
-                }
-                xsvg.Save(target, SKColor.Empty, SKEncodedImageFormat.Png, 100, scale, scale);
-            }
-        }
     }
 }

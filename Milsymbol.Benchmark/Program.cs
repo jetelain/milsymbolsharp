@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Pmad.Milsymbol.App6d;
 using Pmad.Milsymbol.Icons;
+using Pmad.Milsymbol.Png;
 
 namespace Pmad.Milsymbol.Benchmark
 {

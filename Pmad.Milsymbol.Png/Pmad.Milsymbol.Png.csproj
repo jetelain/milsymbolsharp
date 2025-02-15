@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
@@ -17,18 +17,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="App6d\app6d.json" />
-		<EmbeddedResource Include="Icons\milsymbol.js" />
+		<!-- Version of SkiaSharp.NativeAssets.Linux must match version used by Svg.Skia -->
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" />
+		<PackageReference Include="Svg.Skia" Version="2.0.0.4" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\Milsymbol\Pmad.Milsymbol.csproj" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Jint" Version="4.1.0" />
-		<PackageReference Include="System.Text.Json" Version="9.0.0" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-	</ItemGroup>
 
 </Project>

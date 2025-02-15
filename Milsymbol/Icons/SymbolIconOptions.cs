@@ -17,6 +17,10 @@ namespace Pmad.Milsymbol.Icons
 
         public string? CommonIdentifier { get; set; }
 
+        public string? ReinforcedReduced { get; set; }
+
+        public double? Direction { get; set; }
+
         internal JsValue ToJsObject(Engine engine)
         {
             var obj = new JsObject(engine);
@@ -43,6 +47,14 @@ namespace Pmad.Milsymbol.Icons
             if (CommonIdentifier != null)
             {
                 obj.FastSetDataProperty("commonIdentifier", new JsString(CommonIdentifier));
+            }
+            if (ReinforcedReduced != null)
+            {
+                obj.FastSetDataProperty("reinforcedReduced", new JsString(ReinforcedReduced));
+            }
+            if (Direction != null)
+            {
+                obj.FastSetDataProperty("direction", new JsNumber(Direction.Value));
             }
             return obj;
         }

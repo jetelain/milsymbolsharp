@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Milsymbol\Pmad.Milsymbol.csproj" />
+	<ProjectReference Include="..\Pmad.Milsymbol.Png\Pmad.Milsymbol.Png.csproj" />
   </ItemGroup>
 
 </Project>
