@@ -9,6 +9,8 @@ namespace Pmad.Milsymbol.Icons
 
         public double? StrokeWidth { get; set; }
 
+        public double? OutlineWidth { get; set; }
+
         public string? UniqueDesignation { get; set; }
 
         public string? AdditionalInformation { get; set; }
@@ -31,6 +33,10 @@ namespace Pmad.Milsymbol.Icons
             if (StrokeWidth != null)
             {
                 obj.FastSetDataProperty("strokeWidth", new JsNumber(StrokeWidth.Value));
+            }
+            if (OutlineWidth != null)
+            {
+                obj.FastSetDataProperty("outlineWidth", new JsNumber(OutlineWidth.Value));
             }
             if (UniqueDesignation != null)
             {
