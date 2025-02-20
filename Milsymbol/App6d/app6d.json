@@ -4506,6 +4506,7 @@
       {
         "Entity": "Command and Control Points",
         "Entity Type": "Fly-To-Point",
+        "Geometric Rendering": "None",
         "Code": "131000",
         "Remarks": "For training or hierarchical purposes only "
       },
@@ -5085,7 +5086,7 @@
       },
       {
         "Entity": "Manoeuvre Points",
-        "Geometric Rendering": "Point",
+        "Geometric Rendering": "None",
         "Code": "160000",
         "Remarks": "For training or hierarchical purposes only"
       },
@@ -5478,6 +5479,7 @@
       {
         "Entity": "Maritime Control Areas",
         "Entity Type": "Defended Area",
+        "Geometric Rendering": "Area",
         "Code": "200200",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -5541,6 +5543,7 @@
       },
       {
         "Entity": "Maritime Control Points",
+        "Geometric Rendering": "None",
         "Code": "210000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6300,27 +6303,32 @@
       {
         "Entity": "Deception",
         "Code": "230000",
+        "Geometric Rendering": "None",
         "Remarks": "For training or hierarchical purposes"
       },
       {
         "Entity": "Deception",
         "Entity Type": "Decoy/Dummy",
+        "Geometric Rendering": "None",
         "Code": "230100"
       },
       {
         "Entity": "Deception",
         "Entity Type": "Decoy/Dummy/Feint",
+        "Geometric Rendering": "None",
         "Code": "230200"
       },
       {
         "Entity": "Fires Areas",
         "Code": "240000",
+        "Geometric Rendering": "Area",
         "Remarks": "For training or hierarchical purposes"
       },
       {
         "Entity": "Fires Areas",
         "Entity Type": "Airspace Coordination Area",
         "Code": "240100",
+        "Geometric Rendering": "Area",
         "Remarks": "For training or hierarchical purposes"
       },
       {
@@ -6347,6 +6355,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Free Fire Area",
+        "Geometric Rendering": "Area",
         "Code": "240200",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6374,6 +6383,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "No Fire Area",
+        "Geometric Rendering": "Area",
         "Code": "240300",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6401,6 +6411,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Restricted Fire Area",
+        "Geometric Rendering": "Area",
         "Code": "240400",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6428,6 +6439,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Position Area For Artillery (PAA)",
+        "Geometric Rendering": "Area",
         "Code": "240500",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6455,6 +6467,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Point Targets",
+        "Geometric Rendering": "None",
         "Code": "240600"
       },
       {
@@ -6482,6 +6495,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Linear Targets",
+        "Geometric Rendering": "Line",
         "Code": "240700",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6509,6 +6523,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Area Targets",
+        "Geometric Rendering": "Area",
         "Code": "240800",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6558,6 +6573,7 @@
         "Entity": "Fires Areas",
         "Entity Type": "Area Targets",
         "Entity Subtype": "{reserved for future use}",
+        "Geometric Rendering": "Area",
         "Code": "240807",
         "Remarks": "Reserved for future use "
       },
@@ -6577,6 +6593,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Fire Support Area",
+        "Geometric Rendering": "Area",
         "Code": "241000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6604,6 +6621,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Artillery Target Intelligence Zone",
+        "Geometric Rendering": "Area",
         "Code": "241100",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6631,6 +6649,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Call for Fire Area",
+        "Geometric Rendering": "Area",
         "Code": "241200",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6658,6 +6677,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Censor Zone",
+        "Geometric Rendering": "Area",
         "Code": "241300",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6685,6 +6705,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Critical Friendly Zone",
+        "Geometric Rendering": "Area",
         "Code": "241400",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6712,6 +6733,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Dead Space Area",
+        "Geometric Rendering": "Area",
         "Code": "241500",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6739,6 +6761,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Sensor Zone",
+        "Geometric Rendering": "Area",
         "Code": "241600",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6766,6 +6789,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Target Build-up Area",
+        "Geometric Rendering": "Area",
         "Code": "241700",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6793,6 +6817,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Target Value Area",
+        "Geometric Rendering": "Area",
         "Code": "241800",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6820,6 +6845,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Zone of Responsibility",
+        "Geometric Rendering": "Area",
         "Code": "241900",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6865,6 +6891,7 @@
       {
         "Entity": "Fires Areas",
         "Entity Type": "Kill Box",
+        "Geometric Rendering": "Area",
         "Code": "242300",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6912,6 +6939,7 @@
       },
       {
         "Entity": "Fire Points",
+        "Geometric Rendering": "None",
         "Code": "250000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6947,6 +6975,7 @@
       },
       {
         "Entity": "Fire Lines",
+        "Geometric Rendering": "Line",
         "Code": "260000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -6988,6 +7017,7 @@
       },
       {
         "Entity": "Protection Areas",
+        "Geometric Rendering": "Area",
         "Code": "270000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7053,6 +7083,7 @@
       {
         "Entity": "Protection Areas",
         "Entity Type": "Obstacle Bypass",
+        "Geometric Rendering": "None",
         "Code": "270600",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7080,6 +7111,7 @@
       {
         "Entity": "Protection Areas",
         "Entity Type": "Minefield",
+        "Geometric Rendering": "None",
         "Code": "270700",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7094,12 +7126,14 @@
         "Entity": "Protection Areas",
         "Entity Type": "Minefield",
         "Entity Subtype": "Dummy",
+        "Geometric Rendering": "Area",
         "Code": "270705"
       },
       {
         "Entity": "Protection Areas",
         "Entity Type": "Minefield",
         "Entity Subtype": "Dummy Dynamic",
+        "Geometric Rendering": "Area",
         "Code": "270706"
       },
       {
@@ -7118,12 +7152,14 @@
       {
         "Entity": "Protection Areas",
         "Entity Type": "Decoy Mined Area",
+        "Geometric Rendering": "Area",
         "Code": "270900"
       },
       {
         "Entity": "Protection Areas",
         "Entity Type": "Decoy Mined Area",
         "Entity Subtype": "Fenced",
+        "Geometric Rendering": "Area",
         "Code": "270901"
       },
       {
@@ -7141,6 +7177,7 @@
       {
         "Entity": "Protection Areas",
         "Entity Type": "Roadblocks, Craters and Blown Bridges",
+        "Geometric Rendering": "None",
         "Code": "271200",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7181,6 +7218,7 @@
       {
         "Entity": "Protection Areas",
         "Entity Type": "Bridge",
+        "Geometric Rendering": "None",
         "Code": "271400"
       },
       {
@@ -7254,6 +7292,7 @@
       },
       {
         "Entity": "Protection Points",
+        "Geometric Rendering": "None",
         "Code": "280000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7458,6 +7497,7 @@
       {
         "Entity": "Protection Points",
         "Entity Type": "Tetrahedrons, Dragons Teeth, and Other Similar Obstacles",
+        "Geometric Rendering": "None",
         "Code": "281900",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7511,6 +7551,7 @@
       },
       {
         "Entity": "Protection Lines",
+        "Geometric Rendering": "Line",
         "Code": "290000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7523,6 +7564,7 @@
       {
         "Entity": "Protection Lines",
         "Entity Type": "Antitank Obstacles",
+        "Geometric Rendering": "Line",
         "Code": "290200",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7557,6 +7599,7 @@
       {
         "Entity": "Protection Lines",
         "Entity Type": "Wire Obstacles",
+        "Geometric Rendering": "Line",
         "Code": "290300",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7678,6 +7721,7 @@
       },
       {
         "Entity": "Sustainment Areas",
+        "Geometric Rendering": "Area",
         "Code": "310000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7725,6 +7769,7 @@
       },
       {
         "Entity": "Sustainment Points",
+        "Geometric Rendering": "None",
         "Code": "320000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -7979,6 +8024,7 @@
       },
       {
         "Entity": "Sustainment Lines",
+        "Geometric Rendering": "None",
         "Code": "330000",
         "Remarks": "For training or hierarchical purposes"
       },
@@ -8050,6 +8096,7 @@
       },
       {
         "Entity": "Mission Tasks",
+        "Geometric Rendering": "None",
         "Code": "340000"
       },
       {
@@ -8224,11 +8271,13 @@
       },
       {
         "Entity": "Space Debris",
+        "Geometric Rendering": "None",
         "Code": "350000"
       },
       {
         "Entity": "Space Debris",
         "Entity Type": "Man Made Space Debris",
+        "Geometric Rendering": "None",
         "Code": "350100"
       },
       {
@@ -8255,6 +8304,7 @@
       {
         "Entity": "Space Debris",
         "Entity Type": "Natural Space Debris",
+        "Geometric Rendering": "None",
         "Code": "350200"
       },
       {
