@@ -15,7 +15,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="@Localizer["Symbol Identifier Coding"]" />
                     <pmad-wrap-div class="@DesignSystem.InputGroupAppend">
-                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark">&#x2605; @Localizer["Bookmark"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark" type="button">&#x2605; @Localizer["Bookmark"]</button>
                         <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-code" type="button">@Localizer["Copy code"]</button>
                         <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-image" type="button">@Localizer["Copy image"]</button>
                     </pmad-wrap-div>
