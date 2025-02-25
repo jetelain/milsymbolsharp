@@ -41,7 +41,7 @@ namespace Pmad.Milsymbol.AspNetCore.Controllers
             {
                 return Forbid();
             }
-            List<string> data;
+            List<string>? data;
             try
             {
                 data = JsonSerializer.Deserialize<List<string>>(bookmarks);
