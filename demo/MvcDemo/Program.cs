@@ -30,6 +30,7 @@ namespace MvcDemo
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseMilsymbolStaticFiles();
+            app.UseRequestLocalization(options => options.AddSupportedUICultures("en"));
 
             app.UseRouting();
 

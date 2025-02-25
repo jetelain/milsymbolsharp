@@ -21,11 +21,17 @@ namespace Pmad.Milsymbol.App6d
 
         public App6dStandardIdentity StandardIdentity => (App6dStandardIdentity)(_sidc[3] - '0');
 
+        public string StandardIdentityCode => _sidc[3].ToString();
+
         public string SymbolSet => _sidc.Substring(4, 2);
 
         public App6dStatus Status => (App6dStatus)(_sidc[6] - '0');
 
+        public string StatusCode => _sidc[6].ToString();
+
         public App6dHqTfFd HqTfFd => (App6dHqTfFd)(_sidc[7] - '0');
+
+        public string HqTfFdCode => _sidc[7].ToString();
 
         public string Amplifier => _sidc.Substring(8, 2);
 
