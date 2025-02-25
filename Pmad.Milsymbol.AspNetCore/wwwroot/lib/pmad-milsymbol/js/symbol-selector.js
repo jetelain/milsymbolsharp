@@ -8,6 +8,18 @@ var PmadMilsymbolSelector;
     class PmadMilsymbolSelectorOptions {
         getSymbolOptions() { return {}; }
     }
+    class Constant {
+        constructor(value) {
+            this._value = value;
+        }
+        setValue(value) {
+        }
+        getValue() {
+            return this._value;
+        }
+        addEventListener(event, listener) {
+        }
+    }
     class SelectWithChoicesJS {
         constructor(element, options) {
             this._element = element;
@@ -175,9 +187,12 @@ var PmadMilsymbolSelector;
                 return new FlagCheckboxes(checkboxes, flags);
             }
         }
-        let select = document.getElementById(id);
-        if (select) {
-            return new SelectWithChoicesJS(select, choicesConfig);
+        let element = document.getElementById(id);
+        if (element) {
+            if (element.tagName.toUpperCase() === "SELECT") {
+                return new SelectWithChoicesJS(element, choicesConfig);
+            }
+            return new Constant(element.value);
         }
         throw new Error("Element not found: " + id);
     }

@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Pmad.Milsymbol.AspNetCore
+@model Pmad.Milsymbol.AspNetCore.SymbolSelector.SymbolSelectorModel
+@inject IHtmlLocalizer<PmadMilsymbolLabels> Localizer
+@inject IDesignSystem DesignSystem
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Pmad.Milsymbol.AspNetCore
+
+<div class="pmad-symbol-selector" data-base-id="@Model.BaseId">
+    <input type="hidden" id="@(Model.BaseId)-id" value="@Model.SymbolId.StandardIdentityCode" />
+    <input type="hidden" id="@(Model.BaseId)-status" value="@Model.SymbolId.StatusCode" />
+    <div class="mb-1 p-1">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="@(Model.BaseId)" name="@Model.Name" value="@Model.SymbolId.SIDC" aria-label="@Localizer["Symbol Identifier Coding"]" />
+                    <pmad-wrap-div class="@DesignSystem.InputGroupAppend">
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-add-bookmark">&#x2605; @Localizer["Bookmark"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-code" type="button">@Localizer["Copy code"]</button>
+                        <button class="btn btn-outline-secondary" id="@(Model.BaseId)-copy-image" type="button">@Localizer["Copy image"]</button>
+                    </pmad-wrap-div>
+                </div>
+                <div id="@(Model.BaseId)-preview" class="preview-box bg-light p-2 mt-1"></div>
+            </div>
+            <div class="col-md-3">
+                <div>
+                    @Localizer["Bookmarks"]
+                    @if (!string.IsNullOrEmpty(Model.BookmarksHref))
+                    {
+                        <a href="@Model.BookmarksHref" class="small" target="_blank">@Localizer["Edit"]</a>
+                    }
+                </div>
+                <div id="@(Model.BaseId)-bookmarks" class="row row-cols-3 g-0 no-gutters">
+                    <div class="col p-1 d-none">
+                        <button class="btn btn-outline-secondary w-100 h-100">
+                            #
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="@DesignSystem.FormRow">
+
+
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-set" class="@DesignSystem.ControlLabel">@Localizer["Symbol set"]</label>
+            <select id="@(Model.BaseId)-set" class="form-control form-control-sm">
+                @foreach (var option in Model.App6d.SymbolSets)
+                {
+                    var icon = option.MainIcons.Where(i => i.IsPointRendering).FirstOrDefault()?.Code ?? "000000";
+                    <option value="@option.Code" data-sidc="1003@(option.Code)0000@(icon)0000">@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-9">
+            <label for="@(Model.BaseId)-icon" class="@DesignSystem.ControlLabel">@Localizer["Symbol"]</label>
+            @if (!string.IsNullOrEmpty(Model.AllSymbolsHref))
+            {
+                <a href="@Model.AllSymbolsHref" class="small" target="_blank">@Localizer["All symbols"]</a>
+            }
+            <select id="@(Model.BaseId)-icon" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-mod1" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 1"]</label>
+            <select id="@(Model.BaseId)-mod1" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-mod2" class="@DesignSystem.ControlLabel">@Localizer["Icon Modifier 2"]</label>
+            <select id="@(Model.BaseId)-mod2" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="form-group mb-2 col-md-3">
+            <label for="@(Model.BaseId)-amp" class="@DesignSystem.ControlLabel">@Localizer["Echelon"]</label>
+            <select id="@(Model.BaseId)-amp" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="btn-group mb-2 col-md-3 btn-group-toggle" role="group" data-toggle="buttons">
+            <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq1">
+                <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="32.94" viewBox="21 -29 158 183"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M100,-25 L25,50 M100,-25 L175,50" stroke-width="4" stroke-dasharray="8,8" stroke="black" fill="none"></path></svg></span>
+                <br />@Localizer["Dummy"]
+            </pmad-toggle-button>
+            <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq2">
+                <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="37.44" viewBox="21 46 158 208"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M25,150 L25,250" stroke-width="4" stroke="black" fill="none"></path></svg></span>
+                <br />@Localizer["HQ"]
+            </pmad-toggle-button>
+            <pmad-toggle-button type="checkbox" id="@(Model.BaseId)-hq4">
+                <span class="symbol-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="28.44" height="26.64" viewBox="21 6 158 148"><path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1"></path><path d="M55,50 L55,10 145,10 145,50" stroke-width="4" stroke="black" fill="none"></path></svg></span>
+                <br />@Localizer["TF"]
+            </pmad-toggle-button>
+        </div>
+    </div>
+    </div>

@@ -3,6 +3,7 @@
     public enum SymbolSelectorLayout
     {
         Default,
-        Extended
+        Extended,
+        OrbatIcon
     }
 }

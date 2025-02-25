@@ -52,7 +52,19 @@ namespace PmadMilsymbolSelector {
         getValue(): string;
         addEventListener(event: string, listener: EventListener): void;
     }
-
+    class Constant implements PseudoSelect {
+        private _value: string;
+        constructor(value: string) {
+            this._value = value;
+        }
+        setValue(value: string): void {
+        }
+        getValue(): string {
+            return this._value;
+        }
+        addEventListener(event: string, listener: EventListener): void {
+        }
+    }
     class SelectWithChoicesJS implements PseudoSelect {
         private _element: HTMLSelectElement;
         private _choices: Choices;
@@ -228,9 +240,12 @@ namespace PmadMilsymbolSelector {
                 return new FlagCheckboxes(checkboxes, flags);
             }
         }
-        let select = document.getElementById(id) as HTMLSelectElement;
-        if (select) {
-            return new SelectWithChoicesJS(select, choicesConfig);
+        let element = document.getElementById(id);
+        if (element) {
+            if (element.tagName.toUpperCase() === "SELECT") {
+                return new SelectWithChoicesJS(element as HTMLSelectElement, choicesConfig);
+            }
+            return new Constant((element as HTMLInputElement).value);
         }
         throw new Error("Element not found: " + id);
     }
