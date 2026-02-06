@@ -19,6 +19,10 @@
 
 <pmad-orbat root-unit="@Model.RootUnit" />
 
+<h2>Sample Markdown</h2>
+
+@Html.Raw(MvcDemoBS5.MarkdownToHtml.ConvertMarkdownToHtml(Model.Markdown))
+
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function(){

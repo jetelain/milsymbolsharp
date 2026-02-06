@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/jetelain/milsymbolsharp</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Description>Markdig extension for military symbols (NATO APP-6D).</Description>
+		<IsAotCompatible>true</IsAotCompatible>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Authors>Julien Etelain</Authors>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Markdig" Version="0.44.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Milsymbol\Pmad.Milsymbol.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

@@ -11,5 +11,6 @@ namespace MvcDemo.Models
         public string? Symbol2 { get; set; }
         public string? Symbol3 { get; set; }
 
+        public string Markdown { get; set; } = string.Empty;
     }
 }

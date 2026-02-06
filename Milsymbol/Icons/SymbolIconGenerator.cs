@@ -3,7 +3,7 @@ using Jint.Native;
 
 namespace Pmad.Milsymbol.Icons
 {
-    public class SymbolIconGenerator : IDisposable
+    public class SymbolIconGenerator : IDisposable, ISymbolIconGenerator
     {
         private readonly Engine engine;
         private readonly JsValue symbolFunction;

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Pmad.Milsymbol.AspNetCore\Pmad.Milsymbol.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\Pmad.Milsymbol.Markdig\Pmad.Milsymbol.Markdig.csproj" />
   </ItemGroup>
 
 </Project>
