@@ -1,7 +1,7 @@
 ﻿using Markdig;
 using Pmad.Milsymbol.Markdig;
 
-namespace MvcDemoBS5
+namespace MvcDemo
 {
     public static class MarkdownToHtml
     {

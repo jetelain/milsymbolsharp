@@ -10,10 +10,12 @@
     <Compile Include="..\MvcDemo\Controllers\HomeController.cs" Link="Controllers\HomeController.cs" />
     <Compile Include="..\MvcDemo\Models\ErrorViewModel.cs" Link="Models\ErrorViewModel.cs" />
     <Compile Include="..\MvcDemo\Models\HomeViewModel.cs" Link="Models\HomeViewModel.cs" />
+	<Compile Include="..\MvcDemo\MarkdownToHtml.cs" Link="MarkdownToHtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Pmad.Milsymbol.AspNetCore\Pmad.Milsymbol.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\Pmad.Milsymbol.Markdig\Pmad.Milsymbol.Markdig.csproj" />
   </ItemGroup>
 
   <ItemGroup>
