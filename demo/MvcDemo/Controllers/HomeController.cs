@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using MvcDemo.Models;
 using Pmad.Milsymbol.AspNetCore.Orbat;
 
@@ -8,16 +9,22 @@ namespace MvcDemo.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment)
         {
             _logger = logger;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
         {
             return View(new HomeViewModel()
             {
+                Markdown = System.IO.File.ReadAllText(
+                    Path.Combine(_hostEnvironment.WebRootPath, "..", "..", "..", "Pmad.Milsymbol.Markdig", "EXAMPLES.md")) +
+                    System.IO.File.ReadAllText(
+                    Path.Combine(_hostEnvironment.WebRootPath, "..", "..", "..", "Pmad.Milsymbol.Markdig", "QUICKREF.md")),
                 RootUnit = new OrbatUnitViewModel()
                 {
                     Sdic = "10031000150000000000",
