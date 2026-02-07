@@ -7,14 +7,15 @@ namespace Pmad.Milsymbol.Markdig;
 
 /// <summary>
 /// Parses military symbol inline syntax in Markdown documents.
-/// Recognizes the syntax: :milsymbol[SIDC]{options}:
+/// Recognizes the syntax: :ms[SIDC, options]:
 /// where SIDC is a 20 or 30 digit code and options are optional key-value pairs.
 /// </summary>
 /// <example>
 /// Example usage in Markdown:
 /// <code>
-/// :milsymbol[10031000001211000000]:
-/// :milsymbol[10031000001211000000]{size=50, uniquedesignation="A-1"}:
+/// :ms[10031000001211000000]:
+/// :ms[10031000001211000000, size=50, uniquedesignation="A-1"]:
+/// :ms[10031000001211000000, s=50, ud="A-1"]:
 /// </code>
 /// </example>
 public sealed class MilsymbolInlineParser : InlineParser
@@ -33,7 +34,7 @@ public sealed class MilsymbolInlineParser : InlineParser
 
     /// <summary>
     /// Attempts to match and parse a military symbol inline element from the current position in the Markdown text.
-    /// Expected format: :milsymbol[SIDC]{options}:
+    /// Expected format: :ms[SIDC, options]:
     /// </summary>
     /// <param name="processor">The inline processor managing the parsing state.</param>
     /// <param name="slice">The current slice of text being parsed.</param>
@@ -54,8 +55,8 @@ public sealed class MilsymbolInlineParser : InlineParser
         // Move past the opening ':'
         c = slice.NextChar();
 
-        // Check if it starts with 'milsymbol['
-        var match = "milsymbol[";
+        // Check if it starts with 'ms['
+        var match = "ms[";
         for (int i = 0; i < match.Length; i++)
         {
             if (slice.CurrentChar != match[i])
@@ -67,28 +68,37 @@ public sealed class MilsymbolInlineParser : InlineParser
         }
 
         // Find the closing ']'
-        var sidcStart = slice.Start;
-        var sidcEnd = -1;
+        var contentStart = slice.Start;
+        var contentEnd = -1;
 
+        // Need to respect quoted strings when finding the closing bracket
+        var inQuotes = false;
         while (slice.CurrentChar != '\0')
         {
-            if (slice.CurrentChar == ']')
+            if (slice.CurrentChar == '"')
             {
-                sidcEnd = slice.Start;
+                inQuotes = !inQuotes;
+            }
+            else if (slice.CurrentChar == ']' && !inQuotes)
+            {
+                contentEnd = slice.Start;
                 break;
             }
             slice.NextChar();
         }
 
-        if (sidcEnd == -1)
+        if (contentEnd == -1)
         {
             // No closing ']' found
             slice.Start = start;
             return false;
         }
 
-        // Extract SIDC
-        var sidc = slice.Text.Substring(sidcStart, sidcEnd - sidcStart);
+        // Extract content (SIDC and possibly options)
+        var content = slice.Text.Substring(contentStart, contentEnd - contentStart);
+        
+        // Split content to get SIDC and options
+        var (sidc, optionsText) = SplitContentToSidcAndOptions(content);
         
         // Validate SIDC format
         if (!IsValidSidc(sidc))
@@ -100,37 +110,8 @@ public sealed class MilsymbolInlineParser : InlineParser
         // Move past ']'
         slice.NextChar();
         
-        var options = defaultOptions;
-        
-        // Check for options syntax: '{' 
-        if (slice.CurrentChar == '{')
-        {
-            var optionsStart = slice.Start;
-            slice.NextChar(); // Move past '{'
-            
-            // Find the closing '}'
-            var optionsEnd = -1;
-            while (slice.CurrentChar != '\0')
-            {
-                if (slice.CurrentChar == '}')
-                {
-                    optionsEnd = slice.Start;
-                    slice.NextChar(); // Move past '}'
-                    break;
-                }
-                slice.NextChar();
-            }
-            
-            if (optionsEnd == -1)
-            {
-                // No closing '}' found, reset
-                slice.Start = start;
-                return false;
-            }
-            
-            var optionsText = slice.Text.Substring(optionsStart + 1, optionsEnd - optionsStart - 1);
-            options = ParseOptions(optionsText);
-        }
+        // Parse options if present
+        var options = string.IsNullOrWhiteSpace(optionsText) ? defaultOptions : ParseOptions(optionsText);
         
         // Expect closing ':'
         if (slice.CurrentChar != ':')
@@ -151,6 +132,35 @@ public sealed class MilsymbolInlineParser : InlineParser
         return true;
     }
 
+    /// <summary>
+    /// Splits the content into SIDC and options text.
+    /// The first token (before the first comma outside quotes) is the SIDC.
+    /// Everything after is options.
+    /// </summary>
+    /// <param name="content">The content to split.</param>
+    /// <returns>A tuple of SIDC and options text.</returns>
+    private static (string sidc, string optionsText) SplitContentToSidcAndOptions(string content)
+    {
+        var inQuotes = false;
+        for (int i = 0; i < content.Length; i++)
+        {
+            if (content[i] == '"')
+            {
+                inQuotes = !inQuotes;
+            }
+            else if (content[i] == ',' && !inQuotes)
+            {
+                // Found the first comma - SIDC is before, options are after
+                var sidc = content.Substring(0, i).Trim();
+                var options = content.Substring(i + 1).Trim();
+                return (sidc, options);
+            }
+        }
+        
+        // No comma found - entire content is SIDC
+        return (content.Trim(), string.Empty);
+    }
+    
     /// <summary>
     /// Validates whether a string is a valid SIDC (Symbol Identification Coding) code.
     /// </summary>
@@ -232,6 +242,7 @@ public sealed class MilsymbolInlineParser : InlineParser
             switch (key.ToLowerInvariant())
             {
                 case "size":
+                case "s":
                     if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var size))
                     {
                         options.Size = size;
@@ -239,6 +250,7 @@ public sealed class MilsymbolInlineParser : InlineParser
                     break;
                     
                 case "strokewidth":
+                case "sw":
                     if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var strokeWidth))
                     {
                         options.StrokeWidth = strokeWidth;
@@ -246,6 +258,7 @@ public sealed class MilsymbolInlineParser : InlineParser
                     break;
                     
                 case "outlinewidth":
+                case "ow":
                     if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var outlineWidth))
                     {
                         options.OutlineWidth = outlineWidth;
@@ -253,26 +266,32 @@ public sealed class MilsymbolInlineParser : InlineParser
                     break;
                     
                 case "uniquedesignation":
+                case "ud":
                     options.UniqueDesignation = value;
                     break;
                     
                 case "additionalinformation":
+                case "ai":
                     options.AdditionalInformation = value;
                     break;
                     
                 case "higherformation":
+                case "hf":
                     options.HigherFormation = value;
                     break;
                     
                 case "commonidentifier":
+                case "ci":
                     options.CommonIdentifier = value;
                     break;
                     
                 case "reinforcedreduced":
+                case "rr":
                     options.ReinforcedReduced = value;
                     break;
                     
                 case "direction":
+                case "d":
                     if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var direction))
                     {
                         options.Direction = direction;

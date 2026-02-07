@@ -12,7 +12,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]:";
+        var markdown = ":ms[10031000131211050000]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -27,7 +27,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[100310001312110500001234567890]:";
+        var markdown = ":ms[100310001312110500001234567890]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -42,7 +42,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[123]:";
+        var markdown = ":ms[123]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -56,7 +56,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[1003100013121105000X]:";
+        var markdown = ":ms[1003100013121105000X]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -70,7 +70,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000:";
+        var markdown = ":ms[10031000131211050000:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -84,7 +84,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]";
+        var markdown = ":ms[10031000131211050000]";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -98,7 +98,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = "milsymbol[10031000131211050000]:";
+        var markdown = "ms[10031000131211050000]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -126,7 +126,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[]:";
+        var markdown = ":ms[]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -134,13 +134,13 @@ public class MilsymbolInlineParserTest
     }
 
     [Fact]
-    public void Parser_EmptyOptions_ShouldParse()
+    public void Parser_NoOptions_ShouldParse()
     {
         var pipeline = new MarkdownPipelineBuilder()
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{}:";
+        var markdown = ":ms[10031000131211050000]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -149,13 +149,13 @@ public class MilsymbolInlineParserTest
     }
 
     [Fact]
-    public void Parser_MissingClosingBrace_ShouldNotParse()
+    public void Parser_MissingClosingBracket_WithOptions_ShouldNotParse()
     {
         var pipeline = new MarkdownPipelineBuilder()
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=50:";
+        var markdown = ":ms[10031000131211050000, size=50:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -169,7 +169,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=50}:";
+        var markdown = ":ms[10031000131211050000, size=50]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -184,7 +184,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=50, direction=45, strokeWidth=2.5}:";
+        var markdown = ":ms[10031000131211050000, size=50, direction=45, strokeWidth=2.5]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -201,7 +201,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{uniqueDesignation=\"A-1\"}:";
+        var markdown = ":ms[10031000131211050000, uniqueDesignation=\"A-1\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -216,7 +216,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{uniqueDesignation=\"Unit 1\", higherFormation=\"2BDE\", additionalInformation=\"Ready\"}:";
+        var markdown = ":ms[10031000131211050000, uniqueDesignation=\"Unit 1\", higherFormation=\"2BDE\", additionalInformation=\"Ready\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -233,7 +233,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=40, uniqueDesignation=\"A-1\"}:";
+        var markdown = ":ms[10031000131211050000, size=40, uniqueDesignation=\"A-1\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -249,7 +249,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{uniqueDesignation=\"A-1, Ready\"}:";
+        var markdown = ":ms[10031000131211050000, uniqueDesignation=\"A-1, Ready\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -264,7 +264,30 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=50, strokeWidth=2, outlineWidth=3, uniqueDesignation=\"A\", additionalInformation=\"B\", higherFormation=\"C\", commonIdentifier=\"D\", reinforcedReduced=\"E\", direction=90}:";
+        var markdown = ":ms[10031000131211050000, size=50, strokeWidth=2, outlineWidth=3, uniqueDesignation=\"A\", additionalInformation=\"B\", higherFormation=\"C\", commonIdentifier=\"D\", reinforcedReduced=\"E\", direction=90]:";
+        var document = Markdown.Parse(markdown, pipeline);
+        
+        var inline = FindMilsymbolInline(document);
+        Assert.NotNull(inline);
+        Assert.Equal(50, inline!.Options.Size);
+        Assert.Equal(2, inline.Options.StrokeWidth);
+        Assert.Equal(3, inline.Options.OutlineWidth);
+        Assert.Equal("A", inline.Options.UniqueDesignation);
+        Assert.Equal("B", inline.Options.AdditionalInformation);
+        Assert.Equal("C", inline.Options.HigherFormation);
+        Assert.Equal("D", inline.Options.CommonIdentifier);
+        Assert.Equal("E", inline.Options.ReinforcedReduced);
+        Assert.Equal(90, inline.Options.Direction);
+    }
+
+    [Fact]
+    public void Parser_ShortOptionNames_ShouldParse()
+    {
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseMilsymbol()
+            .Build();
+
+        var markdown = ":ms[10031000131211050000, s=50, sw=2, ow=3, ud=\"A\", ai=\"B\", hf=\"C\", ci=\"D\", rr=\"E\", d=90]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -287,7 +310,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{invalidOption=test, size=40}:";
+        var markdown = ":ms[10031000131211050000, invalidOption=test, size=40]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -302,7 +325,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=invalid, uniqueDesignation=\"A-1\"}:";
+        var markdown = ":ms[10031000131211050000, size=invalid, uniqueDesignation=\"A-1\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -317,7 +340,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{SIZE=50, UniqueDesignation=\"A\"}:";
+        var markdown = ":ms[10031000131211050000, SIZE=50, UniqueDesignation=\"A\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -333,7 +356,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size = 50 , uniqueDesignation = \"A-1\" }:";
+        var markdown = ":ms[10031000131211050000, size = 50 , uniqueDesignation = \"A-1\" ]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -349,7 +372,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = "This is a symbol :milsymbol[10031000131211050000]: in a sentence.";
+        var markdown = "This is a symbol :ms[10031000131211050000]: in a sentence.";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -364,7 +387,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Symbol 1: :milsymbol[10031000131211050000]: and Symbol 2: :milsymbol[10061000161211000000]:.";
+        var markdown = "Symbol 1: :ms[10031000131211050000]: and Symbol 2: :ms[10061000161211000000]:.";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inlines = FindAllMilsymbolInlines(document);
@@ -396,7 +419,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol(defaultOptions: defaultOptions)
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]:";
+        var markdown = ":ms[10031000131211050000]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -421,7 +444,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol(defaultOptions: defaultOptions)
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{}:";
+        var markdown = ":ms[10031000131211050000]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -447,7 +470,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol(defaultOptions: defaultOptions)
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=120, uniqueDesignation=\"CUSTOM\"}:";
+        var markdown = ":ms[10031000131211050000, size=120, uniqueDesignation=\"CUSTOM\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -479,7 +502,43 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol(defaultOptions: defaultOptions)
             .Build();
 
-        var markdown = ":milsymbol[10031000131211050000]{size=50, strokeWidth=2, outlineWidth=1, direction=180, uniqueDesignation=\"A\", additionalInformation=\"B\", higherFormation=\"C\", commonIdentifier=\"D\", reinforcedReduced=\"E\"}:";
+        var markdown = ":ms[10031000131211050000, size=50, strokeWidth=2, outlineWidth=1, direction=180, uniqueDesignation=\"A\", additionalInformation=\"B\", higherFormation=\"C\", commonIdentifier=\"D\", reinforcedReduced=\"E\"]:";
+        var document = Markdown.Parse(markdown, pipeline);
+        
+        var inline = FindMilsymbolInline(document);
+        Assert.NotNull(inline);
+        Assert.Equal(50, inline!.Options.Size);
+        Assert.Equal(2, inline.Options.StrokeWidth);
+        Assert.Equal(1, inline.Options.OutlineWidth);
+        Assert.Equal(180, inline.Options.Direction);
+        Assert.Equal("A", inline.Options.UniqueDesignation);
+        Assert.Equal("B", inline.Options.AdditionalInformation);
+        Assert.Equal("C", inline.Options.HigherFormation);
+        Assert.Equal("D", inline.Options.CommonIdentifier);
+        Assert.Equal("E", inline.Options.ReinforcedReduced);
+    }
+
+    [Fact]
+    public void Parser_AllOptionsOverriddenWithShortNames_ShouldNotUseDefaults()
+    {
+        var defaultOptions = new Icons.SymbolIconOptions
+        {
+            Size = 100,
+            StrokeWidth = 5,
+            OutlineWidth = 3,
+            Direction = 90,
+            UniqueDesignation = "DEFAULT-UD",
+            AdditionalInformation = "DEFAULT-AI",
+            HigherFormation = "DEFAULT-HF",
+            CommonIdentifier = "DEFAULT-CI",
+            ReinforcedReduced = "DEFAULT-RR"
+        };
+
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseMilsymbol(defaultOptions: defaultOptions)
+            .Build();
+
+        var markdown = ":ms[10031000131211050000, s=50, sw=2, ow=1, d=180, ud=\"A\", ai=\"B\", hf=\"C\", ci=\"D\", rr=\"E\"]:";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inline = FindMilsymbolInline(document);
@@ -508,7 +567,7 @@ public class MilsymbolInlineParserTest
             .UseMilsymbol(defaultOptions: defaultOptions)
             .Build();
 
-        var markdown = "Symbol 1: :milsymbol[10031000131211050000]: and Symbol 2: :milsymbol[10061000161211000000]{uniqueDesignation=\"B\"}:.";
+        var markdown = "Symbol 1: :ms[10031000131211050000]: and Symbol 2: :ms[10061000161211000000, uniqueDesignation=\"B\"]:.";
         var document = Markdown.Parse(markdown, pipeline);
         
         var inlines = FindAllMilsymbolInlines(document);

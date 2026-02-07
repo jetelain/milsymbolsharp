@@ -12,7 +12,7 @@ public class MilsymbolMarkdownTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = "This is a symbol: :milsymbol[10031000131211050000]: inline.";
+        var markdown = "This is a symbol: :ms[10031000131211050000]: inline.";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -26,7 +26,7 @@ public class MilsymbolMarkdownTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Symbol 1: :milsymbol[10031000131211050000]: and Symbol 2: :milsymbol[10061000161211000000]:.";
+        var markdown = "Symbol 1: :ms[10031000131211050000]: and Symbol 2: :ms[10061000161211000000]:.";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         var svgCount = System.Text.RegularExpressions.Regex.Matches(html, "<svg").Count;
@@ -40,11 +40,11 @@ public class MilsymbolMarkdownTest
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Invalid: :milsymbol[invalid]: symbol.";
+        var markdown = "Invalid: :ms[invalid]: symbol.";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.DoesNotContain("<svg", html);
-        Assert.Contains(":milsymbol[invalid]:", html);
+        Assert.Contains(":ms[invalid]:", html);
     }
 
     [Fact]
@@ -58,8 +58,8 @@ public class MilsymbolMarkdownTest
 
 This document shows military symbols:
 
-- Friend Infantry: :milsymbol[10031000131211050000]:
-- Enemy Armor: :milsymbol[10061000161211000000]:
+- Friend Infantry: :ms[10031000131211050000]:
+- Enemy Armor: :ms[10061000161211000000]:
 
 End of document.";
         
@@ -77,7 +77,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Large symbol: :milsymbol[10031000131211050000]{size=50}:";
+        var markdown = "Large symbol: :ms[10031000131211050000, size=50]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -91,7 +91,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Unit: :milsymbol[10031000131211050000]{uniqueDesignation=\"A-1\"}:";
+        var markdown = "Unit: :ms[10031000131211050000, uniqueDesignation=\"A-1\"]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -105,7 +105,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Unit: :milsymbol[10031000131211050000]{size=40, uniqueDesignation=\"B-2\", higherFormation=\"2BDE\"}:";
+        var markdown = "Unit: :ms[10031000131211050000, size=40, uniqueDesignation=\"B-2\", higherFormation=\"2BDE\"]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -120,7 +120,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Moving unit: :milsymbol[10031000131211050000]{direction=45}:";
+        var markdown = "Moving unit: :ms[10031000131211050000, direction=45]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -133,7 +133,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Info: :milsymbol[10031000131211050000]{additionalInformation=\"Ready\"}:";
+        var markdown = "Info: :ms[10031000131211050000, additionalInformation=\"Ready\"]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -141,13 +141,13 @@ End of document.";
     }
 
     [Fact]
-    public void MilsymbolInline_EmptyOptions_ShouldRenderNormally()
+    public void MilsymbolInline_NoOptions_ShouldRenderNormally()
     {
         var pipeline = new MarkdownPipelineBuilder()
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Empty options: :milsymbol[10031000131211050000]{}:";
+        var markdown = "No options: :ms[10031000131211050000]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -160,7 +160,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Quoted: :milsymbol[10031000131211050000]{uniqueDesignation=\"Alpha Company\"}:";
+        var markdown = "Quoted: :ms[10031000131211050000, uniqueDesignation=\"Alpha Company\"]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -174,7 +174,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Comma: :milsymbol[10031000131211050000]{uniqueDesignation=\"A-1, Ready\"}:";
+        var markdown = "Comma: :ms[10031000131211050000, uniqueDesignation=\"A-1, Ready\"]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);
@@ -188,7 +188,7 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Invalid: :milsymbol[10031000131211050000]{invalid:";
+        var markdown = "Invalid: :ms[10031000131211050000, invalid:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.DoesNotContain("<svg", html);
@@ -201,7 +201,21 @@ End of document.";
             .UseMilsymbol()
             .Build();
 
-        var markdown = "Mixed: :milsymbol[10031000131211050000]{size=40, invalidOption=test, uniqueDesignation=\"A-1\"}:";
+        var markdown = "Mixed: :ms[10031000131211050000, size=40, invalidOption=test, uniqueDesignation=\"A-1\"]:";
+        var html = Markdown.ToHtml(markdown, pipeline);
+
+        Assert.Contains("<svg", html);
+        Assert.Contains("A-1", html);
+    }
+
+    [Fact]
+    public void MilsymbolInline_ShortOptionNames_ShouldRender()
+    {
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseMilsymbol()
+            .Build();
+
+        var markdown = "Short: :ms[10031000131211050000, s=50, ud=\"A-1\"]:";
         var html = Markdown.ToHtml(markdown, pipeline);
 
         Assert.Contains("<svg", html);

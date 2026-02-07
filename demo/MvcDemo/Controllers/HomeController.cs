@@ -22,7 +22,9 @@ namespace MvcDemo.Controllers
             return View(new HomeViewModel()
             {
                 Markdown = System.IO.File.ReadAllText(
-                    Path.Combine(_hostEnvironment.WebRootPath, "..", "..", "..", "Pmad.Milsymbol.Markdig", "EXAMPLES.md")),
+                    Path.Combine(_hostEnvironment.WebRootPath, "..", "..", "..", "Pmad.Milsymbol.Markdig", "EXAMPLES.md")) +
+                    System.IO.File.ReadAllText(
+                    Path.Combine(_hostEnvironment.WebRootPath, "..", "..", "..", "Pmad.Milsymbol.Markdig", "QUICKREF.md")),
                 RootUnit = new OrbatUnitViewModel()
                 {
                     Sdic = "10031000150000000000",
